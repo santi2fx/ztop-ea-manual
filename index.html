@@ -7,15 +7,165 @@
   <meta name="description" content="คู่มือการใช้งาน ZTOP EA V4.00 - Momentum Spike Breakout System สำหรับ MetaTrader 5">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     html { scroll-behavior: smooth; }
+    body { font-family: 'Kanit', sans-serif; }
     .lang-active { @apply bg-blue-600 text-white font-semibold; }
     .lang-inactive { @apply bg-gray-200 text-gray-700 hover:bg-gray-300; }
     .param-row:nth-child(even) { @apply bg-gray-50; }
     @media print { .no-print { display: none !important; } }
+    
+    /* Broker Grid Styles */
+    .broker-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .broker-card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 24px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .broker-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+    }
+    .broker-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.15);
+      border-color: #3b82f6;
+    }
+    .broker-name {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #3b82f6;
+      margin-bottom: 6px;
+    }
+    .broker-platforms {
+      font-size: 0.85rem;
+      color: #6b7280;
+      margin-bottom: 14px;
+    }
+    .broker-link {
+      display: inline-block;
+      background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: all 0.3s ease;
+    }
+    .broker-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+    }
+    .warning-box {
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .warning-box h3 {
+      color: #ef4444;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .info-box {
+      background: rgba(59, 130, 246, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .info-box h3 {
+      color: #3b82f6;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .info-box p {
+      color: #4b5563;
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+    }
+    .support-channel {
+      text-align: center;
+      margin-top: 24px;
+      padding: 24px;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+    }
+    .support-channel h3 {
+      color: #3b82f6;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .channel-name {
+      font-size: 1.15rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .channel-link {
+      color: #dc2626;
+      font-weight: bold;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .channel-link:hover {
+      color: #991b1b;
+    }
+    .terms-section {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .terms-section h2 {
+      color: #3b82f6;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .terms-section p {
+      color: #4b5563;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
   </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans">
+<body class="bg-gray-50 text-gray-800">
 
   <!-- Language Switcher -->
   <div class="fixed top-4 right-4 z-50 no-print flex space-x-1 rounded-lg overflow-hidden shadow-md">
@@ -38,14 +188,13 @@
   <!-- Navigation -->
   <nav class="bg-white shadow-md sticky top-0 z-40 no-print">
     <div class="max-w-6xl mx-auto px-4">
-      <div class="flex overflow-x-auto py-3 space-x-1 md:space-x-2 text-xs md:text-sm scrollbar-hide">
+      <div class="flex overflow-x-auto py-3 space-x-1 md:space-x-2 text-xs md:text-sm">
         <a href="#overview" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition" data-th="ภาพรวม" data-en="Overview">ภาพรวม</a>
         <a href="#install" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition" data-th="การติดตั้ง" data-en="Installation">การติดตั้ง</a>
+        <a href="#brokers" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition" data-th="โบรกเกอร์" data-en="Brokers">โบรกเกอร์</a>
         <a href="#params" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition" data-th="พารามิเตอร์" data-en="Parameters">พารามิเตอร์</a>
-        <a href="#strategy" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition" data-th="กลยุทธ์" data-en="Strategy">กลยุทธ์</a>
-        <a href="#risk" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition" data-th="ความเสี่ยง" data-en="Risk Management">ความเสี่ยง</a>
-        <a href="#dashboard" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition" data-th="แดชบอร์ด" data-en="Dashboard">แดชบอร์ด</a>
-        <a href="#contact" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition" data-th="ติดต่อ & เงื่อนไข" data-en="Contact & Terms">ติดต่อ & เงื่อนไข</a>
+        <a href="#terms" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition" data-th="เงื่อนไข" data-en="Terms">เงื่อนไข</a>
+        <a href="#contact" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition" data-th="ติดต่อ" data-en="Contact">ติดต่อ</a>
       </div>
     </div>
   </nav>
@@ -108,16 +257,6 @@
             </ul>
           </div>
         </div>
-
-        <div class="mt-6 bg-amber-50 border border-amber-200 rounded-lg p-4">
-          <p class="text-amber-800 text-sm flex items-start">
-            <i class="fas fa-exclamation-triangle mr-2 mt-0.5 flex-shrink-0"></i>
-            <span data-th="<strong>คำเตือน:</strong> การเทรดมีความเสี่ยงสูง ผู้ใช้ควรทดสอบในบัญชีเดโมก่อนใช้งานจริง และเข้าใจพารามิเตอร์ทุกตัวอย่างถ่องแท้" 
-                  data-en="<strong>Warning:</strong> Trading involves high risk. Always test in a demo account first and fully understand all parameters before live trading.">
-              <strong>คำเตือน:</strong> การเทรดมีความเสี่ยงสูง ผู้ใช้ควรทดสอบในบัญชีเดโมก่อนใช้งานจริง และเข้าใจพารามิเตอร์ทุกตัวอย่างถ่องแท้
-            </span>
-          </p>
-        </div>
       </div>
     </section>
 
@@ -169,15 +308,49 @@
           </div>
         </div>
       </div>
+    </section>
 
-      <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <p class="text-blue-800 text-sm flex items-start">
-          <i class="fas fa-lightbulb mr-2 mt-0.5 flex-shrink-0"></i>
-          <span data-th="<strong>คำแนะนำด่วน:</strong> เริ่มต้นด้วยค่าเริ่มต้นทั้งหมดก่อน ทดสอบในเดโมอย่างน้อย 1 สัปดาห์ แล้วค่อยปรับพารามิเตอร์ตามสไตล์การเทรดของคุณ" 
-                data-en="<strong>Quick Tip:</strong> Start with all default settings. Test in demo for at least 1 week before adjusting parameters to match your trading style.">
-            <strong>คำแนะนำด่วน:</strong> เริ่มต้นด้วยค่าเริ่มต้นทั้งหมดก่อน ทดสอบในเดโมอย่างน้อย 1 สัปดาห์ แล้วค่อยปรับพารามิเตอร์ตามสไตล์การเทรดของคุณ
-          </span>
+    <!-- Supported Brokers Section (NEW) -->
+    <section id="brokers" class="mb-12 scroll-mt-24">
+      <div class="terms-section">
+        <h2 data-th="🏦 โบรกเกอร์ที่รองรับ" data-en="🏦 Supported Brokers">🏦 โบรกเกอร์ที่รองรับ</h2>
+        <p data-th="เพื่อใช้งาน ZTOP EA V4.00 ได้อย่างเต็มประสิทธิภาพ คุณสามารถเปิดบัญชีเทรดจริงหรือบัญชีเดโม่กับโบรกเกอร์ที่รองรับดังนี้:" 
+           data-en="To use ZTOP EA V4.00 at full efficiency, you can open a live or demo trading account with the following supported brokers:">
+           เพื่อใช้งาน ZTOP EA V4.00 ได้อย่างเต็มประสิทธิภาพ คุณสามารถเปิดบัญชีเทรดจริงหรือบัญชีเดโม่กับโบรกเกอร์ที่รองรับดังนี้:
         </p>
+
+        <div class="broker-grid">
+          <div class="broker-card">
+            <div class="broker-name">Vantage International</div>
+            <div class="broker-platforms">MQL5</div>
+            <a href="https://www.vantagemarkets.com/th/open-live-account/?affid=Njg4NDM%3D" target="_blank" class="broker-link" 
+               data-th="เปิดบัญชี" data-en="Open Account">เปิดบัญชี</a>
+          </div>
+          <div class="broker-card">
+            <div class="broker-name">HFM</div>
+            <div class="broker-platforms">MQL5</div>
+            <a href="https://uutrader.short.gy/uutradeHFM" target="_blank" class="broker-link"
+               data-th="เปิดบัญชี" data-en="Open Account">เปิดบัญชี</a>
+          </div>
+          <div class="broker-card">
+            <div class="broker-name">Exness</div>
+            <div class="broker-platforms">MQL5</div>
+            <a href="https://uutrader.short.gy/uutraderExness" target="_blank" class="broker-link"
+               data-th="เปิดบัญชี" data-en="Open Account">เปิดบัญชี</a>
+          </div>
+          <div class="broker-card">
+            <div class="broker-name">Landprime</div>
+            <div class="broker-platforms">MQL5</div>
+            <a href="https://uutrader.short.gy/uutradeLandprime" target="_blank" class="broker-link"
+               data-th="เปิดบัญชี" data-en="Open Account">เปิดบัญชี</a>
+          </div>
+          <div class="broker-card">
+            <div class="broker-name">FBS</div>
+            <div class="broker-platforms">MQL5</div>
+            <a href="https://uutrader.short.gy/uutraderFBS" target="_blank" class="broker-link"
+               data-th="เปิดบัญชี" data-en="Open Account">เปิดบัญชี</a>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -236,15 +409,50 @@
           </tbody>
         </table>
       </div>
-      
-      <p class="text-xs text-gray-500 mt-3" data-th="* ดูพารามิเตอร์ทั้งหมดในไฟล์ .set หรือในหน้าตั้งค่าของ EA" data-en="* View all parameters in the .set file or in EA settings tab">* ดูพารามิเตอร์ทั้งหมดในไฟล์ .set หรือในหน้าตั้งค่าของ EA</p>
     </section>
 
-    <!-- Contact & Terms Section -->
+    <!-- Terms & Conditions Section (NEW) -->
+    <section id="terms" class="mb-12 scroll-mt-24">
+      <div class="terms-section">
+        <h2 data-th="⚠️ ข้อกำหนดและเงื่อนไข" data-en="⚠️ Terms and Conditions">⚠️ ข้อกำหนดและเงื่อนไข</h2>
+
+        <div class="warning-box">
+          <h3 data-th="⚠️ คำเตือนความเสี่ยง" data-en="⚠️ Risk Warning">⚠️ คำเตือนความเสี่ยง</h3>
+          <p data-th="การเทรด Forex และ CFDs มีความเสี่ยงสูง อาจทำให้เสียเงินลงทุนทั้งหมด ควรศึกษาและเข้าใจความเสี่ยงก่อนการลงทุน" 
+             data-en="Trading Forex and CFDs involves high risk and may result in loss of all invested capital. Please study and understand the risks before investing.">
+             การเทรด Forex และ CFDs มีความเสี่ยงสูง อาจทำให้เสียเงินลงทุนทั้งหมด ควรศึกษาและเข้าใจความเสี่ยงก่อนการลงทุน
+          </p>
+        </div>
+
+        <div class="info-box">
+          <h3 data-th="ℹ️ เงื่อนไขการใช้งาน" data-en="ℹ️ Terms of Use">ℹ️ เงื่อนไขการใช้งาน</h3>
+          <p data-th="• EA นี้ใช้งานได้เฉพาะกับโบรกเกอร์ที่ระบุไว้เท่านั้น" data-en="• This EA can only be used with specified brokers">• EA นี้ใช้งานได้เฉพาะกับโบรกเกอร์ที่ระบุไว้เท่านั้น</p>
+          <p data-th="• แนะนำให้ทดสอบบนบัญชีเดโม่ก่อนใช้งานจริง" data-en="• Recommended to test on demo account before live trading">• แนะนำให้ทดสอบบนบัญชีเดโม่ก่อนใช้งานจริง</p>
+          <p data-th="• ผู้ใช้งานต้องรับผิดชอบต่อการตัดสินใจลงทุนของตนเอง" data-en="• Users are responsible for their own investment decisions">• ผู้ใช้งานต้องรับผิดชอบต่อการตัดสินใจลงทุนของตนเอง</p>
+          <p data-th="• ควรติดตามและปรับแต่งการตั้งค่าให้เหมาะสมกับสภาวะตลาด" data-en="• Should monitor and adjust settings according to market conditions">• ควรติดตามและปรับแต่งการตั้งค่าให้เหมาะสมกับสภาวะตลาด</p>
+        </div>
+      </div>
+
+      <!-- Agreement Section -->
+      <div class="terms-section">
+        <h2 data-th="📃 ข้อตกลงการใช้งาน" data-en="📃 User Agreement">📃 ข้อตกลงการใช้งาน</h2>
+        <p data-th="เมื่อคุณดาวน์โหลดและใช้งาน ZTOP EA V4.00 ถือว่าคุณได้ยอมรับเงื่อนไขและข้อตกลงทั้งหมดที่ระบุไว้ในเอกสารนี้" 
+           data-en="By downloading and using ZTOP EA V4.00, you agree to accept all terms and conditions specified in this document.">
+           เมื่อคุณดาวน์โหลดและใช้งาน ZTOP EA V4.00 ถือว่าคุณได้ยอมรับเงื่อนไขและข้อตกลงทั้งหมดที่ระบุไว้ในเอกสารนี้
+        </p>
+        <p data-th="หากมีคำถามเพิ่มเติมเกี่ยวกับการใช้งานหรือข้อกำหนด กรุณาติดต่อผ่านช่องทาง" 
+           data-en="If you have additional questions about usage or requirements, please contact us via">
+           หากมีคำถามเพิ่มเติมเกี่ยวกับการใช้งานหรือข้อกำหนด กรุณาติดต่อผ่านช่องทาง
+        </p>
+        <p><strong style="background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">UU School Trading</strong></p>
+      </div>
+    </section>
+
+    <!-- Contact & Support Section -->
     <section id="contact" class="mb-12 scroll-mt-24">
       <h2 class="text-2xl font-bold mb-4 pb-2 border-b border-gray-200 flex items-center">
         <i class="fas fa-headset text-blue-600 mr-2"></i>
-        <span data-th="📞 ติดต่อ & เงื่อนไขการใช้งาน" data-en="📞 Contact & Terms of Use">📞 ติดต่อ & เงื่อนไขการใช้งาน</span>
+        <span data-th="📞 ติดต่อ & การสนับสนุน" data-en="📞 Contact & Support">📞 ติดต่อ & การสนับสนุน</span>
       </h2>
       
       <div class="grid md:grid-cols-2 gap-6">
@@ -280,34 +488,36 @@
           </div>
         </div>
         
-        <!-- Terms Card -->
-        <div class="bg-white rounded-lg shadow p-5 border border-gray-100">
-          <h3 class="font-semibold text-lg mb-4 flex items-center text-amber-700">
-            <i class="fas fa-file-contract mr-2"></i>
-            <span data-th="เงื่อนไขการใช้งาน" data-en="Terms of Use">เงื่อนไขการใช้งาน</span>
-          </h3>
-          <div class="text-sm text-gray-700 space-y-2">
-            <p data-th="1. ZTOP EA V4 เป็นเครื่องมือช่วยเทรด <strong>ไม่ใช่การรับประกันผลกำไร</strong>" 
-               data-en="1. ZTOP EA V4 is a trading assistance tool, <strong>not a profit guarantee</strong>.">
-               1. ZTOP EA V4 เป็นเครื่องมือช่วยเทรด <strong>ไม่ใช่การรับประกันผลกำไร</strong>
-            </p>
-            <p data-th="2. ผู้ใช้รับผิดชอบการตัดสินใจเทรดและความเสี่ยงทั้งหมดด้วยตนเอง" 
-               data-en="2. Users are solely responsible for their trading decisions and all associated risks.">
-               2. ผู้ใช้รับผิดชอบการตัดสินใจเทรดและความเสี่ยงทั้งหมดด้วยตนเอง
-            </p>
-            <p data-th="3. ห้ามแจกจ่าย แก้ไข หรือขายไฟล์ซอฟต์แวร์โดยไม่ได้รับอนุญาต" 
-               data-en="3. Do not distribute, modify, or resell the software files without authorization.">
-               3. ห้ามแจกจ่าย แก้ไข หรือขายไฟล์ซอฟต์แวร์โดยไม่ได้รับอนุญาต
-            </p>
-            <p data-th="4. ระบบยืนยันตัวตนผ่าน Google Sheet เป็นส่วนหนึ่งของลิขสิทธิ์" 
-               data-en="4. Google Sheet authentication is part of the copyright protection system.">
-               4. ระบบยืนยันตัวตนผ่าน Google Sheet เป็นส่วนหนึ่งของลิขสิทธิ์
-            </p>
-            <p data-th="5. ผู้พัฒนาไม่รับผิดชอบต่อความเสียหายจากการใช้งานที่ไม่ถูกต้อง" 
-               data-en="5. Developers are not liable for damages resulting from incorrect usage.">
-               5. ผู้พัฒนาไม่รับผิดชอบต่อความเสียหายจากการใช้งานที่ไม่ถูกต้อง
-            </p>
-          </div>
+        <!-- Support Channel Card -->
+        <div class="support-channel">
+          <h3 data-th="ช่องทางที่สนับสนุน" data-en="Supported Channel">ช่องทางที่สนับสนุน</h3>
+          <div class="channel-name">uu school trading</div>
+          <br>
+          <a href="https://www.youtube.com/watch?v=1b12km_dAdg&t=703s" target="_blank" rel="noopener noreferrer" class="channel-link"
+             data-th="ดูวิดีโอ YouTube" data-en="Watch YouTube Video">
+            ดูวิดีโอ YouTube
+          </a>
+          <p style="margin-top: 12px; color: #6b7280; font-size: 0.9rem;" 
+             data-th="สำหรับคำถาม การสนับสนุน และอัพเดทข้อมูลล่าสุด" 
+             data-en="For questions, support, and latest updates">
+             สำหรับคำถาม การสนับสนุน และอัพเดทข้อมูลล่าสุด
+          </p>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="text-align: center; margin-top: 24px;">
+        <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+          <a href="https://drive.google.com/file/d/1Ev-MMga5poZlMUsoTTOJfR5qiYH5D8ae/view?usp=drive_link" target="_blank" 
+             class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition">
+            <i class="fas fa-download mr-2"></i>
+            <span data-th="ดาวน์โหลด EA" data-en="Download EA">ดาวน์โหลด EA</span>
+          </a>
+          <a href="https://www.facebook.com/uutrader" target="_blank"
+             class="inline-flex items-center px-6 py-3 bg-gray-600 text-white font-semibold rounded-lg shadow hover:bg-gray-700 transition">
+            <i class="fas fa-envelope mr-2"></i>
+            <span data-th="ติดต่อ Admin" data-en="Contact Admin">ติดต่อ Admin</span>
+          </a>
         </div>
       </div>
     </section>
