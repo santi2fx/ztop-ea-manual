@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ZTOP EA V4 Manual | คู่มือการใช้งาน</title>
+  <meta name="description" content="คู่มือการใช้งาน ZTOP EA V4.00 - Momentum Spike Breakout System สำหรับ MetaTrader 5">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    html { scroll-behavior: smooth; }
+    .lang-active { @apply bg-blue-600 text-white font-semibold; }
+    .lang-inactive { @apply bg-gray-200 text-gray-700 hover:bg-gray-300; }
+    .param-row:nth-child(even) { @apply bg-gray-50; }
+    @media print { .no-print { display: none !important; } }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+  <!-- Language Switcher -->
+  <div class="fixed top-4 right-4 z-50 no-print flex space-x-1 rounded-lg overflow-hidden shadow-md">
+    <button id="btn-th" class="px-4 py-2 text-sm font-medium lang-active transition" onclick="switchLang('th')">🇹🇭 ไทย</button>
+    <button id="btn-en" class="px-4 py-2 text-sm font-medium lang-inactive transition" onclick="switchLang('en')">🇬🇧 EN</button>
+  </div>
+
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-700 text-white py-8 px-4 shadow-lg">
+    <div class="max-w-6xl mx-auto text-center">
+      <div class="inline-flex items-center justify-center w-16 h-16 bg-yellow-400 rounded-full mb-4 shadow">
+        <i class="fas fa-robot text-2xl text-blue-900"></i>
+      </div>
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight" data-th="ZTOP EA V4.00" data-en="ZTOP EA V4.00">ZTOP EA V4.00</h1>
+      <p class="text-blue-100 mt-2 text-lg" data-th="Momentum Spike Breakout System" data-en="Momentum Spike Breakout System">Momentum Spike Breakout System</p>
+      <p class="text-blue-200 mt-1 text-sm" data-th="สร้างโดย UU School Trading" data-en="Created by UU School Trading">Created by UU School Trading</p>
+    </div>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="bg-white shadow-md sticky top-0 z-40 no-print">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex overflow-x-auto py-3 space-x-1 md:space-x-2 text-xs md:text-sm scrollbar-hide">
+        <a href="#overview" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition" data-th="ภาพรวม" data-en="Overview">ภาพรวม</a>
+        <a href="#install" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition" data-th="การติดตั้ง" data-en="Installation">การติดตั้ง</a>
+        <a href="#params" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition" data-th="พารามิเตอร์" data-en="Parameters">พารามิเตอร์</a>
+        <a href="#strategy" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition" data-th="กลยุทธ์" data-en="Strategy">กลยุทธ์</a>
+        <a href="#risk" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition" data-th="ความเสี่ยง" data-en="Risk Management">ความเสี่ยง</a>
+        <a href="#dashboard" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition" data-th="แดชบอร์ด" data-en="Dashboard">แดชบอร์ด</a>
+        <a href="#contact" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition" data-th="ติดต่อ & เงื่อนไข" data-en="Contact & Terms">ติดต่อ & เงื่อนไข</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Download Banner -->
+  <div class="bg-gradient-to-r from-green-600 to-emerald-600 text-white py-4 px-4 no-print">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="text-center md:text-left">
+        <p class="font-semibold" data-th="📥 ดาวน์โหลด ZTOP EA V4.00 ฟรี" data-en="📥 Download ZTOP EA V4.00 Free">📥 ดาวน์โหลด ZTOP EA V4.00 ฟรี</p>
+        <p class="text-sm text-green-100" data-th="ไฟล์ .ex5 + อินดิเคเตอร์ประกอบ + ไฟล์ตั้งค่า .set" data-en=".ex5 file + indicators + .set preset files">ไฟล์ .ex5 + อินดิเคเตอร์ประกอบ + ไฟล์ตั้งค่า .set</p>
+      </div>
+      <a href="https://drive.google.com/file/d/1Ev-MMga5poZlMUsoTTOJfR5qiYH5D8ae/view?usp=drive_link" 
+         target="_blank" 
+         class="inline-flex items-center px-6 py-3 bg-white text-green-700 font-semibold rounded-lg shadow hover:bg-gray-100 transition transform hover:scale-105">
+        <i class="fas fa-download mr-2"></i>
+        <span data-th="ดาวน์โหลดตอนนี้" data-en="Download Now">ดาวน์โหลดตอนนี้</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-6xl mx-auto px-4 py-8">
+
+    <!-- Overview Section -->
+    <section id="overview" class="mb-12 scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-4 pb-2 border-b border-gray-200 flex items-center">
+        <i class="fas fa-bullseye text-blue-600 mr-2"></i>
+        <span data-th="🎯 ภาพรวมระบบ" data-en="🎯 System Overview">🎯 ภาพรวมระบบ</span>
+      </h2>
+      <div class="prose max-w-none text-gray-700">
+        <p data-th="ZTOP EA V4 เป็น Expert Advisor สำหรับ MetaTrader 5 ที่ใช้กลยุทธ์ <strong>Momentum Spike Breakout</strong> ตรวจจับสัญญาณจากอินดิเคเตอร์ ZigZag และวางคำสั่งแบบ Pending Order (BuyStop/SellStop) โดยอัตโนมัติ" 
+           data-en="ZTOP EA V4 is an Expert Advisor for MetaTrader 5 using the <strong>Momentum Spike Breakout</strong> strategy, detecting signals from ZigZag indicators and automatically placing Pending Orders (BuyStop/SellStop).">
+           ZTOP EA V4 เป็น Expert Advisor สำหรับ MetaTrader 5 ที่ใช้กลยุทธ์ <strong>Momentum Spike Breakout</strong> ตรวจจับสัญญาณจากอินดิเคเตอร์ ZigZag และวางคำสั่งแบบ Pending Order (BuyStop/SellStop) โดยอัตโนมัติ
+        </p>
+        
+        <div class="grid md:grid-cols-2 gap-4 mt-6">
+          <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+            <h3 class="font-semibold text-blue-800 flex items-center">
+              <i class="fas fa-star text-yellow-500 mr-2"></i>
+              <span data-th="✨ จุดเด่น" data-en="✨ Key Features">✨ จุดเด่น</span>
+            </h3>
+            <ul class="mt-2 space-y-1.5 text-sm">
+              <li>✅ <span data-th="ระบบวางคำสั่งแบบคู่ (BuyStop + SellStop)" data-en="Dual pending order system (BuyStop + SellStop)">ระบบวางคำสั่งแบบคู่ (BuyStop + SellStop)</span></li>
+              <li>✅ <span data-th="ตัวกรองสัญญาณขั้นสูง 10 เงื่อนไข (เลือกเปิด-ปิดได้)" data-en="10 advanced filter conditions (toggle on/off)">ตัวกรองสัญญาณขั้นสูง 10 เงื่อนไข (เลือกเปิด-ปิดได้)</span></li>
+              <li>✅ <span data-th="จัดการความเสี่ยงอัตโนมัติ: TP/SL, Trailing, Break-Even" data-en="Auto risk management: TP/SL, Trailing, Break-Even">จัดการความเสี่ยงอัตโนมัติ: TP/SL, Trailing, Break-Even</span></li>
+              <li>✅ <span data-th="แดชบอร์ดแสดงสถานะแบบเรียลไทม์" data-en="Real-time status dashboard">แดชบอร์ดแสดงสถานะแบบเรียลไทม์</span></li>
+              <li>✅ <span data-th="จำกัดกำไร/ขาดทุนรายวันได้" data-en="Daily profit/loss limits">จำกัดกำไร/ขาดทุนรายวันได้</span></li>
+            </ul>
+          </div>
+          <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
+            <h3 class="font-semibold text-green-800 flex items-center">
+              <i class="fas fa-user-check text-green-600 mr-2"></i>
+              <span data-th="📊 เหมาะสำหรับ" data-en="📊 Ideal For">📊 เหมาะสำหรับ</span>
+            </h3>
+            <ul class="mt-2 space-y-1.5 text-sm">
+              <li>• <span data-th="เทรดเดอร์ที่ต้องการระบบอัตโนมัติ" data-en="Traders seeking automation">เทรดเดอร์ที่ต้องการระบบอัตโนมัติ</span></li>
+              <li>• <span data-th="ผู้ใช้บัญชี Prop Firm ที่ต้องการควบคุมความเสี่ยง" data-en="Prop Firm traders needing risk control">ผู้ใช้บัญชี Prop Firm ที่ต้องการควบคุมความเสี่ยง</span></li>
+              <li>• <span data-th="การเทรดทองคำ (XAUUSD) และคู่เงินหลัก" data-en="Gold (XAUUSD) and major forex pairs">การเทรดทองคำ (XAUUSD) และคู่เงินหลัก</span></li>
+              <li>• <span data-th="Timeframe แนะนำ: M15 - H4" data-en="Recommended timeframes: M15 - H4">Timeframe แนะนำ: M15 - H4</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-6 bg-amber-50 border border-amber-200 rounded-lg p-4">
+          <p class="text-amber-800 text-sm flex items-start">
+            <i class="fas fa-exclamation-triangle mr-2 mt-0.5 flex-shrink-0"></i>
+            <span data-th="<strong>คำเตือน:</strong> การเทรดมีความเสี่ยงสูง ผู้ใช้ควรทดสอบในบัญชีเดโมก่อนใช้งานจริง และเข้าใจพารามิเตอร์ทุกตัวอย่างถ่องแท้" 
+                  data-en="<strong>Warning:</strong> Trading involves high risk. Always test in a demo account first and fully understand all parameters before live trading.">
+              <strong>คำเตือน:</strong> การเทรดมีความเสี่ยงสูง ผู้ใช้ควรทดสอบในบัญชีเดโมก่อนใช้งานจริง และเข้าใจพารามิเตอร์ทุกตัวอย่างถ่องแท้
+            </span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Installation Section -->
+    <section id="install" class="mb-12 scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-4 pb-2 border-b border-gray-200 flex items-center">
+        <i class="fas fa-cogs text-blue-600 mr-2"></i>
+        <span data-th="⚙️ การติดตั้งบน MetaTrader 5" data-en="⚙️ Installation on MetaTrader 5">⚙️ การติดตั้งบน MetaTrader 5</span>
+      </h2>
+      
+      <div class="space-y-4">
+        <div class="flex items-start">
+          <span class="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm mr-3">1</span>
+          <div>
+            <p class="font-medium" data-th="ดาวน์โหลดและแตกไฟล์" data-en="Download and extract files">ดาวน์โหลดและแตกไฟล์</p>
+            <p class="text-gray-600 text-sm mt-1" data-th="ดาวน์โหลดจากลิงก์ด้านบน แล้วแตกไฟล์ .zip ออกมา" data-en="Download from the link above and extract the .zip file">ดาวน์โหลดจากลิงก์ด้านบน แล้วแตกไฟล์ .zip ออกมา</p>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm mr-3">2</span>
+          <div>
+            <p class="font-medium" data-th="คัดลอกไฟล์ไปยังโฟลเดอร์ MT5" data-en="Copy files to MT5 folders">คัดลอกไฟล์ไปยังโฟลเดอร์ MT5</p>
+            <div class="bg-gray-100 rounded p-3 mt-2 text-xs font-mono overflow-x-auto">
+              <p class="text-gray-700">📁 MQL5/Experts/ → วางไฟล์ <code>ZTOP EA V4.ex5</code></p>
+              <p class="text-gray-700 mt-1">📁 MQL5/Indicators/ → วางไฟล์ <code>ZigzagColor.ex5</code> และ <code>ZZArrow.ex5</code></p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm mr-3">3</span>
+          <div>
+            <p class="font-medium" data-th="เปิดใช้งานการเทรดอัตโนมัติ" data-en="Enable automated trading">เปิดใช้งานการเทรดอัตโนมัติ</p>
+            <ul class="text-gray-600 text-sm mt-1 space-y-1">
+              <li>• ใน MT5: <code>Tools → Options → Expert Advisors</code></li>
+              <li>• ☑ Allow algorithmic trading</li>
+              <li>• ☑ Allow WebRequest <span class="text-amber-600">(จำเป็นสำหรับระบบยืนยันตัวตน)</span></li>
+              <li>• เพิ่ม URL: <code>https://script.google.com</code></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm mr-3">4</span>
+          <div>
+            <p class="font-medium" data-th="ลากวางและตั้งค่า" data-en="Attach and configure">ลากวางและตั้งค่า</p>
+            <p class="text-gray-600 text-sm mt-1" data-th="ลาก ZTOP EA V4 ลงบนชาร์ต > ปรับพารามิเตอร์ > กด OK" data-en="Drag ZTOP EA V4 onto a chart > adjust parameters > click OK">ลาก ZTOP EA V4 ลงบนชาร์ต > ปรับพารามิเตอร์ > กด OK</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <p class="text-blue-800 text-sm flex items-start">
+          <i class="fas fa-lightbulb mr-2 mt-0.5 flex-shrink-0"></i>
+          <span data-th="<strong>คำแนะนำด่วน:</strong> เริ่มต้นด้วยค่าเริ่มต้นทั้งหมดก่อน ทดสอบในเดโมอย่างน้อย 1 สัปดาห์ แล้วค่อยปรับพารามิเตอร์ตามสไตล์การเทรดของคุณ" 
+                data-en="<strong>Quick Tip:</strong> Start with all default settings. Test in demo for at least 1 week before adjusting parameters to match your trading style.">
+            <strong>คำแนะนำด่วน:</strong> เริ่มต้นด้วยค่าเริ่มต้นทั้งหมดก่อน ทดสอบในเดโมอย่างน้อย 1 สัปดาห์ แล้วค่อยปรับพารามิเตอร์ตามสไตล์การเทรดของคุณ
+          </span>
+        </p>
+      </div>
+    </section>
+
+    <!-- Parameters Section -->
+    <section id="params" class="mb-12 scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-4 pb-2 border-b border-gray-200 flex items-center">
+        <i class="fas fa-sliders-h text-blue-600 mr-2"></i>
+        <span data-th="📋 พารามิเตอร์สำคัญ" data-en="📋 Key Parameters">📋 พารามิเตอร์สำคัญ</span>
+      </h2>
+      
+      <div class="overflow-x-auto rounded-lg border border-gray-200">
+        <table class="min-w-full divide-y divide-gray-200 text-sm">
+          <thead class="bg-gray-100">
+            <tr>
+              <th class="px-4 py-3 text-left font-semibold text-gray-700" data-th="พารามิเตอร์" data-en="Parameter">พารามิเตอร์</th>
+              <th class="px-4 py-3 text-left font-semibold text-gray-700" data-th="ค่าเริ่มต้น" data-en="Default">ค่าเริ่มต้น</th>
+              <th class="px-4 py-3 text-left font-semibold text-gray-700" data-th="คำอธิบาย" data-en="Description">คำอธิบาย</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            <tr class="param-row">
+              <td class="px-4 py-3 font-mono text-blue-700">InpDepth</td>
+              <td class="px-4 py-3">12</td>
+              <td class="px-4 py-3" data-th="ความลึกของการค้นหาจุดกลับตัวใน ZigZag" data-en="ZigZag reversal detection depth">ความลึกของการค้นหาจุดกลับตัวใน ZigZag</td>
+            </tr>
+            <tr class="param-row">
+              <td class="px-4 py-3 font-mono text-blue-700">InpLotSize</td>
+              <td class="px-4 py-3">0.01</td>
+              <td class="px-4 py-3" data-th="ขนาดล็อตพื้นฐาน" data-en="Base lot size">ขนาดล็อตพื้นฐาน</td>
+            </tr>
+            <tr class="param-row">
+              <td class="px-4 py-3 font-mono text-blue-700">InpStopLossPoints</td>
+              <td class="px-4 py-3">1000</td>
+              <td class="px-4 py-3" data-th="ระยะ Stop Loss (หน่วย: จุด)" data-en="Stop Loss distance (in points)">ระยะ Stop Loss (หน่วย: จุด)</td>
+            </tr>
+            <tr class="param-row">
+              <td class="px-4 py-3 font-mono text-blue-700">InpTakeProfitPoints</td>
+              <td class="px-4 py-3">5000</td>
+              <td class="px-4 py-3" data-th="ระยะ Take Profit (หน่วย: จุด)" data-en="Take Profit distance (in points)">ระยะ Take Profit (หน่วย: จุด)</td>
+            </tr>
+            <tr class="param-row">
+              <td class="px-4 py-3 font-mono text-blue-700">InpUseAdvFilter</td>
+              <td class="px-4 py-3">false</td>
+              <td class="px-4 py-3" data-th="เปิดใช้งานตัวกรองสัญญาณขั้นสูง" data-en="Enable advanced signal filters">เปิดใช้งานตัวกรองสัญญาณขั้นสูง</td>
+            </tr>
+            <tr class="param-row">
+              <td class="px-4 py-3 font-mono text-blue-700">InpFilterMinConditions</td>
+              <td class="px-4 py-3">3</td>
+              <td class="px-4 py-3" data-th="จำนวนเงื่อนไขขั้นต่ำที่ต้องผ่าน (จากที่เปิดใช้งาน)" data-en="Min conditions to pass (from enabled ones)">จำนวนเงื่อนไขขั้นต่ำที่ต้องผ่าน (จากที่เปิดใช้งาน)</td>
+            </tr>
+            <tr class="param-row">
+              <td class="px-4 py-3 font-mono text-blue-700">InpUseDailyProfit</td>
+              <td class="px-4 py-3">false</td>
+              <td class="px-4 py-3" data-th="หยุดเทรดเมื่อถึงเป้ากำไรรายวัน" data-en="Stop trading when daily profit target reached">หยุดเทรดเมื่อถึงเป้ากำไรรายวัน</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <p class="text-xs text-gray-500 mt-3" data-th="* ดูพารามิเตอร์ทั้งหมดในไฟล์ .set หรือในหน้าตั้งค่าของ EA" data-en="* View all parameters in the .set file or in EA settings tab">* ดูพารามิเตอร์ทั้งหมดในไฟล์ .set หรือในหน้าตั้งค่าของ EA</p>
+    </section>
+
+    <!-- Contact & Terms Section -->
+    <section id="contact" class="mb-12 scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-4 pb-2 border-b border-gray-200 flex items-center">
+        <i class="fas fa-headset text-blue-600 mr-2"></i>
+        <span data-th="📞 ติดต่อ & เงื่อนไขการใช้งาน" data-en="📞 Contact & Terms of Use">📞 ติดต่อ & เงื่อนไขการใช้งาน</span>
+      </h2>
+      
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Contact Card -->
+        <div class="bg-white rounded-lg shadow p-5 border border-gray-100">
+          <h3 class="font-semibold text-lg mb-4 flex items-center text-blue-700">
+            <i class="fas fa-address-card mr-2"></i>
+            <span data-th="ช่องทางการติดต่อ" data-en="Contact Channels">ช่องทางการติดต่อ</span>
+          </h3>
+          <div class="space-y-3">
+            <a href="https://www.facebook.com/uutrader" target="_blank" 
+               class="flex items-center p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition group">
+              <i class="fab fa-facebook text-blue-600 text-xl w-8 group-hover:scale-110 transition"></i>
+              <div class="ml-3">
+                <p class="font-medium text-gray-800">Facebook</p>
+                <p class="text-sm text-gray-600">UU School Trading</p>
+              </div>
+            </a>
+            <div class="flex items-center p-3 bg-green-50 rounded-lg">
+              <i class="fab fa-telegram text-green-600 text-xl w-8"></i>
+              <div class="ml-3">
+                <p class="font-medium text-gray-800">Telegram</p>
+                <p class="text-sm text-gray-600">@teleuutrader</p>
+              </div>
+            </div>
+            <div class="flex items-center p-3 bg-purple-50 rounded-lg">
+              <i class="fas fa-id-card text-purple-600 text-xl w-8"></i>
+              <div class="ml-3">
+                <p class="font-medium text-gray-800">Line ID</p>
+                <p class="text-sm text-gray-600">uutrader</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Terms Card -->
+        <div class="bg-white rounded-lg shadow p-5 border border-gray-100">
+          <h3 class="font-semibold text-lg mb-4 flex items-center text-amber-700">
+            <i class="fas fa-file-contract mr-2"></i>
+            <span data-th="เงื่อนไขการใช้งาน" data-en="Terms of Use">เงื่อนไขการใช้งาน</span>
+          </h3>
+          <div class="text-sm text-gray-700 space-y-2">
+            <p data-th="1. ZTOP EA V4 เป็นเครื่องมือช่วยเทรด <strong>ไม่ใช่การรับประกันผลกำไร</strong>" 
+               data-en="1. ZTOP EA V4 is a trading assistance tool, <strong>not a profit guarantee</strong>.">
+               1. ZTOP EA V4 เป็นเครื่องมือช่วยเทรด <strong>ไม่ใช่การรับประกันผลกำไร</strong>
+            </p>
+            <p data-th="2. ผู้ใช้รับผิดชอบการตัดสินใจเทรดและความเสี่ยงทั้งหมดด้วยตนเอง" 
+               data-en="2. Users are solely responsible for their trading decisions and all associated risks.">
+               2. ผู้ใช้รับผิดชอบการตัดสินใจเทรดและความเสี่ยงทั้งหมดด้วยตนเอง
+            </p>
+            <p data-th="3. ห้ามแจกจ่าย แก้ไข หรือขายไฟล์ซอฟต์แวร์โดยไม่ได้รับอนุญาต" 
+               data-en="3. Do not distribute, modify, or resell the software files without authorization.">
+               3. ห้ามแจกจ่าย แก้ไข หรือขายไฟล์ซอฟต์แวร์โดยไม่ได้รับอนุญาต
+            </p>
+            <p data-th="4. ระบบยืนยันตัวตนผ่าน Google Sheet เป็นส่วนหนึ่งของลิขสิทธิ์" 
+               data-en="4. Google Sheet authentication is part of the copyright protection system.">
+               4. ระบบยืนยันตัวตนผ่าน Google Sheet เป็นส่วนหนึ่งของลิขสิทธิ์
+            </p>
+            <p data-th="5. ผู้พัฒนาไม่รับผิดชอบต่อความเสียหายจากการใช้งานที่ไม่ถูกต้อง" 
+               data-en="5. Developers are not liable for damages resulting from incorrect usage.">
+               5. ผู้พัฒนาไม่รับผิดชอบต่อความเสียหายจากการใช้งานที่ไม่ถูกต้อง
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-gray-300 py-8 px-4 mt-12">
+    <div class="max-w-6xl mx-auto text-center">
+      <p class="font-semibold text-white">ZTOP EA V4.00</p>
+      <p class="text-sm mt-1" data-th="สร้างโดย UU School Trading" data-en="Created by UU School Trading">Created by UU School Trading</p>
+      <p class="text-xs mt-4 text-gray-400">
+        © <span id="year"></span> • All Rights Reserved
+      </p>
+      <p class="text-xs mt-2 text-gray-500">
+        <span data-th="เว็บไซต์นี้ไม่เกี่ยวข้องกับ MetaQuotes Software Corp." data-en="This website is not affiliated with MetaQuotes Software Corp.">
+          เว็บไซต์นี้ไม่เกี่ยวข้องกับ MetaQuotes Software Corp.
+        </span>
+      </p>
+    </div>
+  </footer>
+
+  <!-- JavaScript for Language Switching -->
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
+    function switchLang(lang) {
+      document.getElementById('btn-th').className = 
+        'px-4 py-2 text-sm font-medium transition ' + (lang === 'th' ? 'lang-active' : 'lang-inactive');
+      document.getElementById('btn-en').className = 
+        'px-4 py-2 text-sm font-medium transition ' + (lang === 'en' ? 'lang-active' : 'lang-inactive');
+      
+      document.querySelectorAll('[data-th][data-en]').forEach(el => {
+        el.innerHTML = el.getAttribute(`data-${lang}`);
+      });
+      
+      document.documentElement.lang = lang;
+      localStorage.setItem('ztop_lang', lang);
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedLang = localStorage.getItem('ztop_lang') || 'th';
+      switchLang(savedLang);
+    });
+  </script>
+</body>
+</html>
