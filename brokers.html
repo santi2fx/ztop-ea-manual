@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ZTOP EA V4 - โบรกเกอร์ที่รองรับ</title>
+  <link rel="icon" href="assets/images/ztop-additional(icon).ico" type="image/x-icon">
+  <meta name="description" content="โบรกเกอร์ที่รองรับสำหรับ ZTOP EA V4.00 - Momentum Spike Breakout System">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Kanit', sans-serif; }
+    .lang-active { @apply bg-blue-600 text-white font-semibold; }
+    .lang-inactive { @apply bg-gray-200 text-gray-700 hover:bg-gray-300; }
+    @media print { .no-print { display: none !important; } }
+    .broker-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .broker-card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 24px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .broker-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+    }
+    .broker-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.15);
+      border-color: #3b82f6;
+    }
+    .broker-name {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #3b82f6;
+      margin-bottom: 6px;
+    }
+    .broker-platforms {
+      font-size: 0.85rem;
+      color: #6b7280;
+      margin-bottom: 14px;
+    }
+    .broker-link {
+      display: inline-block;
+      background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: all 0.3s ease;
+    }
+    .broker-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- Language Switcher -->
+  <div class="fixed top-4 right-4 z-50 no-print flex space-x-1 rounded-lg overflow-hidden shadow-md">
+    <button id="btn-th" class="px-4 py-2 text-sm font-medium lang-active transition" onclick="switchLang('th')">🇭 ไทย</button>
+    <button id="btn-en" class="px-4 py-2 text-sm font-medium lang-inactive transition" onclick="switchLang('en')">🇬🇧 EN</button>
+  </div>
+
+  <!-- Header -->
+  <header class="relative bg-gradient-to-r from-blue-900 via-blue-800 to-blue-700 text-white py-12 px-4 shadow-lg">
+    <div class="absolute inset-0 opacity-30">
+      <img src="assets/images/ztop-background-TOP.png" alt="ZTOP Background" class="w-full h-full object-cover">
+    </div>
+    <div class="max-w-6xl mx-auto text-center relative z-10">
+      <div class="inline-flex items-center justify-center w-20 h-20 rounded-full mb-4 shadow-lg overflow-hidden bg-white/20 backdrop-blur-sm">
+        <img src="assets/images/ztop-background-TOP.png" alt="ZTOP Logo" class="w-16 h-16 object-cover rounded-full">
+      </div>
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight drop-shadow-lg" data-th="🏦 โบรกเกอร์ที่รองรับ" data-en="🏦 Supported Brokers">🏦 โบรกเกอร์ที่รองรับ</h1>
+      <p class="text-blue-100 mt-2 text-lg drop-shadow-md" data-th="เลือกโบรกเกอร์ที่เหมาะกับคุณ" data-en="Choose your preferred broker">เลือกโบรกเกอร์ที่เหมาะกับคุณ</p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-6xl mx-auto px-4 py-8">
+
+    <!-- Brokers Section -->
+    <section class="mb-12 scroll-mt-24">
+      <div class="bg-white border border-gray-200 rounded-2xl p-8">
+        <p class="text-gray-600 mb-8 text-center" data-th="เพื่อใช้งาน ZTOP EA V4.00 ได้อย่างเต็มประสิทธิภาพ คุณสามารถเปิดบัญชีเทรดจริงหรือบัญชีเดโม่กับโบรกเกอร์ที่รองรับดังนี้:" 
+           data-en="To use ZTOP EA V4.00 at full efficiency, you can open a live or demo trading account with the following supported brokers:">
+          เพื่อใช้งาน ZTOP EA V4.00 ได้อย่างเต็มประสิทธิภาพ คุณสามารถเปิดบัญชีเทรดจริงหรือบัญชีเดโม่กับโบรกเกอร์ที่รองรับดังนี้:
+        </p>
+
+        <div class="broker-grid">
+          <div class="broker-card">
+            <div class="broker-name flex items-center"><i class="fas fa-landmark mr-2"></i> Vantage International</div>
+            <div class="broker-platforms"><i class="fas fa-laptop-code"></i> MQL5</div>
+            <a href="https://www.vantagemarkets.com/th/open-live-account/?affid=Njg4NDM%3D" target="_blank" class="broker-link" 
+               data-th="เปิดบัญชี" data-en="Open Account"><i class="fas fa-user-plus mr-1"></i> เปิดบัญชี</a>
+          </div>
+          <div class="broker-card">
+            <div class="broker-name flex items-center"><i class="fas fa-landmark mr-2"></i> HFM</div>
+            <div class="broker-platforms"><i class="fas fa-laptop-code"></i> MQL5</div>
+            <a href="https://uutrader.short.gy/uutradeHFM" target="_blank" class="broker-link"
+               data-th="เปิดบัญชี" data-en="Open Account"><i class="fas fa-user-plus mr-1"></i> เปิดบัญชี</a>
+          </div>
+          <div class="broker-card">
+            <div class="broker-name flex items-center"><i class="fas fa-landmark mr-2"></i> Exness</div>
+            <div class="broker-platforms"><i class="fas fa-laptop-code"></i> MQL5</div>
+            <a href="https://uutrader.short.gy/uutraderExness" target="_blank" class="broker-link"
+               data-th="เปิดบัญชี" data-en="Open Account"><i class="fas fa-user-plus mr-1"></i> เปิดบัญชี</a>
+          </div>
+          <div class="broker-card">
+            <div class="broker-name flex items-center"><i class="fas fa-landmark mr-2"></i> Landprime</div>
+            <div class="broker-platforms"><i class="fas fa-laptop-code"></i> MQL5</div>
+            <a href="https://uutrader.short.gy/uutradeLandprime" target="_blank" class="broker-link"
+               data-th="เปิดบัญชี" data-en="Open Account"><i class="fas fa-user-plus mr-1"></i> เปิดบัญชี</a>
+          </div>
+          <div class="broker-card">
+            <div class="broker-name flex items-center"><i class="fas fa-landmark mr-2"></i> FBS</div>
+            <div class="broker-platforms"><i class="fas fa-laptop-code"></i> MQL5</div>
+            <a href="https://uutrader.short.gy/uutraderFBS" target="_blank" class="broker-link"
+               data-th="เปิดบัญชี" data-en="Open Account"><i class="fas fa-user-plus mr-1"></i> เปิดบัญชี</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Back to Home -->
+    <div class="text-center">
+      <a href="index.html" class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition">
+        <i class="fas fa-arrow-left mr-2"></i>
+        <span data-th="กลับหน้าแรก" data-en="Back to Home">กลับหน้าแรก</span>
+      </a>
+    </div>
+
+  </main>
+
+  <script>
+    function switchLang(lang) {
+      const elements = document.querySelectorAll('[data-th][data-en]');
+      elements.forEach(el => {
+        el.textContent = lang === 'th' ? el.getAttribute('data-th') : el.getAttribute('data-en');
+      });
+      document.getElementById('btn-th').className = 'px-4 py-2 text-sm font-medium transition ' + (lang === 'th' ? 'lang-active' : 'lang-inactive');
+      document.getElementById('btn-en').className = 'px-4 py-2 text-sm font-medium transition ' + (lang === 'en' ? 'lang-active' : 'lang-inactive');
+    }
+  </script>
+
+</body>
+</html>

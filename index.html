@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ZTOP EA V4 Manual | คู่มือการใช้งาน</title>
+  <link rel="icon" href="assets/images/ztop-additional(icon).ico" type="image/x-icon">
+  <meta name="description" content="คู่มือการใช้งาน ZTOP EA V4.00 - Momentum Spike Breakout System สำหรับ MetaTrader 5">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Kanit', sans-serif; }
+    .lang-active { @apply bg-blue-600 text-white font-semibold; }
+    .lang-inactive { @apply bg-gray-200 text-gray-700 hover:bg-gray-300; }
+    .param-row:nth-child(even) { @apply bg-gray-50; }
+    @media print { .no-print { display: none !important; } }
+    
+    /* Broker Grid Styles */
+    .broker-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .broker-card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 24px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .broker-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+    }
+    .broker-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.15);
+      border-color: #3b82f6;
+    }
+    .broker-name {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #3b82f6;
+      margin-bottom: 6px;
+    }
+    .broker-platforms {
+      font-size: 0.85rem;
+      color: #6b7280;
+      margin-bottom: 14px;
+    }
+    .broker-link {
+      display: inline-block;
+      background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: all 0.3s ease;
+    }
+    .broker-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+    }
+    .warning-box {
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .warning-box h3 {
+      color: #ef4444;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .info-box {
+      background: rgba(59, 130, 246, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .info-box h3 {
+      color: #3b82f6;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .info-box p {
+      color: #4b5563;
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+    }
+    .support-channel {
+      text-align: center;
+      margin-top: 24px;
+      padding: 24px;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+    }
+    .support-channel h3 {
+      color: #3b82f6;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .channel-name {
+      font-size: 1.15rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .channel-link {
+      color: #dc2626;
+      font-weight: bold;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .channel-link:hover {
+      color: #991b1b;
+    }
+    .terms-section {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .terms-section h2 {
+      color: #3b82f6;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .terms-section p {
+      color: #4b5563;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    /* Filter Section Styles */
+    .filter-group-card {
+      border-left: 4px solid;
+      padding-left: 1rem;
+      margin-bottom: 1rem;
+    }
+    .filter-group-card.trend { border-color: #3b82f6; }
+    .filter-group-card.volatility { border-color: #10b981; }
+    .filter-group-card.momentum { border-color: #8b5cf6; }
+    /* Gallery Styles */
+    .gallery-img {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .gallery-img:hover {
+      transform: scale(1.02);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    .feature-card {
+      transition: all 0.3s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    }
+    .step-icon {
+      transition: all 0.3s ease;
+    }
+    .step-card:hover .step-icon {
+      transform: rotate(5deg) scale(1.1);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- Language Switcher -->
+  <div class="fixed top-4 right-4 z-50 no-print flex space-x-1 rounded-lg overflow-hidden shadow-md">
+    <button id="btn-th" class="px-4 py-2 text-sm font-medium lang-active transition" onclick="switchLang('th')">🇭 ไทย</button>
+    <button id="btn-en" class="px-4 py-2 text-sm font-medium lang-inactive transition" onclick="switchLang('en')">🇬🇧 EN</button>
+  </div>
+
+  <!-- Floating Open Account Button -->
+  <a href="brokers.html" class="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-3 rounded-full shadow-lg hover:from-green-700 hover:to-emerald-700 transition transform hover:scale-105 flex items-center font-semibold no-print">
+    <i class="fas fa-user-plus mr-2"></i>
+    <span data-th="เปิดบัญชี" data-en="Open Account">เปิดบัญชี</span>
+  </a>
+
+  <!-- Header -->
+  <header class="relative bg-gradient-to-r from-blue-900 via-blue-800 to-blue-700 text-white py-12 px-4 shadow-lg">
+    <div class="absolute inset-0 opacity-30">
+      <img src="assets/images/ztop-background-TOP.png" alt="ZTOP Background" class="w-full h-full object-cover">
+    </div>
+    <div class="max-w-6xl mx-auto text-center relative z-10">
+      <div class="inline-flex items-center justify-center w-20 h-20 rounded-full mb-4 shadow-lg overflow-hidden bg-white/20 backdrop-blur-sm">
+        <img src="assets/images/ztop-background-TOP.png" alt="ZTOP Logo" class="w-16 h-16 object-cover rounded-full">
+      </div>
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight drop-shadow-lg" data-th="ZTOP EA V4.00" data-en="ZTOP EA V4.00">ZTOP EA V4.00</h1>
+      <p class="text-blue-100 mt-2 text-lg drop-shadow-md" data-th="Momentum Spike Breakout System" data-en="Momentum Spike Breakout System">Momentum Spike Breakout System</p>
+      <p class="text-blue-200 mt-1 text-sm drop-shadow-md" data-th="สร้างโดย UU School Trading" data-en="Created by UU School Trading">Created by UU School Trading</p>
+    </div>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="bg-white shadow-md sticky top-0 z-40 no-print">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex overflow-x-auto py-3 space-x-1 md:space-x-2 text-xs md:text-sm">
+        <a href="#overview" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center">
+          <i class="fas fa-home mr-1"></i><span data-th="ภาพรวม" data-en="Overview">ภาพรวม</span>
+        </a>
+        <a href="#install" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center">
+          <i class="fas fa-download mr-1"></i><span data-th="ติดตั้ง" data-en="Install">ติดตั้ง</span>
+        </a>
+        <a href="#brokers" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center">
+          <i class="fas fa-building mr-1"></i><span data-th="โบรกเกอร์" data-en="Brokers">โบรกเกอร์</span>
+        </a>
+        <a href="#gallery" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center">
+          <i class="fas fa-images mr-1"></i><span data-th="แกลเลอรี่" data-en="Gallery">แกลเลอรี่</span>
+        </a>
+        <a href="#presets" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center">
+          <i class="fas fa-file-alt mr-1"></i><span data-th="Preset" data-en="Presets">Preset</span>
+        </a>
+        <a href="#filters" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center">
+          <i class="fas fa-filter mr-1"></i><span data-th="Filter" data-en="Filter">Filter</span>
+        </a>
+        <a href="#params" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center">
+          <i class="fas fa-sliders-h mr-1"></i><span data-th="พารามิเตอร์" data-en="Parameters">พารามิเตอร์</span>
+        </a>
+        <a href="#terms" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center">
+          <i class="fas fa-file-contract mr-1"></i><span data-th="เงื่อนไข" data-en="Terms">เงื่อนไข</span>
+        </a>
+        <a href="#contact" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center">
+          <i class="fas fa-phone mr-1"></i><span data-th="ติดต่อ" data-en="Contact">ติดต่อ</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Download Banner -->
+  <div class="bg-gradient-to-r from-green-600 to-emerald-600 text-white py-4 px-4 no-print">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="text-center md:text-left">
+        <p class="font-semibold flex items-center justify-center md:justify-start">
+          <i class="fas fa-cloud-download-alt mr-2"></i>
+          <span data-th="ดาวน์โหลด ZTOP EA V4.00 ฟรี" data-en="Download ZTOP EA V4.00 Free">ดาวน์โหลด ZTOP EA V4.00 ฟรี</span>
+        </p>
+        <p class="text-sm text-green-100" data-th="ไฟล์ .ex5 + อินดิเคเตอร์ประกอบ + ไฟล์ตั้งค่า .set" data-en=".ex5 file + indicators + .set preset files">ไฟล์ .ex5 + อินดิเคเตอร์ประกอบ + ไฟล์ตั้งค่า .set</p>
+      </div>
+      <a href="https://drive.google.com/file/d/1Ev-MMga5poZlMUsoTTOJfR5qiYH5D8ae/view?usp=drive_link" 
+         target="_blank" 
+         class="inline-flex items-center px-6 py-3 bg-white text-green-700 font-semibold rounded-lg shadow hover:bg-gray-100 transition transform hover:scale-105">
+        <i class="fas fa-download mr-2"></i>
+        <span data-th="ดาวน์โหลดตอนนี้" data-en="Download Now">ดาวน์โหลดตอนนี้</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-6xl mx-auto px-4 py-8">
+
+    <!-- Overview Section -->
+    <section id="overview" class="mb-12 scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-4 pb-2 border-b border-gray-200 flex items-center">
+        <i class="fas fa-bullseye text-blue-600 mr-2"></i>
+        <span data-th="🎯 ภาพรวมระบบ" data-en="🎯 System Overview">🎯 ภาพรวมระบบ</span>
+      </h2>
+      <div class="prose max-w-none text-gray-700">
+        <p data-th="ZTOP EA V4 เป็น Expert Advisor สำหรับ MetaTrader 5 ที่ใช้กลยุทธ์ <strong>Momentum Spike Breakout</strong> ตรวจจับสัญญาณจากอินดิเคเตอร์ ZigZag และวางคำสั่งแบบ Pending Order (BuyStop/SellStop) โดยอัตโนมัติ" 
+           data-en="ZTOP EA V4 is an Expert Advisor for MetaTrader 5 using the <strong>Momentum Spike Breakout</strong> strategy, detecting signals from ZigZag indicators and automatically placing Pending Orders (BuyStop/SellStop).">
+           ZTOP EA V4 เป็น Expert Advisor สำหรับ MetaTrader 5 ที่ใช้กลยุทธ์ <strong>Momentum Spike Breakout</strong> ตรวจจับสัญญาณจากอินดิเคเตอร์ ZigZag และวางคำสั่งแบบ Pending Order (BuyStop/SellStop) โดยอัตโนมัติ
+        </p>
+        
+        <div class="grid md:grid-cols-2 gap-4 mt-6">
+          <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+            <h3 class="font-semibold text-blue-800 flex items-center">
+              <i class="fas fa-star text-yellow-500 mr-2"></i>
+              <span data-th="✨ จุดเด่น" data-en="✨ Key Features">✨ จุดเด่น</span>
+            </h3>
+            <ul class="mt-2 space-y-1.5 text-sm">
+              <li>✅ <span data-th="ระบบวางคำสั่งแบบคู่ (BuyStop + SellStop)" data-en="Dual pending order system (BuyStop + SellStop)">ระบบวางคำสั่งแบบคู่ (BuyStop + SellStop)</span></li>
+              <li>✅ <span data-th="ตัวกรองสัญญาณขั้นสูง 10 เงื่อนไข (เลือกเปิด-ปิดได้)" data-en="10 advanced filter conditions (toggle on/off)">ตัวกรองสัญญาณขั้นสูง 10 เงื่อนไข (เลือกเปิด-ปิดได้)</span></li>
+              <li>✅ <span data-th="จัดการความเสี่ยงอัตโนมัติ: TP/SL, Trailing, Break-Even" data-en="Auto risk management: TP/SL, Trailing, Break-Even">จัดการความเสี่ยงอัตโนมัติ: TP/SL, Trailing, Break-Even</span></li>
+              <li>✅ <span data-th="แดชบอร์ดแสดงสถานะแบบเรียลไทม์" data-en="Real-time status dashboard">แดชบอร์ดแสดงสถานะแบบเรียลไทม์</span></li>
+              <li>✅ <span data-th="จำกัดกำไร/ขาดทุนรายวันได้" data-en="Daily profit/loss limits">จำกัดกำไร/ขาดทุนรายวันได้</span></li>
+            </ul>
+          </div>
+          <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
+            <h3 class="font-semibold text-green-800 flex items-center">
+              <i class="fas fa-user-check text-green-600 mr-2"></i>
+              <span data-th="📊 เหมาะสำหรับ" data-en="📊 Ideal For"> เหมาะสำหรับ</span>
+            </h3>
+            <ul class="mt-2 space-y-1.5 text-sm">
+              <li>• <span data-th="เทรดเดอร์ที่ต้องการระบบอัตโนมัติ" data-en="Traders seeking automation">เทรดเดอร์ที่ต้องการระบบอัตโนมัติ</span></li>
+              <li>• <span data-th="ผู้ใช้บัญชี Prop Firm ที่ต้องการควบคุมความเสี่ยง" data-en="Prop Firm traders needing risk control">ผู้ใช้บัญชี Prop Firm ที่ต้องการควบคุมความเสี่ยง</span></li>
+              <li>• <span data-th="การเทรดทองคำ (XAUUSD) และคู่เงินหลัก" data-en="Gold (XAUUSD) and major forex pairs">การเทรดทองคำ (XAUUSD) และคู่เงินหลัก</span></li>
+              <li>• <span data-th="Timeframe แนะนำ: M15 - H4" data-en="Recommended timeframes: M15 - H4">Timeframe แนะนำ: M15 - H4</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Installation Section -->
+    <section id="install" class="mb-12 scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-4 pb-2 border-b border-gray-200 flex items-center">
+        <i class="fas fa-cogs text-blue-600 mr-2"></i>
+        <span data-th="⚙️ การติดตั้งบน MetaTrader 5" data-en="⚙️ Installation on MetaTrader 5">⚙️ การติดตั้งบน MetaTrader 5</span>
+      </h2>
+      
+      <div class="space-y-4">
+        <div class="flex items-start">
+          <span class="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm mr-3"><i class="fas fa-download"></i></span>
+          <div>
+            <p class="font-medium" data-th="ดาวน์โหลดและแตกไฟล์" data-en="Download and extract files">ดาวน์โหลดและแตกไฟล์</p>
+            <p class="text-gray-600 text-sm mt-1" data-th="ดาวน์โหลดจากลิงก์ด้านบน แล้วแตกไฟล์ .zip ออกมา" data-en="Download from the link above and extract the .zip file">ดาวน์โหลดจากลิงก์ด้านบน แล้วแตกไฟล์ .zip ออกมา</p>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm mr-3"><i class="fas fa-folder-open"></i></span>
+          <div>
+            <p class="font-medium" data-th="คัดลอกไฟล์ไปยังโฟลเดอร์ MT5" data-en="Copy files to MT5 folders">คัดลอกไฟล์ไปยังโฟลเดอร์ MT5</p>
+            <div class="bg-gray-100 rounded p-3 mt-2 text-xs font-mono overflow-x-auto">
+              <p class="text-gray-700"><i class="fas fa-folder text-yellow-500"></i> MQL5/Experts/ → วางไฟล์ <code>ZTOP EA V4.ex5</code></p>
+              <p class="text-gray-700 mt-1"><i class="fas fa-folder text-yellow-500"></i> MQL5/Indicators/ → วางไฟล์ <code>ZigzagColor.ex5</code> และ <code>ZZArrow.ex5</code></p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm mr-3"><i class="fas fa-check-circle"></i></span>
+          <div>
+            <p class="font-medium" data-th="เปิดใช้งานการเทรดอัตโนมัติ" data-en="Enable automated trading">เปิดใช้งานการเทรดอัตโนมัติ</p>
+            <ul class="text-gray-600 text-sm mt-1 space-y-1">
+              <li><i class="fas fa-angle-right text-blue-500 mr-1"></i> ใน MT5: <code>Tools → Options → Expert Advisors</code></li>
+              <li><i class="fas fa-check text-green-500 mr-1"></i> Allow algorithmic trading</li>
+              <li><i class="fas fa-check text-green-500 mr-1"></i> Allow WebRequest <span class="text-amber-600">(จำเป็นสำหรับระบบยืนยันตัวตน)</span></li>
+              <li><i class="fas fa-plus text-blue-500 mr-1"></i> เพิ่ม URL: <code>https://script.google.com</code></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm mr-3"><i class="fas fa-play"></i></span>
+          <div>
+            <p class="font-medium" data-th="ลากวางและตั้งค่า" data-en="Attach and configure">ลากวางและตั้งค่า</p>
+            <p class="text-gray-600 text-sm mt-1" data-th="ลาก ZTOP EA V4 ลงบนชาร์ต > ปรับพารามิเตอร์ > กด OK" data-en="Drag ZTOP EA V4 onto a chart > adjust parameters > click OK">ลาก ZTOP EA V4 ลงบนชาร์ต > ปรับพารามิเตอร์ > กด OK</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Supported Brokers Section -->
+    <section id="brokers" class="mb-12 scroll-mt-24">
+      <div class="terms-section">
+        <h2 data-th="🏦 โบรกเกอร์ที่รองรับ" data-en="🏦 Supported Brokers">🏦 โบรกเกอร์ที่รองรับ</h2>
+        <p data-th="เพื่อใช้งาน ZTOP EA V4.00 ได้อย่างเต็มประสิทธิภาพ คุณสามารถเปิดบัญชีเทรดจริงหรือบัญชีเดโม่กับโบรกเกอร์ที่รองรับดังนี้:" 
+           data-en="To use ZTOP EA V4.00 at full efficiency, you can open a live or demo trading account with the following supported brokers:">
+           เพื่อใช้งาน ZTOP EA V4.00 ได้อย่างเต็มประสิทธิภาพ คุณสามารถเปิดบัญชีเทรดจริงหรือบัญชีเดโม่กับโบรกเกอร์ที่รองรับดังนี้:
+        </p>
+
+        <div class="broker-grid">
+          <div class="broker-card">
+            <div class="broker-name flex items-center"><i class="fas fa-landmark mr-2"></i> Vantage International</div>
+            <div class="broker-platforms"><i class="fas fa-laptop-code"></i> MQL5</div>
+            <a href="https://www.vantagemarkets.com/th/open-live-account/?affid=Njg4NDM%3D" target="_blank" class="broker-link" 
+               data-th="เปิดบัญชี" data-en="Open Account"><i class="fas fa-user-plus mr-1"></i> เปิดบัญชี</a>
+          </div>
+          <div class="broker-card">
+            <div class="broker-name flex items-center"><i class="fas fa-landmark mr-2"></i> HFM</div>
+            <div class="broker-platforms"><i class="fas fa-laptop-code"></i> MQL5</div>
+            <a href="https://uutrader.short.gy/uutradeHFM" target="_blank" class="broker-link"
+               data-th="เปิดบัญชี" data-en="Open Account"><i class="fas fa-user-plus mr-1"></i> เปิดบัญชี</a>
+          </div>
+          <div class="broker-card">
+            <div class="broker-name flex items-center"><i class="fas fa-landmark mr-2"></i> Exness</div>
+            <div class="broker-platforms"><i class="fas fa-laptop-code"></i> MQL5</div>
+            <a href="https://uutrader.short.gy/uutraderExness" target="_blank" class="broker-link"
+               data-th="เปิดบัญชี" data-en="Open Account"><i class="fas fa-user-plus mr-1"></i> เปิดบัญชี</a>
+          </div>
+          <div class="broker-card">
+            <div class="broker-name flex items-center"><i class="fas fa-landmark mr-2"></i> Landprime</div>
+            <div class="broker-platforms"><i class="fas fa-laptop-code"></i> MQL5</div>
+            <a href="https://uutrader.short.gy/uutradeLandprime" target="_blank" class="broker-link"
+               data-th="เปิดบัญชี" data-en="Open Account"><i class="fas fa-user-plus mr-1"></i> เปิดบัญชี</a>
+          </div>
+          <div class="broker-card">
+            <div class="broker-name flex items-center"><i class="fas fa-landmark mr-2"></i> FBS</div>
+            <div class="broker-platforms"><i class="fas fa-laptop-code"></i> MQL5</div>
+            <a href="https://uutrader.short.gy/uutraderFBS" target="_blank" class="broker-link"
+               data-th="เปิดบัญชี" data-en="Open Account"><i class="fas fa-user-plus mr-1"></i> เปิดบัญชี</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery & Visual Showcase Section -->
+    <section id="gallery" class="mb-12 scroll-mt-24">
+      <h2 class="text-3xl font-bold text-center mb-4 pb-2 border-b border-gray-200 flex items-center justify-center">
+        <i class="fas fa-images text-blue-600 mr-2"></i>
+        <span data-th="🎬 แกลเลอรี่และภาพรวมระบบ" data-en="🎬 Gallery & System Overview">🎬 แกลเลอรี่และภาพรวมระบบ</span>
+      </h2>
+      <p class="text-center text-gray-600 mb-8" data-th="สัมผัสประสบการณ์การเทรดอัตโนมัติที่ทันสมัยและมีประสิทธิภาพ" 
+         data-en="Experience modern and efficient automated trading">
+         สัมผัสประสบการณ์การเทรดอัตโนมัติที่ทันสมัยและมีประสิทธิภาพ
+      </p>
+
+      <!-- Hero Banner - รูปที่ 5 -->
+      <div class="mb-10 rounded-2xl overflow-hidden shadow-2xl gallery-img border-2 border-blue-200">
+        <div class="relative">
+          <img src="assets/images/ztop-hero-banner.jpeg" alt="ZTOP EA Hero Banner" class="w-full h-auto">
+          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+            <h3 class="text-white text-xl font-bold flex items-center">
+              <i class="fas fa-bolt text-yellow-400 mr-2"></i>
+              <span data-th="ZTOP EA - ZZ + STOP Pending Breakout System" data-en="ZTOP EA - ZZ + STOP Pending Breakout System">ZTOP EA - ZZ + STOP Pending Breakout System</span>
+            </h3>
+            <p class="text-gray-200 text-sm" data-th="Precision Breakout Trading Powered by Pending STOP Logic" 
+               data-en="Precision Breakout Trading Powered by Pending STOP Logic">
+               Precision Breakout Trading Powered by Pending STOP Logic
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Features with Icons -->
+      <div class="grid md:grid-cols-3 gap-6 mb-10">
+        <div class="feature-card bg-gradient-to-br from-blue-500 to-blue-600 text-white p-6 rounded-xl shadow-lg">
+          <div class="text-4xl mb-3"><i class="fas fa-desktop"></i></div>
+          <h3 class="font-bold text-lg mb-2" data-th="แดชบอร์ดแบบเรียลไทม์" data-en="Real-time Dashboard">แดชบอร์ดแบบเรียลไทม์</h3>
+          <p class="text-sm text-blue-100" data-th="ติดตามสถานะการเทรด ยอดเงิน และความเสี่ยงได้ทันที" data-en="Monitor trading status, balance, and risk instantly">ติดตามสถานะการเทรด ยอดเงิน และความเสี่ยงได้ทันที</p>
+        </div>
+        
+        <div class="feature-card bg-gradient-to-br from-emerald-500 to-emerald-600 text-white p-6 rounded-xl shadow-lg">
+          <div class="text-4xl mb-3"><i class="fas fa-bullseye"></i></div>
+          <h3 class="font-bold text-lg mb-2" data-th="สัญญาณแม่นยำ" data-en="Precise Signals">สัญญาณแม่นยำ</h3>
+          <p class="text-sm text-emerald-100" data-th="ระบบกรอง 10 เงื่อนไขเพื่อคุณภาพสัญญาณสูงสุด" data-en="10-condition filter system for maximum signal quality">ระบบกรอง 10 เงื่อนไขเพื่อคุณภาพสัญญาณสูงสุด</p>
+        </div>
+        
+        <div class="feature-card bg-gradient-to-br from-purple-500 to-purple-600 text-white p-6 rounded-xl shadow-lg">
+          <div class="text-4xl mb-3"><i class="fas fa-shield-alt"></i></div>
+          <h3 class="font-bold text-lg mb-2" data-th="ป้องกันความเสี่ยง" data-en="Risk Protection">ป้องกันความเสี่ยง</h3>
+          <p class="text-sm text-purple-100" data-th="TP/SL อัตโนมัติ Trailing Stop และ Break Even" data-en="Automatic TP/SL, Trailing Stop and Break Even">TP/SL อัตโนมัติ Trailing Stop และ Break Even</p>
+        </div>
+      </div>
+
+      <!-- Dashboard Screenshot - รูปที่ 1 -->
+      <div class="mb-10">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-xl font-bold flex items-center">
+            <i class="fas fa-tachometer-alt text-blue-600 mr-2"></i>
+            <span data-th="แดชบอร์ดการเทรด" data-en="Trading Dashboard">แดชบอร์ดการเทรด</span>
+          </h3>
+          <span class="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full flex items-center">
+            <i class="fas fa-code-branch mr-1"></i> V1.00
+          </span>
+        </div>
+        <div class="rounded-xl overflow-hidden shadow-xl border-2 border-gray-200 gallery-img">
+          <img src="assets/images/ztop-dashboard.png" alt="ZTOP EA Dashboard" class="w-full h-auto">
+        </div>
+        <div class="mt-3 flex items-center text-sm text-gray-600 bg-white p-3 rounded-lg shadow">
+          <i class="fas fa-info-circle text-blue-500 mr-2"></i>
+          <span data-th="แดชบอร์ดแสดงข้อมูลครบถ้วน: ยอดเงิน, สถานะออเดอร์, สัญญาณ, และการจัดการความเสี่ยง" 
+                data-en="Dashboard displays complete information: Balance, order status, signals, and risk management">
+                แดชบอร์ดแสดงข้อมูลครบถ้วน: ยอดเงิน, สถานะออเดอร์, สัญญาณ, และการจัดการความเสี่ยง
+          </span>
+        </div>
+      </div>
+
+      <!-- Promo Banner - รูปที่ 2 -->
+      <div class="mb-10 rounded-2xl overflow-hidden shadow-xl gallery-img border-2 border-emerald-200">
+        <img src="assets/images/ztop-promo(PNG).png" alt="ZTOP EA ZZ + STOP Pending" class="w-full h-auto">
+      </div>
+
+      <!-- Strategy Visualization - รูปที่ 3 -->
+      <div class="mb-10">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-xl font-bold flex items-center">
+            <i class="fas fa-chart-line text-emerald-600 mr-2"></i>
+            <span data-th="การแสดงผลกลยุทธ์" data-en="Strategy Visualization">การแสดงผลกลยุทธ์</span>
+          </h3>
+          <span class="text-xs bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full flex items-center">
+            <i class="fas fa-vial mr-1"></i> Backtest
+          </span>
+        </div>
+        <div class="rounded-xl overflow-hidden shadow-xl border-2 border-gray-200 gallery-img">
+          <img src="assets/images/ztop-strategy-tester.png" alt="ZTOP EA Strategy Tester" class="w-full h-auto">
+        </div>
+        <div class="mt-3 grid md:grid-cols-3 gap-3">
+          <div class="flex items-center text-sm text-gray-600 bg-white p-3 rounded-lg shadow">
+            <i class="fas fa-check-circle text-emerald-500 mr-2"></i>
+            <span data-th="ทดสอบกลยุทธ์ได้ทันที" data-en="Test strategies instantly">ทดสอบกลยุทธ์ได้ทันที</span>
+          </div>
+          <div class="flex items-center text-sm text-gray-600 bg-white p-3 rounded-lg shadow">
+            <i class="fas fa-check-circle text-emerald-500 mr-2"></i>
+            <span data-th="เห็นผลชัดเจนบนชาร์ต" data-en="Clear results on chart">เห็นผลชัดเจนบนชาร์ต</span>
+          </div>
+          <div class="flex items-center text-sm text-gray-600 bg-white p-3 rounded-lg shadow">
+            <i class="fas fa-check-circle text-emerald-500 mr-2"></i>
+            <span data-th="ปรับปรุงพารามิเตอร์ได้ง่าย" data-en="Easy parameter adjustment">ปรับปรุงพารามิเตอร์ได้ง่าย</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- How It Works with Icons -->
+      <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 shadow-lg mb-10">
+        <h3 class="text-2xl font-bold text-center mb-6 flex items-center justify-center">
+          <i class="fas fa-cogs text-blue-600 mr-2"></i>
+          <span data-th="วิธีการทำงาน" data-en="How It Works">วิธีการทำงาน</span>
+        </h3>
+        
+        <div class="grid md:grid-cols-4 gap-6">
+          <div class="step-card text-center">
+            <div class="step-icon w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-3 shadow-lg">
+              <i class="fas fa-search"></i>
+            </div>
+            <h4 class="font-semibold mb-2" data-th="1. ตรวจจับสัญญาณ" data-en="1. Detect Signal">1. ตรวจจับสัญญาณ</h4>
+            <p class="text-sm text-gray-600" data-th="ZigZag หาจุดกลับตัว" data-en="ZigZag finds reversal points">ZigZag หาจุดกลับตัว</p>
+          </div>
+          
+          <div class="step-card text-center">
+            <div class="step-icon w-16 h-16 bg-emerald-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-3 shadow-lg">
+              <i class="fas fa-filter"></i>
+            </div>
+            <h4 class="font-semibold mb-2" data-th="2. กรองสัญญาณ" data-en="2. Filter Signal">2. กรองสัญญาณ</h4>
+            <p class="text-sm text-gray-600" data-th="10 เงื่อนไขยืนยัน" data-en="10 conditions validation">10 เงื่อนไขยืนยัน</p>
+          </div>
+          
+          <div class="step-card text-center">
+            <div class="step-icon w-16 h-16 bg-purple-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-3 shadow-lg">
+              <i class="fas fa-clock"></i>
+            </div>
+            <h4 class="font-semibold mb-2" data-th="3. วางคำสั่งรอ" data-en="3. Place Pending Order">3. วางคำสั่งรอ</h4>
+            <p class="text-sm text-gray-600" data-th="Buy Stop / Sell Stop" data-en="Buy Stop / Sell Stop">Buy Stop / Sell Stop</p>
+          </div>
+          
+          <div class="step-card text-center">
+            <div class="step-icon w-16 h-16 bg-orange-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-3 shadow-lg">
+              <i class="fas fa-coins"></i>
+            </div>
+            <h4 class="font-semibold mb-2" data-th="4. ทำกำไร" data-en="4. Take Profit">4. ทำกำไร</h4>
+            <p class="text-sm text-gray-600" data-th="TP/SL อัตโนมัติ" data-en="Automatic TP/SL">TP/SL อัตโนมัติ</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statistics with Icons -->
+      <div class="grid md:grid-cols-4 gap-4">
+        <div class="bg-white border-2 border-blue-200 rounded-xl p-4 text-center hover:shadow-lg transition">
+          <div class="text-3xl text-blue-600 mb-2"><i class="fas fa-percentage"></i></div>
+          <div class="text-2xl font-bold text-gray-800">10+</div>
+          <div class="text-sm text-gray-600" data-th="เงื่อนไขกรองสัญญาณ" data-en="Filter Conditions">เงื่อนไขกรองสัญญาณ</div>
+        </div>
+        
+        <div class="bg-white border-2 border-emerald-200 rounded-xl p-4 text-center hover:shadow-lg transition">
+          <div class="text-3xl text-emerald-600 mb-2"><i class="fas fa-file-alt"></i></div>
+          <div class="text-2xl font-bold text-gray-800">5</div>
+          <div class="text-sm text-gray-600" data-th="ไฟล์ตั้งค่าสำเร็จรูป" data-en="Preset Files">ไฟล์ตั้งค่าสำเร็จรูป</div>
+        </div>
+        
+        <div class="bg-white border-2 border-purple-200 rounded-xl p-4 text-center hover:shadow-lg transition">
+          <div class="text-3xl text-purple-600 mb-2"><i class="fas fa-shield-alt"></i></div>
+          <div class="text-2xl font-bold text-gray-800">100%</div>
+          <div class="text-sm text-gray-600" data-th="ระบบจัดการความเสี่ยง" data-en="Risk Management System">ระบบจัดการความเสี่ยง</div>
+        </div>
+        
+        <div class="bg-white border-2 border-orange-200 rounded-xl p-4 text-center hover:shadow-lg transition">
+          <div class="text-3xl text-orange-600 mb-2"><i class="fas fa-bolt"></i></div>
+          <div class="text-2xl font-bold text-gray-800">24/7</div>
+          <div class="text-sm text-gray-600" data-th="เทรดอัตโนมัติ" data-en="Auto Trading">เทรดอัตโนมัติ</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Preset Files Section -->
+    <section id="presets" class="mb-12 scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-4 pb-2 border-b border-gray-200 flex items-center">
+        <i class="fas fa-file-download text-blue-600 mr-2"></i>
+        <span data-th="📦 ไฟล์ตั้งค่าล่วงหน้า (.set)" data-en="📦 Preset Files (.set)">📦 ไฟล์ตั้งค่าล่วงหน้า (.set)</span>
+      </h2>
+      
+      <p class="text-gray-600 mb-6" data-th="ดาวน์โหลดไฟล์ .set เพื่อโหลดการตั้งค่าทั้งหมดในคลิกเดียว เหมาะสำหรับผู้ใช้ที่ต้องการเริ่มต้นเร็ว หรือทดสอบกลยุทธ์ต่างๆ" 
+         data-en="Download .set files to load all settings in one click. Perfect for quick start or testing different strategies.">
+         ดาวน์โหลดไฟล์ .set เพื่อโหลดการตั้งค่าทั้งหมดในคลิกเดียว เหมาะสำหรับผู้ใช้ที่ต้องการเริ่มต้นเร็ว หรือทดสอบกลยุทธ์ต่างๆ
+      </p>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        
+        <!-- Preset 1: Conservative -->
+        <div class="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-lg transition">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="font-semibold text-green-700 flex items-center"><i class="fas fa-shield-alt mr-1"></i> <span data-th="🟢 Conservative" data-en="🟢 Conservative"> Conservative</span></h3>
+            <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded" data-th="ความเสี่ยงต่ำ" data-en="Low Risk">ความเสี่ยงต่ำ</span>
+          </div>
+          <p class="text-sm text-gray-600 mb-4" data-th="เหมาะสำหรับบัญชีขนาดเล็กหรือผู้เริ่มต้น เน้นความปลอดภัย" 
+             data-en="Ideal for small accounts or beginners. Focus on safety.">
+             เหมาะสำหรับบัญชีขนาดเล็กหรือผู้เริ่มต้น เน้นความปลอดภัย
+          </p>
+          <ul class="text-xs text-gray-500 space-y-1 mb-4">
+            <li><i class="fas fa-check text-green-500 mr-1"></i> Lot: 0.01 (Fixed)</li>
+            <li><i class="fas fa-check text-green-500 mr-1"></i> SL/TP: 1000/5000 points</li>
+            <li><i class="fas fa-check text-green-500 mr-1"></i> Max Risk: 2%</li>
+            <li><i class="fas fa-check text-green-500 mr-1"></i> Filter: Strict (5+ conditions)</li>
+          </ul>
+          <a href="presets/ZTOP_Conservative.set" download class="block text-center w-full py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm font-medium">
+            <i class="fas fa-download mr-1"></i>
+            <span data-th="ดาวน์โหลด" data-en="Download">ดาวน์โหลด</span>
+          </a>
+        </div>
+
+        <!-- Preset 2: Balanced -->
+        <div class="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-lg transition">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="font-semibold text-blue-700 flex items-center"><i class="fas fa-balance-scale mr-1"></i> <span data-th="🔵 Balanced" data-en="🔵 Balanced">🔵 Balanced</span></h3>
+            <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded" data-th="ความเสี่ยงปานกลาง" data-en="Medium Risk">ความเสี่ยงปานกลาง</span>
+          </div>
+          <p class="text-sm text-gray-600 mb-4" data-th="สมดุลระหว่างความเสี่ยงและผลตอบแทน เหมาะสำหรับผู้ใช้ทั่วไป" 
+             data-en="Balanced risk/reward. Suitable for general users.">
+             สมดุลระหว่างความเสี่ยงและผลตอบแทน เหมาะสำหรับผู้ใช้ทั่วไป
+          </p>
+          <ul class="text-xs text-gray-500 space-y-1 mb-4">
+            <li><i class="fas fa-check text-blue-500 mr-1"></i> Lot: 0.01 + 0.01 step</li>
+            <li><i class="fas fa-check text-blue-500 mr-1"></i> SL/TP: 1500/6000 points</li>
+            <li><i class="fas fa-check text-blue-500 mr-1"></i> Max Risk: 5%</li>
+            <li><i class="fas fa-check text-blue-500 mr-1"></i> Filter: Standard (3+ conditions)</li>
+          </ul>
+          <a href="presets/ZTOP_Balanced.set" download class="block text-center w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm font-medium">
+            <i class="fas fa-download mr-1"></i>
+            <span data-th="ดาวน์โหลด" data-en="Download">ดาวน์โหลด</span>
+          </a>
+        </div>
+
+        <!-- Preset 3: Aggressive -->
+        <div class="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-lg transition">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="font-semibold text-orange-700 flex items-center"><i class="fas fa-fire mr-1"></i> <span data-th="🟠 Aggressive" data-en=" Aggressive">🟠 Aggressive</span></h3>
+            <span class="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded" data-th="ความเสี่ยงสูง" data-en="High Risk">ความเสี่ยงสูง</span>
+          </div>
+          <p class="text-sm text-gray-600 mb-4" data-th="เหมาะสำหรับเทรดเดอร์ที่มีประสบการณ์ ต้องการผลตอบแทนสูง" 
+             data-en="For experienced traders seeking higher returns.">
+             เหมาะสำหรับเทรดเดอร์ที่มีประสบการณ์ ต้องการผลตอบแทนสูง
+          </p>
+          <ul class="text-xs text-gray-500 space-y-1 mb-4">
+            <li><i class="fas fa-check text-orange-500 mr-1"></i> Lot: 0.02 + 0.02 step</li>
+            <li><i class="fas fa-check text-orange-500 mr-1"></i> SL/TP: 800/4000 points</li>
+            <li><i class="fas fa-check text-orange-500 mr-1"></i> Max Risk: 10%</li>
+            <li><i class="fas fa-check text-orange-500 mr-1"></i> Filter: Loose (2+ conditions)</li>
+          </ul>
+          <a href="presets/ZTOP_Aggressive.set" download class="block text-center w-full py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition text-sm font-medium">
+            <i class="fas fa-download mr-1"></i>
+            <span data-th="ดาวน์โหลด" data-en="Download">ดาวน์โหลด</span>
+          </a>
+        </div>
+
+        <!-- Preset 4: Gold Scalper -->
+        <div class="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-lg transition">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="font-semibold text-yellow-700 flex items-center"><i class="fas fa-coins mr-1"></i> <span data-th="🥇 Gold Scalper" data-en="🥇 Gold Scalper">🥇 Gold Scalper</span></h3>
+            <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded">XAUUSD</span>
+          </div>
+          <p class="text-sm text-gray-600 mb-4" data-th="ตั้งค่าพิเศษสำหรับเทรดทองคำ ระยะสั้น-กลาง" 
+             data-en="Optimized settings for Gold (XAUUSD) short-medium term trading.">
+             ตั้งค่าพิเศษสำหรับเทรดทองคำ ระยะสั้น-กลาง
+          </p>
+          <ul class="text-xs text-gray-500 space-y-1 mb-4">
+            <li><i class="fas fa-check text-yellow-500 mr-1"></i> Symbol: XAUUSD only</li>
+            <li><i class="fas fa-check text-yellow-500 mr-1"></i> TF: M15-M30</li>
+            <li><i class="fas fa-check text-yellow-500 mr-1"></i> ATR-based TP/SL</li>
+            <li><i class="fas fa-check text-yellow-500 mr-1"></i> Volatility filters ON</li>
+          </ul>
+          <a href="presets/ZTOP_GoldScalper.set" download class="block text-center w-full py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition text-sm font-medium">
+            <i class="fas fa-download mr-1"></i>
+            <span data-th="ดาวน์โหลด" data-en="Download">ดาวน์โหลด</span>
+          </a>
+        </div>
+
+        <!-- Preset 5: Prop Firm -->
+        <div class="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-lg transition">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="font-semibold text-purple-700 flex items-center"><i class="fas fa-briefcase mr-1"></i> <span data-th="💼 Prop Firm" data-en=" Prop Firm">💼 Prop Firm</span></h3>
+            <span class="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded" data-th="ผ่านกฎ Prop" data-en="Prop Compliant">ผ่านกฎ Prop</span>
+          </div>
+          <p class="text-sm text-gray-600 mb-4" data-th="ตั้งค่าให้ผ่านกฎ Prop Firm: Drawdown จำกัด, ความเสี่ยงต่ำ" 
+             data-en="Configured to pass Prop Firm rules: Limited drawdown, low risk.">
+             ตั้งค่าให้ผ่านกฎ Prop Firm: Drawdown จำกัด, ความเสี่ยงต่ำ
+          </p>
+          <ul class="text-xs text-gray-500 space-y-1 mb-4">
+            <li><i class="fas fa-check text-purple-500 mr-1"></i> Max Daily Loss: 5%</li>
+            <li><i class="fas fa-check text-purple-500 mr-1"></i> Max Risk per trade: 1%</li>
+            <li><i class="fas fa-check text-purple-500 mr-1"></i> BreakEven: ON</li>
+            <li><i class="fas fa-check text-purple-500 mr-1"></i> Daily Profit Limit: ON</li>
+          </ul>
+          <a href="presets/ZTOP_PropFirm.set" download class="block text-center w-full py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition text-sm font-medium">
+            <i class="fas fa-download mr-1"></i>
+            <span data-th="ดาวน์โหลด" data-en="Download">ดาวน์โหลด</span>
+          </a>
+        </div>
+
+        <!-- Preset 6: Custom Template -->
+        <div class="bg-white rounded-lg border border-dashed border-gray-300 p-5 flex flex-col items-center justify-center text-center">
+          <i class="fas fa-plus-circle text-gray-400 text-3xl mb-2"></i>
+          <h3 class="font-semibold text-gray-600 mb-2" data-th="สร้างของคุณเอง" data-en="Create Your Own">สร้างของคุณเอง</h3>
+          <p class="text-xs text-gray-500 mb-3" data-th="ปรับตั้งค่าใน EA > Save As .set > แชร์ให้ชุมชน" 
+             data-en="Adjust settings in EA > Save As .set > Share with community">
+             ปรับตั้งค่าใน EA > Save As .set > แชร์ให้ชุมชน
+          </p>
+          <a href="#params" class="text-xs text-blue-600 hover:underline flex items-center" data-th="ดูคู่มือการตั้งค่า" data-en="View Settings Guide"><i class="fas fa-book mr-1"></i> ดูคู่มือการตั้งค่า</a>
+        </div>
+
+      </div>
+
+      <!-- How to Use Presets -->
+      <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <h4 class="font-semibold text-blue-800 mb-2 flex items-center">
+          <i class="fas fa-info-circle mr-2"></i>
+          <span data-th="วิธีใช้งานไฟล์ .set" data-en="How to Use .set Files">วิธีใช้งานไฟล์ .set</span>
+        </h4>
+        <ol class="text-sm text-blue-900 space-y-1 list-decimal list-inside">
+          <li data-th="ดาวน์โหลดไฟล์ .set ที่ต้องการ" data-en="Download your preferred .set file"><i class="fas fa-download text-blue-500 mr-1"></i> ดาวน์โหลดไฟล์ .set ที่ต้องการ</li>
+          <li data-th="ใน MT5: ลาก EA ลงชาร์ต > กดปุ่ม 'Load' ในหน้าพารามิเตอร์" data-en="In MT5: Attach EA to chart > Click 'Load' in parameters tab"><i class="fas fa-mouse-pointer text-blue-500 mr-1"></i> ใน MT5: ลาก EA ลงชาร์ต > กดปุ่ม 'Load' ในหน้าพารามิเตอร์</li>
+          <li data-th="เลือกไฟล์ .set ที่ดาวน์โหลดมา > กด Open" data-en="Select the downloaded .set file > Click Open"><i class="fas fa-file-import text-blue-500 mr-1"></i> เลือกไฟล์ .set ที่ดาวน์โหลดมา > กด Open</li>
+          <li data-th="ตรวจสอบค่าที่โหลดมา > กด OK เพื่อเริ่มใช้งาน" data-en="Review loaded settings > Click OK to start"><i class="fas fa-check-circle text-blue-500 mr-1"></i> ตรวจสอบค่าที่โหลดมา > กด OK เพื่อเริ่มใช้งาน</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Advanced Filter Documentation Section -->
+    <section id="filters" class="mb-12 scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-4 pb-2 border-b border-gray-200 flex items-center">
+        <i class="fas fa-filter text-blue-600 mr-2"></i>
+        <span data-th="🧠 ระบบกรองสัญญาณขั้นสูง" data-en="🧠 Advanced Filter System"> ระบบกรองสัญญาณขั้นสูง</span>
+      </h2>
+
+      <p class="text-gray-600 mb-6" data-th="ระบบกรองสัญญาณช่วยเพิ่มคุณภาพของสัญญาณเทรด โดยตรวจสอบ 10 เงื่อนไขจาก 3 กลุ่มหลัก ผู้ใช้สามารถเลือกเปิด-ปิดแต่ละเงื่อนไขได้ตามต้องการ" 
+         data-en="The filter system improves signal quality by checking 10 conditions across 3 main groups. Users can toggle each condition on/off as needed.">
+         ระบบกรองสัญญาณช่วยเพิ่มคุณภาพของสัญญาณเทรด โดยตรวจสอบ 10 เงื่อนไขจาก 3 กลุ่มหลัก ผู้ใช้สามารถเลือกเปิด-ปิดแต่ละเงื่อนไขได้ตามต้องการ
+      </p>
+
+      <!-- Filter Overview Card -->
+      <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-5 mb-6">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <h3 class="font-semibold text-blue-800 mb-1 flex items-center" data-th="⚙️ การตั้งค่าหลัก" data-en="⚙️ Main Settings"><i class="fas fa-sliders-h mr-2"></i> ⚙️ การตั้งค่าหลัก</h3>
+            <p class="text-sm text-blue-700" data-th="ควบคุมการทำงานโดยรวมของระบบกรอง" data-en="Control overall filter system behavior">ควบคุมการทำงานโดยรวมของระบบกรอง</p>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-center">
+            <div class="bg-white rounded p-2">
+              <div class="text-xs text-gray-500"><i class="fas fa-power-off text-green-500"></i> <span data-th="เปิดใช้งาน" data-en="Enable">เปิดใช้งาน</span></div>
+              <div class="font-mono text-sm font-semibold">InpUseAdvFilter</div>
+            </div>
+            <div class="bg-white rounded p-2">
+              <div class="text-xs text-gray-500"><i class="fas fa-clock text-blue-500"></i> <span data-th="Timeframe" data-en="Timeframe">Timeframe</span></div>
+              <div class="font-mono text-sm font-semibold">InpAdvFilterTimeframe</div>
+            </div>
+            <div class="bg-white rounded p-2">
+              <div class="text-xs text-gray-500"><i class="fas fa-list-ol text-purple-500"></i> <span data-th="เงื่อนไขขั้นต่ำ" data-en="Min Conditions">เงื่อนไขขั้นต่ำ</span></div>
+              <div class="font-mono text-sm font-semibold">InpFilterMinConditions</div>
+            </div>
+            <div class="bg-white rounded p-2">
+              <div class="text-xs text-gray-500"><i class="fas fa-bug text-orange-500"></i> <span data-th="Debug Mode" data-en="Debug Mode">Debug Mode</span></div>
+              <div class="font-mono text-sm font-semibold">InpFilterDebug</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter Groups -->
+      <div class="space-y-6">
+        
+        <!-- Group 1: Trend Filters -->
+        <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
+          <div class="bg-blue-600 text-white px-5 py-3">
+            <h3 class="font-semibold flex items-center">
+              <i class="fas fa-chart-line mr-2"></i>
+              <span data-th="กลุ่มที่ 1: ตัวกรองแนวโน้ม (Trend Filters)" data-en="Group 1: Trend Filters">กลุ่มที่ 1: ตัวกรองแนวโน้ม (Trend Filters)</span>
+            </h3>
+          </div>
+          <div class="p-5">
+            <p class="text-sm text-gray-600 mb-4" data-th="ตรวจสอบทิศทางแนวโน้มจากค่าเฉลี่ยเคลื่อนที่ (EMA)" data-en="Check trend direction using Exponential Moving Averages (EMA)">ตรวจสอบทิศทางแนวโน้มจากค่าเฉลี่ยเคลื่อนที่ (EMA)</p>
+            
+            <div class="space-y-4">
+              <!-- Filter 1: EMA HTF -->
+              <div class="filter-group-card trend">
+                <div class="flex items-start justify-between flex-wrap gap-2">
+                  <div>
+                    <h4 class="font-semibold text-gray-800 flex items-center"><i class="fas fa-chart-area text-blue-500 mr-2"></i> [1] EMA50_HTF vs EMA200_HTF</h4>
+                    <p class="text-xs text-gray-500 mt-1">InpFilter_Enable_EMA_HTF</p>
+                  </div>
+                  <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded flex items-center"><i class="fas fa-tag mr-1"></i> Trend</span>
+                </div>
+                <p class="text-sm text-gray-600 mt-2" data-th="เปรียบเทียบ EMA50 กับ EMA200 ใน Timeframe ที่สูงกว่า (HTF) เพื่อยืนยันแนวโน้มหลัก" 
+                   data-en="Compare EMA50 vs EMA200 on Higher Timeframe (HTF) to confirm major trend direction">
+                   เปรียบเทียบ EMA50 กับ EMA200 ใน Timeframe ที่สูงกว่า (HTF) เพื่อยืนยันแนวโน้มหลัก
+                </p>
+                <div class="mt-2 text-xs bg-gray-50 rounded p-2">
+                  <strong data-th="Buy:" data-en="Buy:"><i class="fas fa-arrow-up text-green-500"></i> Buy:</strong> 
+                  <span data-th="EMA50_HTF > EMA200_HTF (แนวโน้มขาขึ้น)" data-en="EMA50_HTF > EMA200_HTF (Uptrend)">EMA50_HTF > EMA200_HTF (แนวโน้มขาขึ้น)</span><br>
+                  <strong data-th="Sell:" data-en="Sell:"><i class="fas fa-arrow-down text-red-500"></i> Sell:</strong> 
+                  <span data-th="EMA50_HTF < EMA200_HTF (แนวโน้มขาลง)" data-en="EMA50_HTF < EMA200_HTF (Downtrend)">EMA50_HTF < EMA200_HTF (แนวโน้มขาลง)</span>
+                </div>
+              </div>
+
+              <!-- Filter 2: EMA Local -->
+              <div class="filter-group-card trend">
+                <div class="flex items-start justify-between flex-wrap gap-2">
+                  <div>
+                    <h4 class="font-semibold text-gray-800 flex items-center"><i class="fas fa-chart-bar text-blue-500 mr-2"></i> [2] EMA20 vs EMA50 (Current TF)</h4>
+                    <p class="text-xs text-gray-500 mt-1">InpFilter_Enable_EMA_Local</p>
+                  </div>
+                  <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded flex items-center"><i class="fas fa-tag mr-1"></i> Trend</span>
+                </div>
+                <p class="text-sm text-gray-600 mt-2" data-th="ตรวจสอบแนวโน้มระยะสั้นใน Timeframe ปัจจุบัน" 
+                   data-en="Check short-term trend direction on current timeframe">
+                   ตรวจสอบแนวโน้มระยะสั้นใน Timeframe ปัจจุบัน
+                </p>
+                <div class="mt-2 text-xs bg-gray-50 rounded p-2">
+                  <strong data-th="พารามิเตอร์:" data-en="Parameters:"><i class="fas fa-cog text-gray-500"></i> พารามิเตอร์:</strong> 
+                  InpEMA20Period=20, InpEMA50Period=50, InpEMA200Period=200
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Group 2: Volatility & Volume -->
+        <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
+          <div class="bg-emerald-600 text-white px-5 py-3">
+            <h3 class="font-semibold flex items-center">
+              <i class="fas fa-wave-square mr-2"></i>
+              <span data-th="กลุ่มที่ 2: ความผันผวนและปริมาณ (Volatility & Volume)" data-en="Group 2: Volatility & Volume">กลุ่มที่ 2: ความผันผวนและปริมาณ (Volatility & Volume)</span>
+            </h3>
+          </div>
+          <div class="p-5">
+            <p class="text-sm text-gray-600 mb-4" data-th="ตรวจสอบสภาวะตลาดที่มีความผันผวนและปริมาณการเทรดเหมาะสมสำหรับการเข้าออเดอร์" 
+               data-en="Check market conditions with suitable volatility and trading volume for order entry">
+               ตรวจสอบสภาวะตลาดที่มีความผันผวนและปริมาณการเทรดเหมาะสมสำหรับการเข้าออเดอร์
+            </p>
+            
+            <div class="space-y-4">
+              <!-- Filter 3: ATR Expanding -->
+              <div class="filter-group-card volatility">
+                <div class="flex items-start justify-between flex-wrap gap-2">
+                  <div>
+                    <h4 class="font-semibold text-gray-800 flex items-center"><i class="fas fa-chart-area text-emerald-500 mr-2"></i> [3] ATR Expanding</h4>
+                    <p class="text-xs text-gray-500 mt-1">InpFilter_Enable_ATR</p>
+                  </div>
+                  <span class="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded flex items-center"><i class="fas fa-tag mr-1"></i> Volatility</span>
+                </div>
+                <p class="text-sm text-gray-600 mt-2" data-th="ตรวจสอบว่าความผันผวน (ATR) กำลังขยายตัว ซึ่งมักบ่งชี้ถึงการเริ่มต้นของเทรนด์ใหม่" 
+                   data-en="Check if volatility (ATR) is expanding, often indicating start of new trend">
+                   ตรวจสอบว่าความผันผวน (ATR) กำลังขยายตัว ซึ่งมักบ่งชี้ถึงการเริ่มต้นของเทรนด์ใหม่
+                </p>
+                <div class="mt-2 text-xs bg-gray-50 rounded p-2">
+                  <strong data-th="พารามิเตอร์:" data-en="Parameters:"><i class="fas fa-cog text-gray-500"></i> พารามิเตอร์:</strong> 
+                  InpATRFilterPeriod=14, InpATRMultiplier=1.3<br>
+                  <strong data-th="เงื่อนไข:" data-en="Condition:"><i class="fas fa-check text-green-500"></i> เงื่อนไข:</strong> 
+                  <span data-th="ATR ปัจจุบัน > ATR ค่าเฉลี่ย × 1.3" data-en="Current ATR > Average ATR × 1.3">ATR ปัจจุบัน > ATR ค่าเฉลี่ย × 1.3</span>
+                </div>
+              </div>
+
+              <!-- Filter 4: Volume Spike -->
+              <div class="filter-group-card volatility">
+                <div class="flex items-start justify-between flex-wrap gap-2">
+                  <div>
+                    <h4 class="font-semibold text-gray-800 flex items-center"><i class="fas fa-volume-up text-emerald-500 mr-2"></i> [4] Volume Spike</h4>
+                    <p class="text-xs text-gray-500 mt-1">InpFilter_Enable_Volume</p>
+                  </div>
+                  <span class="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded flex items-center"><i class="fas fa-tag mr-1"></i> Volume</span>
+                </div>
+                <p class="text-sm text-gray-600 mt-2" data-th="ตรวจสอบว่าปริมาณการเทรดปัจจุบันสูงกว่าค่าเฉลี่ยอย่างมีนัยสำคัญ" 
+                   data-en="Check if current volume is significantly higher than average">
+                   ตรวจสอบว่าปริมาณการเทรดปัจจุบันสูงกว่าค่าเฉลี่ยอย่างมีนัยสำคัญ
+                </p>
+                <div class="mt-2 text-xs bg-gray-50 rounded p-2">
+                  <strong data-th="พารามิเตอร์:" data-en="Parameters:"><i class="fas fa-cog text-gray-500"></i> พารามิเตอร์:</strong> 
+                  InpVolumePeriod=20, InpVolumeMultiplier=1.5<br>
+                  <strong data-th="เงื่อนไข:" data-en="Condition:"><i class="fas fa-check text-green-500"></i> เงื่อนไข:</strong> 
+                  <span data-th="Volume ปัจจุบัน > Volume เฉลี่ย × 1.5" data-en="Current Volume > Average Volume × 1.5">Volume ปัจจุบัน > Volume เฉลี่ย × 1.5</span>
+                </div>
+              </div>
+
+              <!-- Filter 7: Donchian Expanding -->
+              <div class="filter-group-card volatility">
+                <div class="flex items-start justify-between flex-wrap gap-2">
+                  <div>
+                    <h4 class="font-semibold text-gray-800 flex items-center"><i class="fas fa-compress-arrows-alt text-emerald-500 mr-2"></i> [7] Donchian Width Expanding</h4>
+                    <p class="text-xs text-gray-500 mt-1">InpFilter_Enable_Donchian</p>
+                  </div>
+                  <span class="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded flex items-center"><i class="fas fa-tag mr-1"></i> Volatility</span>
+                </div>
+                <p class="text-sm text-gray-600 mt-2" data-th="ตรวจสอบว่าช่วงราคา (High-Low) กำลังขยายตัว บ่งชี้ถึงความผันผวนที่เพิ่มขึ้น" 
+                   data-en="Check if price range (High-Low) is expanding, indicating increased volatility">
+                   ตรวจสอบว่าช่วงราคา (High-Low) กำลังขยายตัว บ่งชี้ถึงความผันผวนที่เพิ่มขึ้น
+                </p>
+                <div class="mt-2 text-xs bg-gray-50 rounded p-2">
+                  <strong data-th="พารามิเตอร์:" data-en="Parameters:"><i class="fas fa-cog text-gray-500"></i> พารามิเตอร์:</strong> 
+                  InpDonchianPeriod=20
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Group 3: Momentum Filters -->
+        <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
+          <div class="bg-purple-600 text-white px-5 py-3">
+            <h3 class="font-semibold flex items-center">
+              <i class="fas fa-bolt mr-2"></i>
+              <span data-th="กลุ่มที่ 3: โมเมนตัม (Momentum Filters)" data-en="Group 3: Momentum Filters">กลุ่มที่ 3: โมเมนตัม (Momentum Filters)</span>
+            </h3>
+          </div>
+          <div class="p-5">
+            <p class="text-sm text-gray-600 mb-4" data-th="ตรวจสอบแรงส่งของราคาและสัญญาณทางเทคนิคเพื่อยืนยันคุณภาพของสัญญาณ" 
+               data-en="Check price momentum and technical signals to confirm signal quality">
+               ตรวจสอบแรงส่งของราคาและสัญญาณทางเทคนิคเพื่อยืนยันคุณภาพของสัญญาณ
+            </p>
+            
+            <div class="space-y-4">
+              <!-- Filter 5: ADX Rising -->
+              <div class="filter-group-card momentum">
+                <div class="flex items-start justify-between flex-wrap gap-2">
+                  <div>
+                    <h4 class="font-semibold text-gray-800 flex items-center"><i class="fas fa-chart-line text-purple-500 mr-2"></i> [5] ADX > Level & Rising</h4>
+                    <p class="text-xs text-gray-500 mt-1">InpFilter_Enable_ADX</p>
+                  </div>
+                  <span class="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded flex items-center"><i class="fas fa-tag mr-1"></i> Momentum</span>
+                </div>
+                <p class="text-sm text-gray-600 mt-2" data-th="ตรวจสอบว่า ADX สูงกว่าระดับที่กำหนดและกำลังเพิ่มขึ้น บ่งชี้ถึงแนวโน้มที่แข็งแกร่ง" 
+                   data-en="Check if ADX is above threshold and rising, indicating strong trend">
+                   ตรวจสอบว่า ADX สูงกว่าระดับที่กำหนดและกำลังเพิ่มขึ้น บ่งชี้ถึงแนวโน้มที่แข็งแกร่ง
+                </p>
+                <div class="mt-2 text-xs bg-gray-50 rounded p-2">
+                  <strong data-th="พารามิเตอร์:" data-en="Parameters:"><i class="fas fa-cog text-gray-500"></i> พารามิเตอร์:</strong> 
+                  InpADXFilterPeriod=14, InpADXFilterLevel=25.0<br>
+                  <strong data-th="เงื่อนไข:" data-en="Condition:"><i class="fas fa-check text-green-500"></i> เงื่อนไข:</strong> 
+                  <span data-th="ADX > 25 AND ADX ปัจจุบัน > ADX ก่อนหน้า" data-en="ADX > 25 AND Current ADX > Previous ADX">ADX > 25 AND ADX ปัจจุบัน > ADX ก่อนหน้า</span>
+                </div>
+              </div>
+
+              <!-- Filter 6: Momentum Candle -->
+              <div class="filter-group-card momentum">
+                <div class="flex items-start justify-between flex-wrap gap-2">
+                  <div>
+                    <h4 class="font-semibold text-gray-800 flex items-center"><i class="fas fa-candle-holder text-purple-500 mr-2"></i> [6] Momentum Candle Pattern</h4>
+                    <p class="text-xs text-gray-500 mt-1">InpFilter_Enable_Candle</p>
+                  </div>
+                  <span class="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded flex items-center"><i class="fas fa-tag mr-1"></i> Momentum</span>
+                </div>
+                <p class="text-sm text-gray-600 mt-2" data-th="ตรวจสอบรูปแบบแท่งเทียนที่มีโมเมนตัมสูง (เนื้อเทียนใหญ่, ไส้เทียนสั้น)" 
+                   data-en="Check for high-momentum candlestick patterns (large body, small wicks)">
+                   ตรวจสอบรูปแบบแท่งเทียนที่มีโมเมนตัมสูง (เนื้อเทียนใหญ่, ไส้เทียนสั้น)
+                </p>
+                <div class="mt-2 text-xs bg-gray-50 rounded p-2">
+                  <strong data-th="Buy:" data-en="Buy:"><i class="fas fa-arrow-up text-green-500"></i> Buy:</strong> 
+                  <span data-th="Close > Open, Body ≥ 50% Range, Upper Wick ≤ 30%" data-en="Close > Open, Body ≥ 50% Range, Upper Wick ≤ 30%">Close > Open, Body ≥ 50% Range, Upper Wick ≤ 30%</span><br>
+                  <strong data-th="Sell:" data-en="Sell:"><i class="fas fa-arrow-down text-red-500"></i> Sell:</strong> 
+                  <span data-th="Close < Open, Body ≥ 50% Range, Lower Wick ≤ 30%" data-en="Close < Open, Body ≥ 50% Range, Lower Wick ≤ 30%">Close < Open, Body ≥ 50% Range, Lower Wick ≤ 30%</span>
+                </div>
+              </div>
+
+              <!-- Filter 8: RSI Level -->
+              <div class="filter-group-card momentum">
+                <div class="flex items-start justify-between flex-wrap gap-2">
+                  <div>
+                    <h4 class="font-semibold text-gray-800 flex items-center"><i class="fas fa-tachometer-alt text-purple-500 mr-2"></i> [8] RSI Level</h4>
+                    <p class="text-xs text-gray-500 mt-1">InpFilter_Enable_RSI</p>
+                  </div>
+                  <span class="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded flex items-center"><i class="fas fa-tag mr-1"></i> Momentum</span>
+                </div>
+                <p class="text-sm text-gray-600 mt-2" data-th="ตรวจสอบระดับ RSI เพื่อยืนยันแรงส่งของแนวโน้ม" 
+                   data-en="Check RSI levels to confirm trend momentum">
+                   ตรวจสอบระดับ RSI เพื่อยืนยันแรงส่งของแนวโน้ม
+                </p>
+                <div class="mt-2 text-xs bg-gray-50 rounded p-2">
+                  <strong data-th="พารามิเตอร์:" data-en="Parameters:"><i class="fas fa-cog text-gray-500"></i> พารามิเตอร์:</strong> 
+                  InpRSIPeriod=14, InpRSIBuyLevel=60.0, InpRSISellLevel=40.0<br>
+                  <strong data-th="Buy:" data-en="Buy:"><i class="fas fa-arrow-up text-green-500"></i> Buy:</strong> RSI > 60 (<span data-th="โมเมนตัมขาขึ้น" data-en="Uptrend momentum">โมเมนตัมขาขึ้น</span>)<br>
+                  <strong data-th="Sell:" data-en="Sell:"><i class="fas fa-arrow-down text-red-500"></i> Sell:</strong> RSI < 40 (<span data-th="โมเมนตัมขาลง" data-en="Downtrend momentum">โมเมนตัมขาลง</span>)
+                </div>
+              </div>
+
+              <!-- Filter 9-10: MACD -->
+              <div class="filter-group-card momentum">
+                <div class="flex items-start justify-between flex-wrap gap-2">
+                  <div>
+                    <h4 class="font-semibold text-gray-800 flex items-center"><i class="fas fa-wave-square text-purple-500 mr-2"></i> [9-10] MACD Conditions</h4>
+                    <p class="text-xs text-gray-500 mt-1">InpFilter_Enable_MACD</p>
+                  </div>
+                  <span class="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded flex items-center"><i class="fas fa-tag mr-1"></i> Momentum</span>
+                </div>
+                <p class="text-sm text-gray-600 mt-2" data-th="ตรวจสอบสัญญาณ MACD 2 เงื่อนไข: การตัดกันของเส้น และตำแหน่งเทียบกับศูนย์" 
+                   data-en="Check 2 MACD conditions: Line crossover and position relative to zero">
+                   ตรวจสอบสัญญาณ MACD 2 เงื่อนไข: การตัดกันของเส้น และตำแหน่งเทียบกับศูนย์
+                </p>
+                <div class="mt-2 text-xs bg-gray-50 rounded p-2">
+                  <strong data-th="พารามิเตอร์:" data-en="Parameters:"><i class="fas fa-cog text-gray-500"></i> พารามิเตอร์:</strong> 
+                  InpMACDFast=12, InpMACDSlow=26, InpMACDSignal=9<br>
+                  <strong data-th="[9] MACD vs Signal:" data-en="[9] MACD vs Signal:">[9] MACD vs Signal:</strong> 
+                  <span data-th="Buy: MACD > Signal | Sell: MACD < Signal" data-en="Buy: MACD > Signal | Sell: MACD < Signal">Buy: MACD > Signal | Sell: MACD < Signal</span><br>
+                  <strong data-th="[10] MACD vs Zero:" data-en="[10] MACD vs Zero:">[10] MACD vs Zero:</strong> 
+                  <span data-th="Buy: MACD > 0 | Sell: MACD < 0" data-en="Buy: MACD > 0 | Sell: MACD < 0">Buy: MACD > 0 | Sell: MACD < 0</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Usage Tips -->
+      <div class="mt-8 bg-amber-50 border border-amber-200 rounded-lg p-5">
+        <h4 class="font-semibold text-amber-800 mb-3 flex items-center">
+          <i class="fas fa-lightbulb mr-2"></i>
+          <span data-th="💡 คำแนะนำการใช้งานระบบกรอง" data-en=" Filter Usage Tips">💡 คำแนะนำการใช้งานระบบกรอง</span>
+        </h4>
+        <ul class="text-sm text-amber-900 space-y-2">
+          <li><i class="fas fa-check-circle text-amber-600 mr-2"></i> <strong data-th="เริ่มต้น:" data-en="Start:">เริ่มต้น:</strong> 
+              <span data-th="เปิดเฉพาะเงื่อนไขที่เข้าใจก่อน แล้วค่อยเพิ่มเงื่อนไขอื่นๆ ตามผลการทดสอบ" 
+                    data-en="Start with conditions you understand, then add more based on backtest results">
+                    เปิดเฉพาะเงื่อนไขที่เข้าใจก่อน แล้วค่อยเพิ่มเงื่อนไขอื่นๆ ตามผลการทดสอบ
+              </span>
+          </li>
+          <li><i class="fas fa-check-circle text-amber-600 mr-2"></i> <strong data-th="ปรับค่า Min Conditions:" data-en="Adjust Min Conditions:">ปรับค่า Min Conditions:</strong> 
+              <span data-th="ค่าสูง = สัญญาณน้อยแต่คุณภาพสูง | ค่าต่ำ = สัญญาณบ่อยแต่อาจมีสัญญาณหลอก" 
+                    data-en="Higher value = fewer but higher quality signals | Lower value = more frequent but potentially false signals">
+                    ค่าสูง = สัญญาณน้อยแต่คุณภาพสูง | ค่าต่ำ = สัญญาณบ่อยแต่อาจมีสัญญาณหลอก
+              </span>
+          </li>
+          <li><i class="fas fa-check-circle text-amber-600 mr-2"></i> <strong data-th="ทดสอบแต่ละเงื่อนไข:" data-en="Test individual conditions:">ทดสอบแต่ละเงื่อนไข:</strong> 
+              <span data-th="เปิด Debug Mode (InpFilterDebug=true) เพื่อดูว่าเงื่อนไขใดผ่าน/ไม่ผ่านใน Journal" 
+                    data-en="Enable Debug Mode (InpFilterDebug=true) to see which conditions pass/fail in Journal">
+                    เปิด Debug Mode (InpFilterDebug=true) เพื่อดูว่าเงื่อนไขใดผ่าน/ไม่ผ่านใน Journal
+              </span>
+          </li>
+          <li><i class="fas fa-check-circle text-amber-600 mr-2"></i> <strong data-th="ปรับตามคู่เงิน:" data-en="Adjust per symbol:">ปรับตามคู่เงิน:</strong> 
+              <span data-th="ค่าพารามิเตอร์ที่เหมาะกับทองคำอาจไม่เหมาะกับ EURUSD ควรทดสอบแยกกัน" 
+                    data-en="Parameters suitable for Gold may not work for EURUSD. Test separately.">
+                    ค่าพารามิเตอร์ที่เหมาะกับทองคำอาจไม่เหมาะกับ EURUSD ควรทดสอบแยกกัน
+              </span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Parameters Section -->
+    <section id="params" class="mb-12 scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-4 pb-2 border-b border-gray-200 flex items-center">
+        <i class="fas fa-sliders-h text-blue-600 mr-2"></i>
+        <span data-th="📋 พารามิเตอร์สำคัญ" data-en=" Key Parameters">📋 พารามิเตอร์สำคัญ</span>
+      </h2>
+      
+      <div class="overflow-x-auto rounded-lg border border-gray-200">
+        <table class="min-w-full divide-y divide-gray-200 text-sm">
+          <thead class="bg-gray-100">
+            <tr>
+              <th class="px-4 py-3 text-left font-semibold text-gray-700" data-th="พารามิเตอร์" data-en="Parameter"><i class="fas fa-tag mr-1"></i> พารามิเตอร์</th>
+              <th class="px-4 py-3 text-left font-semibold text-gray-700" data-th="ค่าเริ่มต้น" data-en="Default"><i class="fas fa-hashtag mr-1"></i> ค่าเริ่มต้น</th>
+              <th class="px-4 py-3 text-left font-semibold text-gray-700" data-th="คำอธิบาย" data-en="Description"><i class="fas fa-info-circle mr-1"></i> คำอธิบาย</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            <tr class="param-row">
+              <td class="px-4 py-3 font-mono text-blue-700">InpDepth</td>
+              <td class="px-4 py-3">12</td>
+              <td class="px-4 py-3" data-th="ความลึกของการค้นหาจุดกลับตัวใน ZigZag" data-en="ZigZag reversal detection depth">ความลึกของการค้นหาจุดกลับตัวใน ZigZag</td>
+            </tr>
+            <tr class="param-row">
+              <td class="px-4 py-3 font-mono text-blue-700">InpLotSize</td>
+              <td class="px-4 py-3">0.01</td>
+              <td class="px-4 py-3" data-th="ขนาดล็อตพื้นฐาน" data-en="Base lot size">ขนาดล็อตพื้นฐาน</td>
+            </tr>
+            <tr class="param-row">
+              <td class="px-4 py-3 font-mono text-blue-700">InpStopLossPoints</td>
+              <td class="px-4 py-3">1000</td>
+              <td class="px-4 py-3" data-th="ระยะ Stop Loss (หน่วย: จุด)" data-en="Stop Loss distance (in points)">ระยะ Stop Loss (หน่วย: จุด)</td>
+            </tr>
+            <tr class="param-row">
+              <td class="px-4 py-3 font-mono text-blue-700">InpTakeProfitPoints</td>
+              <td class="px-4 py-3">5000</td>
+              <td class="px-4 py-3" data-th="ระยะ Take Profit (หน่วย: จุด)" data-en="Take Profit distance (in points)">ระยะ Take Profit (หน่วย: จุด)</td>
+            </tr>
+            <tr class="param-row">
+              <td class="px-4 py-3 font-mono text-blue-700">InpUseAdvFilter</td>
+              <td class="px-4 py-3">false</td>
+              <td class="px-4 py-3" data-th="เปิดใช้งานตัวกรองสัญญาณขั้นสูง" data-en="Enable advanced signal filters">เปิดใช้งานตัวกรองสัญญาณขั้นสูง</td>
+            </tr>
+            <tr class="param-row">
+              <td class="px-4 py-3 font-mono text-blue-700">InpFilterMinConditions</td>
+              <td class="px-4 py-3">3</td>
+              <td class="px-4 py-3" data-th="จำนวนเงื่อนไขขั้นต่ำที่ต้องผ่าน (จากที่เปิดใช้งาน)" data-en="Min conditions to pass (from enabled ones)">จำนวนเงื่อนไขขั้นต่ำที่ต้องผ่าน (จากที่เปิดใช้งาน)</td>
+            </tr>
+            <tr class="param-row">
+              <td class="px-4 py-3 font-mono text-blue-700">InpUseDailyProfit</td>
+              <td class="px-4 py-3">false</td>
+              <td class="px-4 py-3" data-th="หยุดเทรดเมื่อถึงเป้ากำไรรายวัน" data-en="Stop trading when daily profit target reached">หยุดเทรดเมื่อถึงเป้ากำไรรายวัน</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Terms & Conditions Section -->
+    <section id="terms" class="mb-12 scroll-mt-24">
+      <div class="terms-section">
+        <h2 data-th="️ ข้อกำหนดและเงื่อนไข" data-en="️ Terms and Conditions"><i class="fas fa-exclamation-triangle mr-2"></i> ⚠️ ข้อกำหนดและเงื่อนไข</h2>
+
+        <div class="warning-box">
+          <h3 data-th="⚠️ คำเตือนความเสี่ยง" data-en="⚠️ Risk Warning"><i class="fas fa-exclamation-circle"></i> ⚠️ คำเตือนความเสี่ยง</h3>
+          <p data-th="การเทรด Forex และ CFDs มีความเสี่ยงสูง อาจทำให้เสียเงินลงทุนทั้งหมด ควรศึกษาและเข้าใจความเสี่ยงก่อนการลงทุน" 
+             data-en="Trading Forex and CFDs involves high risk and may result in loss of all invested capital. Please study and understand the risks before investing.">
+             การเทรด Forex และ CFDs มีความเสี่ยงสูง อาจทำให้เสียเงินลงทุนทั้งหมด ควรศึกษาและเข้าใจความเสี่ยงก่อนการลงทุน
+          </p>
+        </div>
+
+        <div class="info-box">
+          <h3 data-th="ℹ️ เงื่อนไขการใช้งาน" data-en="️ Terms of Use"><i class="fas fa-info-circle"></i> ℹ️ เงื่อนไขการใช้งาน</h3>
+          <p data-th="• EA นี้ใช้งานได้เฉพาะกับโบรกเกอร์ที่ระบุไว้เท่านั้น" data-en="• This EA can only be used with specified brokers"><i class="fas fa-check text-green-500 mr-1"></i> EA นี้ใช้งานได้เฉพาะกับโบรกเกอร์ที่ระบุไว้เท่านั้น</p>
+          <p data-th="• แนะนำให้ทดสอบบนบัญชีเดโม่ก่อนใช้งานจริง" data-en="• Recommended to test on demo account before live trading"><i class="fas fa-check text-green-500 mr-1"></i> แนะนำให้ทดสอบบนบัญชีเดโม่ก่อนใช้งานจริง</p>
+          <p data-th="• ผู้ใช้งานต้องรับผิดชอบต่อการตัดสินใจลงทุนของตนเอง" data-en="• Users are responsible for their own investment decisions"><i class="fas fa-check text-green-500 mr-1"></i> ผู้ใช้งานต้องรับผิดชอบต่อการตัดสินใจลงทุนของตนเอง</p>
+          <p data-th="• ควรติดตามและปรับแต่งการตั้งค่าให้เหมาะสมกับสภาวะตลาด" data-en="• Should monitor and adjust settings according to market conditions"><i class="fas fa-check text-green-500 mr-1"></i> ควรติดตามและปรับแต่งการตั้งค่าให้เหมาะสมกับสภาวะตลาด</p>
+        </div>
+      </div>
+
+      <!-- Agreement Section -->
+      <div class="terms-section">
+        <h2 data-th="📃 ข้อตกลงการใช้งาน" data-en="📃 User Agreement"><i class="fas fa-file-signature mr-2"></i> 📃 ข้อตกลงการใช้งาน</h2>
+        <p data-th="เมื่อคุณดาวน์โหลดและใช้งาน ZTOP EA V4.00 ถือว่าคุณได้ยอมรับเงื่อนไขและข้อตกลงทั้งหมดที่ระบุไว้ในเอกสารนี้" 
+           data-en="By downloading and using ZTOP EA V4.00, you agree to accept all terms and conditions specified in this document.">
+           เมื่อคุณดาวน์โหลดและใช้งาน ZTOP EA V4.00 ถือว่าคุณได้ยอมรับเงื่อนไขและข้อตกลงทั้งหมดที่ระบุไว้ในเอกสารนี้
+        </p>
+        <p data-th="หากมีคำถามเพิ่มเติมเกี่ยวกับการใช้งานหรือข้อกำหนด กรุณาติดต่อผ่านช่องทาง" 
+           data-en="If you have additional questions about usage or requirements, please contact us via">
+           หากมีคำถามเพิ่มเติมเกี่ยวกับการใช้งานหรือข้อกำหนด กรุณาติดต่อผ่านช่องทาง
+        </p>
+        <p><strong style="background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"><i class="fas fa-graduation-cap mr-1"></i> UU School Trading</strong></p>
+      </div>
+    </section>
+
+    <!-- Contact & Support Section -->
+    <section id="contact" class="mb-12 scroll-mt-24">
+      <h2 class="text-2xl font-bold mb-4 pb-2 border-b border-gray-200 flex items-center">
+        <i class="fas fa-headset text-blue-600 mr-2"></i>
+        <span data-th=" ติดต่อ & การสนับสนุน" data-en=" Contact & Support">📞 ติดต่อ & การสนับสนุน</span>
+      </h2>
+      
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Contact Card -->
+        <div class="bg-white rounded-lg shadow p-5 border border-gray-100">
+          <h3 class="font-semibold text-lg mb-4 flex items-center text-blue-700">
+            <i class="fas fa-address-card mr-2"></i>
+            <span data-th="ช่องทางการติดต่อ" data-en="Contact Channels">ช่องทางการติดต่อ</span>
+          </h3>
+          <div class="space-y-3">
+            <a href="https://www.facebook.com/uutrader" target="_blank" 
+               class="flex items-center p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition group">
+              <i class="fab fa-facebook text-blue-600 text-xl w-8 group-hover:scale-110 transition"></i>
+              <div class="ml-3">
+                <p class="font-medium text-gray-800">Facebook</p>
+                <p class="text-sm text-gray-600">UU School Trading</p>
+              </div>
+            </a>
+            <div class="flex items-center p-3 bg-green-50 rounded-lg">
+              <i class="fab fa-telegram text-green-600 text-xl w-8"></i>
+              <div class="ml-3">
+                <p class="font-medium text-gray-800">Telegram</p>
+                <p class="text-sm text-gray-600">@teleuutrader</p>
+              </div>
+            </div>
+            <div class="flex items-center p-3 bg-purple-50 rounded-lg">
+              <i class="fas fa-id-card text-purple-600 text-xl w-8"></i>
+              <div class="ml-3">
+                <p class="font-medium text-gray-800">Line ID</p>
+                <p class="text-sm text-gray-600">uutrader</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Support Channel Card -->
+        <div class="support-channel">
+          <h3 data-th="ช่องทางที่สนับสนุน" data-en="Supported Channel"><i class="fas fa-video mr-1"></i> ช่องทางที่สนับสนุน</h3>
+          <div class="channel-name">uu school trading</div>
+          <br>
+          <a href="https://www.youtube.com/watch?v=1b12km_dAdg&t=703s" target="_blank" rel="noopener noreferrer" class="channel-link"
+             data-th="ดูวิดีโอ YouTube" data-en="Watch YouTube Video">
+            <i class="fab fa-youtube mr-1"></i> ดูวิดีโอ YouTube
+          </a>
+          <p style="margin-top: 12px; color: #6b7280; font-size: 0.9rem;" 
+             data-th="สำหรับคำถาม การสนับสนุน และอัพเดทข้อมูลล่าสุด" 
+             data-en="For questions, support, and latest updates">
+             สำหรับคำถาม การสนับสนุน และอัพเดทข้อมูลล่าสุด
+          </p>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="text-align: center; margin-top: 24px;">
+        <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+          <a href="https://drive.google.com/file/d/1Ev-MMga5poZlMUsoTTOJfR5qiYH5D8ae/view?usp=drive_link" target="_blank" 
+             class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition">
+            <i class="fas fa-download mr-2"></i>
+            <span data-th="ดาวน์โหลด EA" data-en="Download EA">ดาวน์โหลด EA</span>
+          </a>
+          <a href="https://www.facebook.com/uutrader" target="_blank"
+             class="inline-flex items-center px-6 py-3 bg-gray-600 text-white font-semibold rounded-lg shadow hover:bg-gray-700 transition">
+            <i class="fas fa-envelope mr-2"></i>
+            <span data-th="ติดต่อ Admin" data-en="Contact Admin">ติดต่อ Admin</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-gray-300 py-8 px-4 mt-12">
+    <div class="max-w-6xl mx-auto text-center">
+      <p class="font-semibold text-white flex items-center justify-center">
+        <i class="fas fa-robot mr-2"></i> ZTOP EA V4.00
+      </p>
+      <p class="text-sm mt-1" data-th="สร้างโดย UU School Trading" data-en="Created by UU School Trading"><i class="fas fa-graduation-cap mr-1"></i> สร้างโดย UU School Trading</p>
+      <p class="text-xs mt-4 text-gray-400">
+        © <span id="year"></span> • All Rights Reserved
+      </p>
+      <p class="text-xs mt-2 text-gray-500">
+        <span data-th="เว็บไซต์นี้ไม่เกี่ยวข้องกับ MetaQuotes Software Corp." data-en="This website is not affiliated with MetaQuotes Software Corp.">
+          <i class="fas fa-info-circle mr-1"></i> เว็บไซต์นี้ไม่เกี่ยวข้องกับ MetaQuotes Software Corp.
+        </span>
+      </p>
+    </div>
+  </footer>
+
+  <!-- JavaScript for Language Switching -->
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
+    function switchLang(lang) {
+      document.getElementById('btn-th').className = 
+        'px-4 py-2 text-sm font-medium transition ' + (lang === 'th' ? 'lang-active' : 'lang-inactive');
+      document.getElementById('btn-en').className = 
+        'px-4 py-2 text-sm font-medium transition ' + (lang === 'en' ? 'lang-active' : 'lang-inactive');
+      
+      document.querySelectorAll('[data-th][data-en]').forEach(el => {
+        el.innerHTML = el.getAttribute(`data-${lang}`);
+      });
+      
+      document.documentElement.lang = lang;
+      localStorage.setItem('ztop_lang', lang);
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedLang = localStorage.getItem('ztop_lang') || 'th';
+      switchLang(savedLang);
+    });
+  </script>
+</body>
+</html>
