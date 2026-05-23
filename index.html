@@ -1120,6 +1120,134 @@
           </tbody>
         </table>
       </div>
+
+      <!-- Time Filter Session Section -->
+      <div class="mt-8 bg-white rounded-lg border border-gray-200 overflow-hidden">
+        <div class="bg-indigo-600 text-white px-5 py-3">
+          <h3 class="font-semibold flex items-center">
+            <i class="fas fa-clock mr-2"></i>
+            <span data-th="⏰ ตัวกรองเวลา (Time Filter Session)" data-en="⏰ Time Filter Session">⏰ ตัวกรองเวลา (Time Filter Session)</span>
+          </h3>
+        </div>
+        <div class="p-5">
+          <p class="text-gray-600 mb-4" data-th="ตั้งค่าช่วงเวลาเทรด 4 ช่วง สามารถใช้ Local Time (ประเทศไทย = GMT+7) หรือ Server Time (GMT=0) ได้" 
+             data-en="Set trading hours for 4 sessions. Can use Local Time (Thailand = GMT+7) or Server Time (GMT=0).">
+             ตั้งค่าช่วงเวลาเทรด 4 ช่วง สามารถใช้ Local Time (ประเทศไทย = GMT+7) หรือ Server Time (GMT=0) ได้
+          </p>
+          
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200 text-sm">
+              <thead class="bg-gray-100">
+                <tr>
+                  <th class="px-4 py-2 text-left font-semibold text-gray-700" data-th="พารามิเตอร์" data-en="Parameter">พารามิเตอร์</th>
+                  <th class="px-4 py-2 text-left font-semibold text-gray-700" data-th="ค่าเริ่มต้น" data-en="Default">ค่าเริ่มต้น</th>
+                  <th class="px-4 py-2 text-left font-semibold text-gray-700" data-th="คำอธิบาย" data-en="Description">คำอธิบาย</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                <tr class="bg-blue-50">
+                  <td class="px-4 py-2 font-mono text-blue-700">InpSessionGMT</td>
+                  <td class="px-4 py-2">"=== Time Zone Setting ==="</td>
+                  <td class="px-4 py-2" data-th="หัวข้อการตั้งค่าโซนเวลา" data-en="Time Zone Setting Header">หัวข้อการตั้งค่าโซนเวลา</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-2 font-mono text-blue-700">InpGMTOffset</td>
+                  <td class="px-4 py-2">7</td>
+                  <td class="px-4 py-2" data-th="ค่า Offset ของ GMT (ไทย = +7, Server Time = 0)" data-en="GMT Offset (Thai = +7, Server Time = 0)">GMT Offset (ไทย = +7, Server Time = 0)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4 class="font-semibold text-gray-800 mt-6 mb-3 flex items-center">
+            <i class="fas fa-sun text-yellow-500 mr-2"></i>
+            <span data-th="=== Trading Hours Session 1 (Morning Thailand) ===" data-en="Session 1: Morning Thailand">=== Trading Hours Session 1 (Morning Thailand) ===</span>
+          </h4>
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200 text-sm">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-4 py-2 text-left font-semibold text-gray-700">InpSession1Settings</th>
+                  <th class="px-4 py-2 text-left font-semibold text-gray-700">"=== Trading Hours Session 1 (Morning Thailand) ==="</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpUseSession1</td><td class="px-4 py-2">false</td><td class="px-4 py-2" data-th="เปิดใช้งาน Session 1" data-en="Enable Session 1">เปิดใช้งาน Session 1</td></tr>
+                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS1StartHour</td><td class="px-4 py-2">9</td><td class="px-4 py-2" data-th="ชั่วโมงเริ่มต้น" data-en="Start Hour">S1 Start Hour</td></tr>
+                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS1StartMin</td><td class="px-4 py-2">0</td><td class="px-4 py-2" data-th="นาทีเริ่มต้น" data-en="Start Min">S1 Start Min</td></tr>
+                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS1EndHour</td><td class="px-4 py-2">12</td><td class="px-4 py-2" data-th="ชั่วโมงสิ้นสุด" data-en="End Hour">S1 End Hour</td></tr>
+                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS1EndMin</td><td class="px-4 py-2">0</td><td class="px-4 py-2" data-th="นาทีสิ้นสุด" data-en="End Min">S1 End Min</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4 class="font-semibold text-gray-800 mt-6 mb-3 flex items-center">
+            <i class="fas fa-cloud-sun text-orange-500 mr-2"></i>
+            <span data-th="=== Trading Hours Session 2 (Afternoon Thailand) ===" data-en="Session 2: Afternoon Thailand">=== Trading Hours Session 2 (Afternoon Thailand) ===</span>
+          </h4>
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200 text-sm">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-4 py-2 text-left font-semibold text-gray-700">InpSession2Settings</th>
+                  <th class="px-4 py-2 text-left font-semibold text-gray-700">"=== Trading Hours Session 2 (Afternoon Thailand) ==="</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpUseSession2</td><td class="px-4 py-2">false</td><td class="px-4 py-2" data-th="เปิดใช้งาน Session 2" data-en="Enable Session 2">เปิดใช้งาน Session 2</td></tr>
+                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS2StartHour</td><td class="px-4 py-2">13</td><td class="px-4 py-2">S2 Start Hour</td></tr>
+                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS2StartMin</td><td class="px-4 py-2">0</td><td class="px-4 py-2">S2 Start Min</td></tr>
+                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS2EndHour</td><td class="px-4 py-2">17</td><td class="px-4 py-2">S2 End Hour</td></tr>
+                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS2EndMin</td><td class="px-4 py-2">0</td><td class="px-4 py-2">S2 End Min</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4 class="font-semibold text-gray-800 mt-6 mb-3 flex items-center">
+            <i class="fas fa-moon text-indigo-500 mr-2"></i>
+            <span data-th="=== Trading Hours Session 3 (Evening Thailand) ===" data-en="Session 3: Evening Thailand">=== Trading Hours Session 3 (Evening Thailand) ===</span>
+          </h4>
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200 text-sm">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-4 py-2 text-left font-semibold text-gray-700">InpSession3Settings</th>
+                  <th class="px-4 py-2 text-left font-semibold text-gray-700">"=== Trading Hours Session 3 (Evening Thailand) ==="</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpUseSession3</td><td class="px-4 py-2">false</td><td class="px-4 py-2" data-th="เปิดใช้งาน Session 3" data-en="Enable Session 3">เปิดใช้งาน Session 3</td></tr>
+                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS3StartHour</td><td class="px-4 py-2">19</td><td class="px-4 py-2">S3 Start Hour</td></tr>
+                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS3StartMin</td><td class="px-4 py-2">0</td><td class="px-4 py-2">S3 Start Min</td></tr>
+                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS3EndHour</td><td class="px-4 py-2">22</td><td class="px-4 py-2">S3 End Hour</td></tr>
+                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS3EndMin</td><td class="px-4 py-2">0</td><td class="px-4 py-2">S3 End Min</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4 class="font-semibold text-gray-800 mt-6 mb-3 flex items-center">
+            <i class="fas fa-star text-purple-500 mr-2"></i>
+            <span data-th="=== Trading Hours Session 4 (Night Thailand) ===" data-en="Session 4: Night Thailand">=== Trading Hours Session 4 (Night Thailand) ===</span>
+          </h4>
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200 text-sm">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-4 py-2 text-left font-semibold text-gray-700">InpSession4Settings</th>
+                  <th class="px-4 py-2 text-left font-semibold text-gray-700">"=== Trading Hours Session 4 (Night Thailand) ==="</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpUseSession4</td><td class="px-4 py-2">false</td><td class="px-4 py-2" data-th="เปิดใช้งาน Session 4" data-en="Enable Session 4">เปิดใช้งาน Session 4</td></tr>
+                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS4StartHour</td><td class="px-4 py-2">22</td><td class="px-4 py-2">S4 Start Hour</td></tr>
+                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS4StartMin</td><td class="px-4 py-2">0</td><td class="px-4 py-2">S4 Start Min</td></tr>
+                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS4EndHour</td><td class="px-4 py-2">2</td><td class="px-4 py-2">S4 End Hour</td></tr>
+                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS4EndMin</td><td class="px-4 py-2">0</td><td class="px-4 py-2">S4 End Min</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Terms & Conditions Section -->
