@@ -15,7 +15,6 @@
     body { font-family: 'Kanit', sans-serif; }
     .lang-active { @apply bg-blue-600 text-white font-semibold; }
     .lang-inactive { @apply bg-gray-200 text-gray-700 hover:bg-gray-300; }
-    .param-row:nth-child(even) { @apply bg-gray-50; }
     @media print { .no-print { display: none !important; } }
     
     /* Broker Grid Styles */
@@ -164,15 +163,6 @@
       line-height: 1.6;
       margin-bottom: 12px;
     }
-    /* Filter Section Styles */
-    .filter-group-card {
-      border-left: 4px solid;
-      padding-left: 1rem;
-      margin-bottom: 1rem;
-    }
-    .filter-group-card.trend { border-color: #3b82f6; }
-    .filter-group-card.volatility { border-color: #10b981; }
-    .filter-group-card.momentum { border-color: #8b5cf6; }
     /* Gallery Styles */
     .gallery-img {
       transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -194,14 +184,115 @@
     .step-card:hover .step-icon {
       transform: rotate(5deg) scale(1.1);
     }
+    /* Product Card Styles */
+    .product-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      border: 2px solid #e5e7eb;
+    }
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+      border-color: #3b82f6;
+    }
+    .product-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .product-content {
+      padding: 24px;
+    }
+    .product-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 8px;
+    }
+    .product-category {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .category-ea {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+    .category-indicator {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      margin-top: 16px;
+    }
+    .download-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+    }
+    .section-header {
+      background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+      color: white;
+      padding: 16px 24px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-header h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    /* Coming Soon Placeholder */
+    .coming-soon-card {
+      background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+      border: 2px dashed #9ca3af;
+      border-radius: 16px;
+      padding: 40px 24px;
+      text-align: center;
+      color: #6b7280;
+    }
+    .coming-soon-card i {
+      font-size: 3rem;
+      color: #9ca3af;
+      margin-bottom: 16px;
+    }
+    .coming-soon-card h4 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #4b5563;
+      margin-bottom: 8px;
+    }
+    .coming-soon-card p {
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
   <!-- Language Switcher -->
   <div class="fixed top-4 right-4 z-50 no-print flex space-x-1 rounded-lg overflow-hidden shadow-md">
-    <button id="btn-th" class="px-4 py-2 text-sm font-medium lang-active transition" onclick="switchLang('th')">🇭 ไทย</button>
-    <button id="btn-en" class="px-4 py-2 text-sm font-medium lang-inactive transition" onclick="switchLang('en')">🇬🇧 EN</button>
+    <button id="btn-th" class="px-4 py-2 text-sm font-medium lang-active transition" onclick="switchLang('th')">🇹🇭 ไทย</button>
+    <button id="btn-en" class="px-4 py-2 text-sm font-medium lang-inactive transition" onclick="switchLang('en')">🇬 EN</button>
   </div>
 
   <!-- Floating Open Account Button -->
@@ -241,12 +332,8 @@
         <a href="#gallery" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center">
           <i class="fas fa-images mr-1"></i><span data-th="แกลเลอรี่" data-en="Gallery">แกลเลอรี่</span>
         </a>
-        <a href="#presets" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center">
-          <i class="fas fa-file-alt mr-1"></i><span data-th="Preset" data-en="Presets">Preset</span>
-        </a>
-
-        <a href="#params" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center">
-          <i class="fas fa-sliders-h mr-1"></i><span data-th="พารามิเตอร์" data-en="Parameters">พารามิเตอร์</span>
+        <a href="#downloads" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center">
+          <i class="fas fa-cloud-download-alt mr-1"></i><span data-th="ดาวน์โหลดฟรี" data-en="Free Downloads">ดาวน์โหลดฟรี</span>
         </a>
         <a href="#terms" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center">
           <i class="fas fa-file-contract mr-1"></i><span data-th="เงื่อนไข" data-en="Terms">เงื่อนไข</span>
@@ -587,359 +674,88 @@
       </div>
     </section>
 
-    <!-- Preset Files Section -->
-    <section id="presets" class="mb-12 scroll-mt-24">
-      <h2 class="text-2xl font-bold mb-4 pb-2 border-b border-gray-200 flex items-center">
-        <i class="fas fa-file-download text-blue-600 mr-2"></i>
-        <span data-th="📦 ไฟล์ตั้งค่าล่วงหน้า (.set)" data-en="📦 Preset Files (.set)">📦 ไฟล์ตั้งค่าล่วงหน้า (.set)</span>
-      </h2>
+    <!-- Free Downloads Section -->
+    <section id="downloads" class="mb-12 scroll-mt-24">
       
-      <p class="text-gray-600 mb-6" data-th="ดาวน์โหลดไฟล์ .set เพื่อโหลดการตั้งค่าทั้งหมดในคลิกเดียว เหมาะสำหรับผู้ใช้ที่ต้องการเริ่มต้นเร็ว หรือทดสอบกลยุทธ์ต่างๆ" 
-         data-en="Download .set files to load all settings in one click. Perfect for quick start or testing different strategies.">
-         ดาวน์โหลดไฟล์ .set เพื่อโหลดการตั้งค่าทั้งหมดในคลิกเดียว เหมาะสำหรับผู้ใช้ที่ต้องการเริ่มต้นเร็ว หรือทดสอบกลยุทธ์ต่างๆ
-      </p>
-
-       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-         
-         <!-- Preset 1: Conservative -->
-         <div class="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-lg transition">
-           <div class="flex items-center justify-between mb-3">
-             <h3 class="font-semibold text-green-700 flex items-center"><i class="fas fa-shield-alt mr-1"></i> <span data-th="🟢 Conservative" data-en="🟢 Conservative">🟢 Conservative</span></h3>
-             <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded" data-th="ความเสี่ยงต่ำ" data-en="Low Risk">ความเสี่ยงต่ำ</span>
-           </div>
-           <p class="text-sm text-gray-600 mb-4" data-th="เหมาะสำหรับบัญชีขนาดเล็กหรือผู้เริ่มต้น เน้นความปลอดภัย" 
-              data-en="Ideal for small accounts or beginners. Focus on safety.">
-              เหมาะสำหรับบัญชีขนาดเล็กหรือผู้เริ่มต้น เน้นความปลอดภัย
-           </p>
-           <ul class="text-xs text-gray-500 space-y-1 mb-4">
-             <li><i class="fas fa-check text-green-500 mr-1"></i> Lot: 0.01 (Fixed)</li>
-             <li><i class="fas fa-check text-green-500 mr-1"></i> Risk: 2%</li>
-             <li><i class="fas fa-check text-green-500 mr-1"></i> SL/TP: ATR-Based (2/5×)</li>
-             <li><i class="fas fa-check text-green-500 mr-1"></i> BE / Avg TP / Daily Profit Limit</li>
-           </ul>
-           <a href="presets/ZTOP_Conservative.set" download class="block text-center w-full py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm font-medium">
-             <i class="fas fa-download mr-1"></i>
-             <span data-th="ดาวน์โหลด" data-en="Download">ดาวน์โหลด</span>
-           </a>
-         </div>
-
-         <!-- Preset 2: Balanced -->
-         <div class="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-lg transition">
-           <div class="flex items-center justify-between mb-3">
-             <h3 class="font-semibold text-blue-700 flex items-center"><i class="fas fa-balance-scale mr-1"></i> <span data-th="🔵 Balanced" data-en="🔵 Balanced">🔵 Balanced</span></h3>
-             <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded" data-th="ความเสี่ยงปานกลาง" data-en="Medium Risk">ความเสี่ยงปานกลาง</span>
-           </div>
-           <p class="text-sm text-gray-600 mb-4" data-th="สมดุลระหว่างความเสี่ยงและผลตอบแทน เหมาะสำหรับผู้ใช้ทั่วไป" 
-              data-en="Balanced risk/reward. Suitable for general users.">
-              สมดุลระหว่างความเสี่ยงและผลตอบแทน เหมาะสำหรับผู้ใช้ทั่วไป
-           </p>
-           <ul class="text-xs text-gray-500 space-y-1 mb-4">
-             <li><i class="fas fa-check text-blue-500 mr-1"></i> Lot: 0.01 + 0.02 step</li>
-             <li><i class="fas fa-check text-blue-500 mr-1"></i> Risk: 5%</li>
-             <li><i class="fas fa-check text-blue-500 mr-1"></i> SL/TP: ATR-Based (2/5×)</li>
-             <li><i class="fas fa-check text-blue-500 mr-1"></i> BE / Avg TP / Daily Profit Limit</li>
-           </ul>
-           <a href="presets/ZTOP_Balanced.set" download class="block text-center w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm font-medium">
-             <i class="fas fa-download mr-1"></i>
-             <span data-th="ดาวน์โหลด" data-en="Download">ดาวน์โหลด</span>
-           </a>
-         </div>
-
-         <!-- Preset 3: Aggressive -->
-         <div class="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-lg transition">
-           <div class="flex items-center justify-between mb-3">
-             <h3 class="font-semibold text-orange-700 flex items-center"><i class="fas fa-fire mr-1"></i> <span data-th="🟠 Aggressive" data-en="🟠 Aggressive">🟠 Aggressive</span></h3>
-             <span class="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded" data-th="ความเสี่ยงสูง" data-en="High Risk">ความเสี่ยงสูง</span>
-           </div>
-           <p class="text-sm text-gray-600 mb-4" data-th="เหมาะสำหรับเทรดเดอร์ที่มีประสบการณ์ ต้องการผลตอบแทนสูง" 
-              data-en="For experienced traders seeking higher returns.">
-              เหมาะสำหรับเทรดเดอร์ที่มีประสบการณ์ ต้องการผลตอบแทนสูง
-           </p>
-           <ul class="text-xs text-gray-500 space-y-1 mb-4">
-             <li><i class="fas fa-check text-orange-500 mr-1"></i> Lot: 0.02 + 0.02 step</li>
-             <li><i class="fas fa-check text-orange-500 mr-1"></i> Risk: 10%</li>
-             <li><i class="fas fa-check text-orange-500 mr-1"></i> SL/TP: Fixed Points (2000/3000)</li>
-             <li><i class="fas fa-check text-orange-500 mr-1"></i> BE / Avg TP / Daily Profit Limit</li>
-           </ul>
-           <a href="presets/ZTOP_Aggressive.set" download class="block text-center w-full py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition text-sm font-medium">
-             <i class="fas fa-download mr-1"></i>
-             <span data-th="ดาวน์โหลด" data-en="Download">ดาวน์โหลด</span>
-           </a>
-         </div>
-
-         <!-- Preset 4: Gold Scalper -->
-         <div class="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-lg transition">
-           <div class="flex items-center justify-between mb-3">
-             <h3 class="font-semibold text-yellow-700 flex items-center"><i class="fas fa-coins mr-1"></i> <span data-th="🥇 Gold Scalper" data-en="🥇 Gold Scalper">🥇 Gold Scalper</span></h3>
-             <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded">XAUUSD</span>
-           </div>
-           <p class="text-sm text-gray-600 mb-4" data-th="ตั้งค่าพิเศษสำหรับเทรดทองคำ ระยะสั้น-กลาง" 
-              data-en="Optimized settings for Gold (XAUUSD) short-medium term trading.">
-              ตั้งค่าพิเศษสำหรับเทรดทองคำ ระยะสั้น-กลาง
-           </p>
-           <ul class="text-xs text-gray-500 space-y-1 mb-4">
-             <li><i class="fas fa-check text-yellow-500 mr-1"></i> Symbol: XAUUSD only</li>
-             <li><i class="fas fa-check text-yellow-500 mr-1"></i> TF: M15-M30</li>
-             <li><i class="fas fa-check text-yellow-500 mr-1"></i> Risk: 5%</li>
-             <li><i class="fas fa-check text-yellow-500 mr-1"></i> BE / Avg TP / Daily Profit Limit</li>
-           </ul>
-           <a href="presets/ZTOP_GoldScalper.set" download class="block text-center w-full py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition text-sm font-medium">
-             <i class="fas fa-download mr-1"></i>
-             <span data-th="ดาวน์โหลด" data-en="Download">ดาวน์โหลด</span>
-           </a>
-         </div>
-
-         <!-- Preset 5: Prop Firm -->
-         <div class="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-lg transition">
-           <div class="flex items-center justify-between mb-3">
-             <h3 class="font-semibold text-purple-700 flex items-center"><i class="fas fa-briefcase mr-1"></i> <span data-th="💼 Prop Firm" data-en="💼 Prop Firm">💼 Prop Firm</span></h3>
-             <span class="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded" data-th="ผ่านกฎ Prop" data-en="Prop Compliant">ผ่านกฎ Prop</span>
-           </div>
-           <p class="text-sm text-gray-600 mb-4" data-th="ตั้งค่าให้ผ่านกฎ Prop Firm: Drawdown จำกัด, ความเสี่ยงต่ำ" 
-              data-en="Configured to pass Prop Firm rules: Limited drawdown, low risk.">
-              ตั้งค่าให้ผ่านกฎ Prop Firm: Drawdown จำกัด, ความเสี่ยงต่ำ
-           </p>
-           <ul class="text-xs text-gray-500 space-y-1 mb-4">
-             <li><i class="fas fa-check text-purple-500 mr-1"></i> Max Daily Loss: 5%</li>
-             <li><i class="fas fa-check text-purple-500 mr-1"></i> Max Risk per trade: 1%</li>
-             <li><i class="fas fa-check text-purple-500 mr-1"></i> BreakEven: ON, Daily Profit Limit: ON</li>
-             <li><i class="fas fa-check text-purple-500 mr-1"></i> Margin Safety: 80%</li>
-           </ul>
-           <a href="presets/ZTOP_PropFirm.set" download class="block text-center w-full py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition text-sm font-medium">
-             <i class="fas fa-download mr-1"></i>
-             <span data-th="ดาวน์โหลด" data-en="Download">ดาวน์โหลด</span>
-           </a>
-         </div>
-
-         <!-- Preset 6: Custom Template -->
-         <div class="bg-white rounded-lg border border-dashed border-gray-300 p-5 flex flex-col items-center justify-center text-center">
-           <i class="fas fa-plus-circle text-gray-400 text-3xl mb-2"></i>
-           <h3 class="font-semibold text-gray-600 mb-2" data-th="สร้างของคุณเอง" data-en="Create Your Own">สร้างของคุณเอง</h3>
-           <p class="text-xs text-gray-500 mb-3" data-th="ปรับตั้งค่าใน EA > Save As .set > แชร์ให้ชุมชน" 
-              data-en="Adjust settings in EA > Save As .set > Share with community">
-              ปรับตั้งค่าใน EA > Save As .set > แชร์ให้ชุมชน
-           </p>
-           <a href="#params" class="text-xs text-blue-600 hover:underline flex items-center" data-th="ดูคู่มือการตั้งค่า" data-en="View Settings Guide"><i class="fas fa-book mr-1"></i> ดูคู่มือการตั้งค่า</a>
-         </div>
-
-       </div>
-
-      <!-- How to Use Presets -->
-      <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <h4 class="font-semibold text-blue-800 mb-2 flex items-center">
-          <i class="fas fa-info-circle mr-2"></i>
-          <span data-th="วิธีใช้งานไฟล์ .set" data-en="How to Use .set Files">วิธีใช้งานไฟล์ .set</span>
-        </h4>
-        <ol class="text-sm text-blue-900 space-y-1 list-decimal list-inside">
-          <li data-th="ดาวน์โหลดไฟล์ .set ที่ต้องการ" data-en="Download your preferred .set file"><i class="fas fa-download text-blue-500 mr-1"></i> ดาวน์โหลดไฟล์ .set ที่ต้องการ</li>
-          <li data-th="ใน MT5: ลาก EA ลงชาร์ต > กดปุ่ม 'Load' ในหน้าพารามิเตอร์" data-en="In MT5: Attach EA to chart > Click 'Load' in parameters tab"><i class="fas fa-mouse-pointer text-blue-500 mr-1"></i> ใน MT5: ลาก EA ลงชาร์ต > กดปุ่ม 'Load' ในหน้าพารามิเตอร์</li>
-          <li data-th="เลือกไฟล์ .set ที่ดาวน์โหลดมา > กด Open" data-en="Select the downloaded .set file > Click Open"><i class="fas fa-file-import text-blue-500 mr-1"></i> เลือกไฟล์ .set ที่ดาวน์โหลดมา > กด Open</li>
-          <li data-th="ตรวจสอบค่าที่โหลดมา > กด OK เพื่อเริ่มใช้งาน" data-en="Review loaded settings > Click OK to start"><i class="fas fa-check-circle text-blue-500 mr-1"></i> ตรวจสอบค่าที่โหลดมา > กด OK เพื่อเริ่มใช้งาน</li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- Parameters Section -->
-    <section id="params" class="mb-12 scroll-mt-24">
-      <h2 class="text-2xl font-bold mb-4 pb-2 border-b border-gray-200 flex items-center">
-        <i class="fas fa-sliders-h text-blue-600 mr-2"></i>
-        <span data-th="📋 พารามิเตอร์สำคัญ" data-en=" Key Parameters">📋 พารามิเตอร์สำคัญ</span>
-      </h2>
-      
-      <div class="overflow-x-auto rounded-lg border border-gray-200">
-        <table class="min-w-full divide-y divide-gray-200 text-sm">
-          <thead class="bg-gray-100">
-            <tr>
-              <th class="px-4 py-3 text-left font-semibold text-gray-700" data-th="พารามิเตอร์" data-en="Parameter"><i class="fas fa-tag mr-1"></i> พารามิเตอร์</th>
-              <th class="px-4 py-3 text-left font-semibold text-gray-700" data-th="ค่าเริ่มต้น" data-en="Default"><i class="fas fa-hashtag mr-1"></i> ค่าเริ่มต้น</th>
-              <th class="px-4 py-3 text-left font-semibold text-gray-700" data-th="คำอธิบาย" data-en="Description"><i class="fas fa-info-circle mr-1"></i> คำอธิบาย</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-100">
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpMagicNumber</td><td class="px-4 py-3">9836</td><td class="px-4 py-3" data-th="หมายเลขเวท righteous สำหรับ EA นี้" data-en="Magic number for this EA">หมายเลขเวท righteous สำหรับ EA นี้</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpSlippage</td><td class="px-4 py-3">5</td><td class="px-4 py-3" data-th="ค่าความล่าช้า (Points)" data-en="Slippage (Points)">ค่าความล่าช้า (Points)</td></tr>
-            <tr class="param-row"><td colspan="3" class="px-4 py-2 bg-gray-50 font-semibold text-gray-700"><i class="fas fa-chart-area mr-1"></i> ZigZag Settings</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpDepth</td><td class="px-4 py-3">12</td><td class="px-4 py-3" data-th="ความลึก ZigZag" data-en="ZigZag depth">ความลึก ZigZag</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpDeviation</td><td class="px-4 py-3">5</td><td class="px-4 py-3" data-th="ค่าค deviations" data-en="ZigZag deviation">ค่าค deviations</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpBackstep</td><td class="px-4 py-3">3</td><td class="px-4 py-3" data-th="ขั้นตอนถอยหลัง" data-en="ZigZag backstep">ขั้นตอนถอยหลัง</td></tr>
-            <tr class="param-row"><td colspan="3" class="px-4 py-2 bg-gray-50 font-semibold text-gray-700"><i class="fas fa-exchange-alt mr-1"></i> Buy Stop Settings</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpBuyStopCount</td><td class="px-4 py-3">2</td><td class="px-4 py-3" data-th="จำนวน Buy Stop" data-en="Number of Buy Stop orders">จำนวน Buy Stop</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpBuyStopSpacing</td><td class="px-4 py-3">0</td><td class="px-4 py-3" data-th="ระยะห่างระหว่าง Buy Stop (Points)" data-en="Spacing between Buy Stop orders (Points)">ระยะห่างระหว่าง Buy Stop (Points)</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpBuyStopOffset</td><td class="px-4 py-3">0</td><td class="px-4 py-3" data-th="ระยะ Offset จากจุดอ้างอิง" data-en="Offset from reference point">ระยะ Offset จากจุดอ้างอิง</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpUseATRSpacingStop</td><td class="px-4 py-3">false</td><td class="px-4 py-3" data-th="ใช้ ATR-based spacing แทน Points" data-en="Use ATR-based spacing instead of Points">ใช้ ATR-based spacing แทน Points</td></tr>
-            <tr class="param-row"><td colspan="3" class="px-4 py-2 bg-gray-50 font-semibold text-gray-700"><i class="fas fa-exchange-alt mr-1"></i> Sell Stop Settings</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpSellStopCount</td><td class="px-4 py-3">2</td><td class="px-4 py-3" data-th="จำนวน Sell Stop" data-en="Number of Sell Stop orders">จำนวน Sell Stop</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpSellStopSpacing</td><td class="px-4 py-3">0</td><td class="px-4 py-3" data-th="ระยะห่างระหว่าง Sell Stop (Points)" data-en="Spacing between Sell Stop orders (Points)">ระยะห่างระหว่าง Sell Stop (Points)</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpSellStopOffset</td><td class="px-4 py-3">0</td><td class="px-4 py-3" data-th="ระยะ Offset จากจุดอ้างอิง" data-en="Offset from reference point">ระยะ Offset จากจุดอ้างอิง</td></tr>
-            <tr class="param-row"><td colspan="3" class="px-4 py-2 bg-gray-50 font-semibold text-gray-700"><i class="fas fa-exchange-alt mr-1"></i> Buy Limit Settings</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpUseOutSessionLimit</td><td class="px-4 py-3">true</td><td class="px-4 py-3" data-th="เปิดใช้งาน Out Session Limit Orders" data-en="Enable Out Session Limit Orders">เปิดใช้งาน Out Session Limit Orders</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpBuyLimitCount</td><td class="px-4 py-3">2</td><td class="px-4 py-3" data-th="จำนวน Buy Limit" data-en="Number of Buy Limit orders">จำนวน Buy Limit</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpBuyLimitSpacing</td><td class="px-4 py-3">0</td><td class="px-4 py-3" data-th="ระยะห่างระหว่าง Buy Limit (Points)" data-en="Spacing between Buy Limit orders (Points)">ระยะห่างระหว่าง Buy Limit (Points)</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpBuyLimitOffset</td><td class="px-4 py-3">0.0</td><td class="px-4 py-3" data-th="ระยะ Offset จากจุดอ้างอิง" data-en="Offset from reference point">ระยะ Offset จากจุดอ้างอิง</td></tr>
-            <tr class="param-row"><td colspan="3" class="px-4 py-2 bg-gray-50 font-semibold text-gray-700"><i class="fas fa-exchange-alt mr-1"></i> Sell Limit Settings</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpSellLimitCount</td><td class="px-4 py-3">2</td><td class="px-4 py-3" data-th="จำนวน Sell Limit" data-en="Number of Sell Limit orders">จำนวน Sell Limit</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpSellLimitSpacing</td><td class="px-4 py-3">0</td><td class="px-4 py-3" data-th="ระยะห่างระหว่าง Sell Limit (Points)" data-en="Spacing between Sell Limit orders (Points)">ระยะห่างระหว่าง Sell Limit (Points)</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpSellLimitOffset</td><td class="px-4 py-3">0.0</td><td class="px-4 py-3" data-th="ระยะ Offset จากจุดอ้างอิง" data-en="Offset from reference point">ระยะ Offset จากจุดอ้างอิง</td></tr>
-            <tr class="param-row"><td colspan="3" class="px-4 py-2 bg-gray-50 font-semibold text-gray-700"><i class="fas fa-shield-alt mr-1"></i> Risk Management</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpMaxRiskPercent</td><td class="px-4 py-3">5.0</td><td class="px-4 py-3" data-th="ความเสี่ยงสูงสุด (%)" data-en="Maximum risk per trade (%)">ความเสี่ยงสูงสุด (%)</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpUseMarginCheck</td><td class="px-4 py-3">false</td><td class="px-4 py-3" data-th="เปิดใช้งานการตรวจสอบ Margin" data-en="Enable margin check">เปิดใช้งานการตรวจสอบ Margin</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpMarginSafetyPercent</td><td class="px-4 py-3">80.0</td><td class="px-4 py-3" data-th="เปอร์เซ็นต์ความปลอดภัยของ Margin" data-en="Margin safety percentage">เปอร์เซ็นต์ความปลอดภัยของ Margin</td></tr>
-            <tr class="param-row"><td colspan="3" class="px-4 py-2 bg-gray-50 font-semibold text-gray-700"><i class="fas fa-cogs mr-1"></i> Lot Size Settings</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpLotType</td><td class="px-4 py-3">LotPlus</td><td class="px-4 py-3" data-th="ประเภทการคำนวณล็อต" data-en="Lot calculation type">ประเภทการคำนวณล็อต</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpLotSize</td><td class="px-4 py-3">0.01</td><td class="px-4 py-3" data-th="ขนาดล็อตพื้นฐาน" data-en="Base lot size">ขนาดล็อตพื้นฐาน</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpLotPlus</td><td class="px-4 py-3">0.02</td><td class="px-4 py-3" data-th="เพิ่มล็อตเพิ่มเติม" data-en="Lot increment">เพิ่มล็อตเพิ่มเติม</td></tr>
-            <tr class="param-row"><td colspan="3" class="px-4 py-2 bg-gray-50 font-semibold text-gray-700"><i class="fas fa-bullseye mr-1"></i> TP/SL Settings</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpEnableTPSL</td><td class="px-4 py-3">true</td><td class="px-4 py-3" data-th="เปิดใช้งาน TP/SL อัตโนมัติ" data-en="Enable automatic TP/SL">เปิดใช้งาน TP/SL อัตโนมัติ</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpTPSLMethod</td><td class="px-4 py-3">ATR_BASED</td><td class="px-4 py-3" data-th="วิธีคำนวณ TP/SL (Fixed Points หรือ ATR)" data-en="TP/SL method (Fixed Points or ATR)">วิธีคำนวณ TP/SL (Fixed Points หรือ ATR)</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpTakeProfitPoints</td><td class="px-4 py-3">3000.0</td><td class="px-4 py-3" data-th="ระยะ Take Profit (Points)" data-en="Take Profit distance (Points)">ระยะ Take Profit (Points)</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpStopLossPoints</td><td class="px-4 py-3">2000.0</td><td class="px-4 py-3" data-th="ระยะ Stop Loss (Points)" data-en="Stop Loss distance (Points)">ระยะ Stop Loss (Points)</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpATRMultiplierTP</td><td class="px-4 py-3">5.00</td><td class="px-4 py-3" data-th="ตัวคูณ ATR สำหรับ TP" data-en="ATR multiplier for TP">ตัวคูณ ATR สำหรับ TP</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpATRMultiplierSL</td><td class="px-4 py-3">2.00</td><td class="px-4 py-3" data-th="ตัวคูณ ATR สำหรับ SL" data-en="ATR multiplier for SL">ตัวคูณ ATR สำหรับ SL</td></tr>
-            <tr class="param-row"><td colspan="3" class="px-4 py-2 bg-gray-50 font-semibold text-gray-700"><i class="fas fa-lock mr-1"></i> Break Even</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpUseBreakEven</td><td class="px-4 py-3">true</td><td class="px-4 py-3" data-th="เปิดใช้งาน Break Even" data-en="Enable Break Even">เปิดใช้งาน Break Even</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpBreakEvenTrigger</td><td class="px-4 py-3">500</td><td class="px-4 py-3" data-th="กำไรถึงเท่าไหร่ถึงล็อก (Points)" data-en="Profit level to lock (Points)">กำไรถึงเท่าไหร่ถึงล็อก (Points)</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpBreakEvenBuffer</td><td class="px-4 py-3">100</td><td class="px-4 py-3" data-th="ระยะล็อกกำไร (Points)" data-en="Lock profit buffer (Points)">ระยะล็อกกำไร (Points)</td></tr>
-            <tr class="param-row"><td colspan="3" class="px-4 py-2 bg-gray-50 font-semibold text-gray-700"><i class="fas fa-chart-line mr-1"></i> Average TP Settings</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpUseAvgTP</td><td class="px-4 py-3">true</td><td class="px-4 py-3" data-th="เปิดใช้งาน Average TP" data-en="Enable Average TP">เปิดใช้งาน Average TP</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpAvgTPPoints</td><td class="px-4 py-3">500</td><td class="px-4 py-3" data-th="ระยะ Average TP (Points)" data-en="Average TP distance (Points)">ระยะ Average TP (Points)</td></tr>
-            <tr class="param-row"><td colspan="3" class="px-4 py-2 bg-gray-50 font-semibold text-gray-700"><i class="fas fa-ban mr-1"></i> Cut Loss / Take Profit Settings</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpCutlossType</td><td class="px-4 py-3">notSettingCut</td><td class="px-4 py-3" data-th="ประเภท Cut Loss" data-en="Cut loss type">ประเภท Cut Loss</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpCutlossPercent</td><td class="px-4 py-3">5.0</td><td class="px-4 py-3" data-th="เปอร์เซ็นต์ Cut Loss" data-en="Cut loss percentage">เปอร์เซ็นต์ Cut Loss</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpCutlossDollars</td><td class="px-4 py-3">100.0</td><td class="px-4 py-3" data-th="จำนวนเงิน Cut Loss (USD)" data-en="Cut loss amount (USD)">จำนวนเงิน Cut Loss (USD)</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpProfitType</td><td class="px-4 py-3">percentProfit</td><td class="px-4 py-3" data-th="ประเภท Take Profit" data-en="Profit type">ประเภท Take Profit</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpProfitPercent</td><td class="px-4 py-3">2.0</td><td class="px-4 py-3" data-th="เปอร์เซ็นต์ Profit" data-en="Profit percentage">เปอร์เซ็นต์ Profit</td></tr>
-            <tr class="param-row"><td class="px-4 py-3 font-mono text-blue-700">InpProfitDollars</td><td class="px-4 py-3">200.0</td><td class="px-4 py-3" data-th="จำนวนเงิน Profit (USD)" data-en="Profit amount (USD)">จำนวนเงิน Profit (USD)</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Time Filter Session Section -->
-      <div class="mt-8 bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <div class="bg-indigo-600 text-white px-5 py-3">
-          <h3 class="font-semibold flex items-center">
-            <i class="fas fa-clock mr-2"></i>
-            <span data-th="⏰ ตัวกรองเวลา (Time Filter Session)" data-en="⏰ Time Filter Session">⏰ ตัวกรองเวลา (Time Filter Session)</span>
-          </h3>
-        </div>
-        <div class="p-5">
-          <p class="text-gray-600 mb-4" data-th="ตั้งค่าช่วงเวลาเทรด 4 ช่วง สามารถใช้ Local Time (ประเทศไทย = GMT+7) หรือ Server Time (GMT=0) ได้" 
-             data-en="Set trading hours for 4 sessions. Can use Local Time (Thailand = GMT+7) or Server Time (GMT=0).">
-             ตั้งค่าช่วงเวลาเทรด 4 ช่วง สามารถใช้ Local Time (ประเทศไทย = GMT+7) หรือ Server Time (GMT=0) ได้
-          </p>
-          
-          <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200 text-sm">
-              <thead class="bg-gray-100">
-                <tr>
-                  <th class="px-4 py-2 text-left font-semibold text-gray-700" data-th="พารามิเตอร์" data-en="Parameter">พารามิเตอร์</th>
-                  <th class="px-4 py-2 text-left font-semibold text-gray-700" data-th="ค่าเริ่มต้น" data-en="Default">ค่าเริ่มต้น</th>
-                  <th class="px-4 py-2 text-left font-semibold text-gray-700" data-th="คำอธิบาย" data-en="Description">คำอธิบาย</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-gray-100">
-                <tr class="bg-blue-50">
-                  <td class="px-4 py-2 font-mono text-blue-700">InpSessionGMT</td>
-                  <td class="px-4 py-2">"=== Time Zone Setting ==="</td>
-                  <td class="px-4 py-2" data-th="หัวข้อการตั้งค่าโซนเวลา" data-en="Time Zone Setting Header">หัวข้อการตั้งค่าโซนเวลา</td>
-                </tr>
-                 <tr>
-                   <td class="px-4 py-2 font-mono text-blue-700">InpGMTOffset</td>
-                   <td class="px-4 py-2">0</td>
-                   <td class="px-4 py-2" data-th="ค่า Offset ของ GMT (ไทย = +7, Server Time = 0)" data-en="GMT Offset (Thai = +7, Server Time = 0)">GMT Offset (ไทย = +7, Server Time = 0)</td>
-                 </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h4 class="font-semibold text-gray-800 mt-6 mb-3 flex items-center">
-            <i class="fas fa-sun text-yellow-500 mr-2"></i>
-            <span data-th="=== Trading Hours Session 1 (Morning Thailand) ===" data-en="Session 1: Morning Thailand">=== Trading Hours Session 1 (Morning Thailand) ===</span>
-          </h4>
-          <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200 text-sm">
-              <thead class="bg-gray-50">
-                <tr>
-                  <th class="px-4 py-2 text-left font-semibold text-gray-700">InpSession1Settings</th>
-                  <th class="px-4 py-2 text-left font-semibold text-gray-700">"=== Trading Hours Session 1 (Morning Thailand) ==="</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-gray-100">
-                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpUseSession1</td><td class="px-4 py-2">false</td><td class="px-4 py-2" data-th="เปิดใช้งาน Session 1" data-en="Enable Session 1">เปิดใช้งาน Session 1</td></tr>
-                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS1StartHour</td><td class="px-4 py-2">9</td><td class="px-4 py-2" data-th="ชั่วโมงเริ่มต้น" data-en="Start Hour">S1 Start Hour</td></tr>
-                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS1StartMin</td><td class="px-4 py-2">0</td><td class="px-4 py-2" data-th="นาทีเริ่มต้น" data-en="Start Min">S1 Start Min</td></tr>
-                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS1EndHour</td><td class="px-4 py-2">12</td><td class="px-4 py-2" data-th="ชั่วโมงสิ้นสุด" data-en="End Hour">S1 End Hour</td></tr>
-                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS1EndMin</td><td class="px-4 py-2">0</td><td class="px-4 py-2" data-th="นาทีสิ้นสุด" data-en="End Min">S1 End Min</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h4 class="font-semibold text-gray-800 mt-6 mb-3 flex items-center">
-            <i class="fas fa-cloud-sun text-orange-500 mr-2"></i>
-            <span data-th="=== Trading Hours Session 2 (Afternoon Thailand) ===" data-en="Session 2: Afternoon Thailand">=== Trading Hours Session 2 (Afternoon Thailand) ===</span>
-          </h4>
-          <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200 text-sm">
-              <thead class="bg-gray-50">
-                <tr>
-                  <th class="px-4 py-2 text-left font-semibold text-gray-700">InpSession2Settings</th>
-                  <th class="px-4 py-2 text-left font-semibold text-gray-700">"=== Trading Hours Session 2 (Afternoon Thailand) ==="</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-gray-100">
-                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpUseSession2</td><td class="px-4 py-2">false</td><td class="px-4 py-2" data-th="เปิดใช้งาน Session 2" data-en="Enable Session 2">เปิดใช้งาน Session 2</td></tr>
-                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS2StartHour</td><td class="px-4 py-2">13</td><td class="px-4 py-2">S2 Start Hour</td></tr>
-                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS2StartMin</td><td class="px-4 py-2">0</td><td class="px-4 py-2">S2 Start Min</td></tr>
-                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS2EndHour</td><td class="px-4 py-2">17</td><td class="px-4 py-2">S2 End Hour</td></tr>
-                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS2EndMin</td><td class="px-4 py-2">0</td><td class="px-4 py-2">S2 End Min</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h4 class="font-semibold text-gray-800 mt-6 mb-3 flex items-center">
-            <i class="fas fa-moon text-indigo-500 mr-2"></i>
-            <span data-th="=== Trading Hours Session 3 (Evening Thailand) ===" data-en="Session 3: Evening Thailand">=== Trading Hours Session 3 (Evening Thailand) ===</span>
-          </h4>
-          <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200 text-sm">
-              <thead class="bg-gray-50">
-                <tr>
-                  <th class="px-4 py-2 text-left font-semibold text-gray-700">InpSession3Settings</th>
-                  <th class="px-4 py-2 text-left font-semibold text-gray-700">"=== Trading Hours Session 3 (Evening Thailand) ==="</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-gray-100">
-                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpUseSession3</td><td class="px-4 py-2">false</td><td class="px-4 py-2" data-th="เปิดใช้งาน Session 3" data-en="Enable Session 3">เปิดใช้งาน Session 3</td></tr>
-                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS3StartHour</td><td class="px-4 py-2">19</td><td class="px-4 py-2">S3 Start Hour</td></tr>
-                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS3StartMin</td><td class="px-4 py-2">0</td><td class="px-4 py-2">S3 Start Min</td></tr>
-                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS3EndHour</td><td class="px-4 py-2">22</td><td class="px-4 py-2">S3 End Hour</td></tr>
-                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS3EndMin</td><td class="px-4 py-2">0</td><td class="px-4 py-2">S3 End Min</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h4 class="font-semibold text-gray-800 mt-6 mb-3 flex items-center">
-            <i class="fas fa-star text-purple-500 mr-2"></i>
-            <span data-th="=== Trading Hours Session 4 (Night Thailand) ===" data-en="Session 4: Night Thailand">=== Trading Hours Session 4 (Night Thailand) ===</span>
-          </h4>
-          <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200 text-sm">
-              <thead class="bg-gray-50">
-                <tr>
-                  <th class="px-4 py-2 text-left font-semibold text-gray-700">InpSession4Settings</th>
-                  <th class="px-4 py-2 text-left font-semibold text-gray-700">"=== Trading Hours Session 4 (Night Thailand) ==="</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-gray-100">
-                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpUseSession4</td><td class="px-4 py-2">false</td><td class="px-4 py-2" data-th="เปิดใช้งาน Session 4" data-en="Enable Session 4">เปิดใช้งาน Session 4</td></tr>
-                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS4StartHour</td><td class="px-4 py-2">22</td><td class="px-4 py-2">S4 Start Hour</td></tr>
-                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS4StartMin</td><td class="px-4 py-2">0</td><td class="px-4 py-2">S4 Start Min</td></tr>
-                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS4EndHour</td><td class="px-4 py-2">2</td><td class="px-4 py-2">S4 End Hour</td></tr>
-                <tr class="param-row"><td class="px-4 py-2 font-mono text-blue-700">InpS4EndMin</td><td class="px-4 py-2">0</td><td class="px-4 py-2">S4 End Min</td></tr>
-              </tbody>
-            </table>
-          </div>
+      <!-- EA MT5 Free Section -->
+      <div class="section-header">
+        <i class="fas fa-robot text-3xl"></i>
+        <div>
+          <h3>EA MT5 Free</h3>
+          <p class="text-blue-100 text-sm">Expert Advisors สำหรับ MetaTrader 5</p>
         </div>
       </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        
+        <!-- TBB Gold Engine -->
+        <div class="product-card">
+          <img src="assets/images/TBB HyperStrike Gold EA200x200PNG.png" alt="TBB Gold Engine" class="product-image">
+          <div class="product-content">
+            <span class="product-category category-ea">EA MT5</span>
+            <h3 class="product-title">TBB Gold Engine</h3>
+            <p class="text-gray-600 text-sm mb-4">ระบบเทรดทองคำอัตโนมัติด้วยกลยุทธ์ HyperStrike</p>
+            <a href="https://drive.google.com/file/d/1S2_M_7f4lF6hkkB_4PTXqVWKL70TvoVk/view?usp=drive_link" 
+               target="_blank" 
+               class="download-btn">
+              <i class="fas fa-download mr-2"></i>
+              ดาวน์โหลดฟรี
+            </a>
+          </div>
+        </div>
+
+        <!-- ZTOP EA -->
+        <div class="product-card">
+          <img src="assets/images/ztop-promo(PNG).png" alt="ZTOP EA" class="product-image">
+          <div class="product-content">
+            <span class="product-category category-ea">EA MT5</span>
+            <h3 class="product-title">ZTOP EA V4.20</h3>
+            <p class="text-gray-600 text-sm mb-4">Momentum Spike Breakout System - ZZ + STOP Pending</p>
+            <a href="https://drive.google.com/file/d/1Ev-MMga5poZlMUsoTTOJfR5qiYH5D8ae/view?usp=drive_link" 
+               target="_blank" 
+               class="download-btn">
+              <i class="fas fa-download mr-2"></i>
+              ดาวน์โหลดฟรี
+            </a>
+          </div>
+        </div>
+
+        <!-- MACD Trend Fusion Pro -->
+        <div class="product-card">
+          <img src="assets/images/MACDTrendFusionProI_PNG.png" alt="MACD Trend Fusion Pro" class="product-image">
+          <div class="product-content">
+            <span class="product-category category-ea">EA MT5</span>
+            <h3 class="product-title">MACD Trend Fusion Pro</h3>
+            <p class="text-gray-600 text-sm mb-4">EA เทรดตามแนวโน้มด้วยระบบ MACD Fusion อัจฉริยะ</p>
+            <a href="https://drive.google.com/file/d/11-GTFX2mt3CcDZyjmpYyNM7XN1uLCf3h/view?usp=drive_link" 
+               target="_blank" 
+               class="download-btn">
+              <i class="fas fa-download mr-2"></i>
+              ดาวน์โหลดฟรี
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Indicator MT5 Free Section -->
+      <div class="section-header">
+        <i class="fas fa-chart-line text-3xl"></i>
+        <div>
+          <h3>Indicator MT5 Free</h3>
+          <p class="text-blue-100 text-sm">อินดิเคเตอร์สำหรับ MetaTrader 5</p>
+        </div>
+      </div>
+
+      <div class="coming-soon-card">
+        <i class="fas fa-hourglass-half"></i>
+        <h4 data-th="เร็วๆ นี้" data-en="Coming Soon">เร็วๆ นี้</h4>
+        <p data-th="เรากำลังเตรียมอินดิเคเตอร์คุณภาพสูงเพื่อแจกฟรี ติดตามข่าวสารได้ที่ UU School Trading" 
+           data-en="We are preparing high-quality indicators for free distribution. Stay tuned at UU School Trading">
+           เรากำลังเตรียมอินดิเคเตอร์คุณภาพสูงเพื่อแจกฟรี ติดตามข่าวสารได้ที่ UU School Trading
+        </p>
+      </div>
+
     </section>
 
     <!-- Terms & Conditions Section -->
