@@ -6,284 +6,236 @@
   <title>ZTOP EA V4 Manual | คู่มือการใช้งาน</title>
   <link rel="icon" href="assets/images/ztop-additional(icon).ico" type="image/x-icon">
   <meta name="description" content="คู่มือการใช้งาน ZTOP EA V4.20 - Momentum Spike Breakout System สำหรับ MetaTrader 5">
+  
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Swiper.js CSS (สำหรับสไลด์โชว์) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
   <style>
     html { scroll-behavior: smooth; }
     body { font-family: 'Kanit', sans-serif; }
     .lang-active { @apply bg-blue-600 text-white font-semibold; }
     .lang-inactive { @apply bg-gray-200 text-gray-700 hover:bg-gray-300; }
     @media print { .no-print { display: none !important; } }
-    
-    /* Broker Grid Styles */
-    .broker-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
-      margin-top: 20px;
-    }
-    .broker-card {
-      background: white;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 24px;
-      transition: all 0.3s ease;
+
+    /* ===== Modern Products Hub Styles ===== */
+    .products-hub {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      border-radius: 24px;
+      padding: 40px;
       position: relative;
       overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     }
-    .broker-card::before {
+    .products-hub::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%);
+      pointer-events: none;
     }
-    .broker-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.15);
-      border-color: #3b82f6;
+    .products-hub::after {
+      content: '';
+      position: absolute;
+      bottom: -50%;
+      left: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(16,185,129,0.15) 0%, transparent 70%);
+      pointer-events: none;
     }
-    .broker-name {
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: #3b82f6;
-      margin-bottom: 6px;
-    }
-    .broker-platforms {
-      font-size: 0.85rem;
-      color: #6b7280;
-      margin-bottom: 14px;
-    }
-    .broker-link {
-      display: inline-block;
-      background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
-      color: white;
-      text-decoration: none;
-      padding: 10px 20px;
-      border-radius: 9999px;
-      font-weight: 600;
-      font-size: 0.85rem;
-      transition: all 0.3s ease;
-    }
-    .broker-link:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
-    }
-    .warning-box {
-      background: rgba(239, 68, 68, 0.08);
-      border: 1px solid rgba(239, 68, 68, 0.3);
-      border-radius: 12px;
-      padding: 20px;
-      margin: 20px 0;
-    }
-    .warning-box h3 {
-      color: #ef4444;
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .info-box {
-      background: rgba(59, 130, 246, 0.08);
-      border: 1px solid rgba(59, 130, 246, 0.3);
-      border-radius: 12px;
-      padding: 20px;
-      margin: 20px 0;
-    }
-    .info-box h3 {
-      color: #3b82f6;
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .info-box p {
-      color: #4b5563;
-      font-size: 0.9rem;
-      margin-bottom: 6px;
-    }
-    .support-channel {
-      text-align: center;
-      margin-top: 24px;
-      padding: 24px;
-      background: white;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-    }
-    .support-channel h3 {
-      color: #3b82f6;
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-    .channel-name {
-      font-size: 1.15rem;
-      font-weight: 600;
-      background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .channel-link {
-      color: #dc2626;
-      font-weight: bold;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .channel-link:hover {
-      color: #991b1b;
-    }
-    .terms-section {
-      background: white;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 24px;
-      margin-bottom: 24px;
-    }
-    .terms-section h2 {
-      color: #3b82f6;
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .terms-section p {
-      color: #4b5563;
-      font-size: 0.95rem;
-      line-height: 1.6;
-      margin-bottom: 12px;
-    }
-    /* Gallery Styles */
-    .gallery-img {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .gallery-img:hover {
-      transform: scale(1.02);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-    }
-    .feature-card {
-      transition: all 0.3s ease;
-    }
-    .feature-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-    }
-    .step-icon {
-      transition: all 0.3s ease;
-    }
-    .step-card:hover .step-icon {
-      transform: rotate(5deg) scale(1.1);
-    }
-    /* Product Card Styles */
-    .product-card {
-      background: white;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      transition: all 0.3s ease;
-      border: 2px solid #e5e7eb;
-    }
-    .product-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
-      border-color: #3b82f6;
-    }
-    .product-image {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    }
-    .product-content {
-      padding: 24px;
-    }
-    .product-title {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: #1f2937;
+
+    .hub-header { position: relative; z-index: 2; text-align: center; margin-bottom: 32px; }
+    .hub-title {
+      font-size: 2.25rem; font-weight: 800;
+      background: linear-gradient(135deg, #60a5fa 0%, #34d399 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
       margin-bottom: 8px;
     }
-    .product-category {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: 9999px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      margin-bottom: 12px;
+    .hub-subtitle { color: #94a3b8; font-size: 1rem; }
+
+    .stats-bar {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 16px; margin-bottom: 32px; position: relative; z-index: 2;
     }
-    .category-ea {
-      background: #dbeafe;
-      color: #1e40af;
+    .stat-item {
+      background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px;
+      padding: 16px; text-align: center; transition: all 0.3s ease;
     }
-    .category-indicator {
-      background: #d1fae5;
-      color: #065f46;
+    .stat-item:hover { background: rgba(255, 255, 255, 0.08); transform: translateY(-2px); }
+    .stat-number {
+      font-size: 1.75rem; font-weight: 800;
+      background: linear-gradient(135deg, #60a5fa 0%, #34d399 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
-    .download-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      padding: 12px 24px;
+    .stat-label { color: #94a3b8; font-size: 0.8rem; margin-top: 4px; }
+
+    .filter-bar {
+      display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between;
+      margin-bottom: 28px; position: relative; z-index: 2;
+    }
+    .filter-tabs {
+      display: flex; gap: 8px; background: rgba(255, 255, 255, 0.05);
+      padding: 6px; border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .filter-tab {
+      padding: 10px 20px; border-radius: 10px; font-weight: 600; font-size: 0.9rem;
+      color: #cbd5e1; cursor: pointer; transition: all 0.3s ease;
+      display: flex; align-items: center; gap: 8px; border: none; background: transparent; font-family: inherit;
+    }
+    .filter-tab:hover { color: #fff; background: rgba(255, 255, 255, 0.05); }
+    .filter-tab.active {
       background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      margin-top: 16px;
+      color: white; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
     }
-    .download-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+    .filter-tab .count { background: rgba(255, 255, 255, 0.2); padding: 2px 8px; border-radius: 999px; font-size: 0.75rem; }
+
+    .search-box { position: relative; flex: 1; max-width: 320px; }
+    .search-box input {
+      width: 100%; padding: 12px 16px 12px 44px; background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: #fff;
+      font-family: inherit; font-size: 0.9rem; transition: all 0.3s ease;
     }
-    .section-header {
-      background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
-      color: white;
-      padding: 16px 24px;
-      border-radius: 12px;
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    .search-box input::placeholder { color: #64748b; }
+    .search-box input:focus {
+      outline: none; border-color: #3b82f6; background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
     }
-    .section-header h3 {
-      font-size: 1.5rem;
-      font-weight: 700;
+    .search-box i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #64748b; }
+
+    .products-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px; position: relative; z-index: 2;
     }
-    /* Coming Soon Placeholder */
-    .coming-soon-card {
-      background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-      border: 2px dashed #9ca3af;
-      border-radius: 16px;
-      padding: 40px 24px;
-      text-align: center;
-      color: #6b7280;
+
+    .modern-card {
+      background: linear-gradient(145deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.8) 100%);
+      backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px; overflow: hidden; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative; display: flex; flex-direction: column;
     }
-    .coming-soon-card i {
-      font-size: 3rem;
-      color: #9ca3af;
-      margin-bottom: 16px;
+    .modern-card:hover {
+      transform: translateY(-8px); border-color: rgba(59, 130, 246, 0.5);
+      box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.25);
     }
-    .coming-soon-card h4 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: #4b5563;
-      margin-bottom: 8px;
+    .modern-card.hidden-card { display: none; }
+
+    .card-image-wrap {
+      position: relative; height: 180px; overflow: hidden;
+      background: linear-gradient(135deg, #1e3a8a 0%, #065f46 100%);
     }
-    .coming-soon-card p {
-      font-size: 0.9rem;
-      color: #6b7280;
+    .card-image-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .modern-card:hover .card-image-wrap img { transform: scale(1.08); }
+    .card-image-wrap::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.6) 100%);
+    }
+
+    .card-badges { position: absolute; top: 12px; left: 12px; display: flex; gap: 6px; z-index: 3; }
+    .badge {
+      padding: 4px 10px; border-radius: 999px; font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.5px; display: inline-flex; align-items: center; gap: 4px;
+    }
+    .badge-free { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; }
+    .badge-new { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; animation: pulse-badge 2s infinite; }
+    .badge-hot { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; animation: pulse-badge 2s infinite; }
+    @keyframes pulse-badge {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+      50% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+    }
+
+    .card-type-tag {
+      position: absolute; top: 12px; right: 12px; padding: 6px 12px; border-radius: 10px;
+      font-size: 0.75rem; font-weight: 700; backdrop-filter: blur(10px); z-index: 3;
+    }
+    .type-ea { background: rgba(59, 130, 246, 0.9); color: white; }
+    .type-indicator { background: rgba(168, 85, 247, 0.9); color: white; }
+
+    .card-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+    .card-title { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .card-desc { color: #94a3b8; font-size: 0.85rem; line-height: 1.5; margin-bottom: 16px; flex: 1; }
+    .card-meta { display: flex; gap: 12px; margin-bottom: 16px; font-size: 0.75rem; color: #64748b; }
+    .card-meta span { display: flex; align-items: center; gap: 4px; }
+
+    .card-download-btn {
+      display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px;
+      background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%); color: white;
+      text-decoration: none; border-radius: 12px; font-weight: 600; font-size: 0.9rem;
+      transition: all 0.3s ease; position: relative; overflow: hidden;
+    }
+    .card-download-btn::before {
+      content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transition: left 0.5s ease;
+    }
+    .card-download-btn:hover::before { left: 100%; }
+    .card-download-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4); }
+
+    .empty-state { grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: #64748b; }
+    .empty-state i { font-size: 3rem; margin-bottom: 16px; opacity: 0.5; }
+
+    /* ===== Legacy & Gallery Styles ===== */
+    .broker-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 20px; }
+    .broker-card { background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; transition: all 0.3s ease; position: relative; overflow: hidden; }
+    .broker-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%); }
+    .broker-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(59, 130, 246, 0.15); border-color: #3b82f6; }
+    .broker-name { font-size: 1.15rem; font-weight: 600; color: #3b82f6; margin-bottom: 6px; }
+    .broker-platforms { font-size: 0.85rem; color: #6b7280; margin-bottom: 14px; }
+    .broker-link { display: inline-block; background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%); color: white; text-decoration: none; padding: 10px 20px; border-radius: 9999px; font-weight: 600; font-size: 0.85rem; transition: all 0.3s ease; }
+    .broker-link:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4); }
+    
+    .warning-box { background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 20px; margin: 20px 0; }
+    .warning-box h3 { color: #ef4444; font-size: 1rem; font-weight: 600; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .info-box { background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 12px; padding: 20px; margin: 20px 0; }
+    .info-box h3 { color: #3b82f6; font-size: 1rem; font-weight: 600; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .info-box p { color: #4b5563; font-size: 0.9rem; margin-bottom: 6px; }
+    
+    .support-channel { text-align: center; margin-top: 24px; padding: 24px; background: white; border: 1px solid #e5e7eb; border-radius: 12px; }
+    .support-channel h3 { color: #3b82f6; font-size: 1.2rem; font-weight: 600; margin-bottom: 10px; }
+    .channel-name { font-size: 1.15rem; font-weight: 600; background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .channel-link { color: #dc2626; font-weight: bold; text-decoration: none; transition: color 0.2s; }
+    .channel-link:hover { color: #991b1b; }
+    
+    .terms-section { background: white; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; margin-bottom: 24px; }
+    .terms-section h2 { color: #3b82f6; font-size: 1.25rem; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+    .terms-section p { color: #4b5563; font-size: 0.95rem; line-height: 1.6; margin-bottom: 12px; }
+
+    /* Swiper Customization */
+    .swiper-button-next, .swiper-button-prev { color: #3b82f6; background: rgba(255,255,255,0.8); width: 40px; height: 40px; border-radius: 50%; backdrop-filter: blur(4px); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    .swiper-button-next:after, .swiper-button-prev:after { font-size: 18px; font-weight: bold; }
+    .swiper-pagination-bullet-active { background: #3b82f6 !important; }
+    .swiper-slide { border-radius: 16px; overflow: hidden; }
+
+    .messenger-btn {
+      background: linear-gradient(135deg, #0084ff 0%, #a033ff 50%, #ff5c87 100%);
+      position: relative; overflow: hidden;
+    }
+    .messenger-btn::before {
+      content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: left 0.6s ease;
+    }
+    .messenger-btn:hover::before { left: 100%; }
+    .messenger-btn:hover { box-shadow: 0 10px 25px rgba(0, 132, 255, 0.4); }
+
+    @media (max-width: 640px) {
+      .products-hub { padding: 24px 16px; }
+      .hub-title { font-size: 1.75rem; }
+      .filter-bar { flex-direction: column; align-items: stretch; }
+      .search-box { max-width: 100%; }
+      .filter-tabs { overflow-x: auto; }
+      .swiper-button-next, .swiper-button-prev { display: none; } /* ซ่อนปุ่มบนมือถือ ใช้การปัดแทน */
     }
   </style>
 </head>
@@ -310,7 +262,7 @@
       <div class="inline-flex items-center justify-center w-20 h-20 rounded-full mb-4 shadow-lg overflow-hidden bg-white/20 backdrop-blur-sm">
         <img src="assets/images/ztop-background-TOP.png" alt="ZTOP Logo" class="w-16 h-16 object-cover rounded-full">
       </div>
-       <h1 class="text-3xl md:text-4xl font-bold tracking-tight drop-shadow-lg" data-th="ZTOP EA V4.20" data-en="ZTOP EA V4.20">ZTOP EA V4.20</h1>
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight drop-shadow-lg" data-th="ZTOP EA V4.20" data-en="ZTOP EA V4.20">ZTOP EA V4.20</h1>
       <p class="text-blue-100 mt-2 text-lg drop-shadow-md" data-th="Momentum Spike Breakout System" data-en="Momentum Spike Breakout System">Momentum Spike Breakout System</p>
       <p class="text-blue-200 mt-1 text-sm drop-shadow-md" data-th="สร้างโดย UU School Trading" data-en="Created by UU School Trading">Created by UU School Trading</p>
     </div>
@@ -320,30 +272,13 @@
   <nav class="bg-white shadow-md sticky top-0 z-40 no-print">
     <div class="max-w-6xl mx-auto px-4">
       <div class="flex overflow-x-auto py-3 space-x-1 md:space-x-2 text-xs md:text-sm">
-        <a href="#overview" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center">
-          <i class="fas fa-home mr-1"></i><span data-th="ภาพรวม" data-en="Overview">ภาพรวม</span>
-        </a>
-        <a href="#install" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center">
-          <i class="fas fa-download mr-1"></i><span data-th="ติดตั้ง" data-en="Install">ติดตั้ง</span>
-        </a>
-        <a href="#brokers" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center">
-          <i class="fas fa-building mr-1"></i><span data-th="โบรกเกอร์" data-en="Brokers">โบรกเกอร์</span>
-        </a>
-        <a href="#gallery" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center">
-          <i class="fas fa-images mr-1"></i><span data-th="แกลเลอรี่" data-en="Gallery">แกลเลอรี่</span>
-        </a>
-        <a href="#ea-free" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center">
-          <i class="fas fa-robot mr-1"></i><span data-th="EA MT5 Free" data-en="EA MT5 Free">EA MT5 Free</span>
-        </a>
-        <a href="#indicator-free" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center">
-          <i class="fas fa-chart-line mr-1"></i><span data-th="Indicator MT5 Free" data-en="Indicator MT5 Free">Indicator MT5 Free</span>
-        </a>
-        <a href="#terms" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center">
-          <i class="fas fa-file-contract mr-1"></i><span data-th="เงื่อนไข" data-en="Terms">เงื่อนไข</span>
-        </a>
-        <a href="#contact" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center">
-          <i class="fas fa-phone mr-1"></i><span data-th="ติดต่อ" data-en="Contact">ติดต่อ</span>
-        </a>
+        <a href="#overview" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center"><i class="fas fa-home mr-1"></i><span data-th="ภาพรวม" data-en="Overview">ภาพรวม</span></a>
+        <a href="#install" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center"><i class="fas fa-download mr-1"></i><span data-th="ติดตั้ง" data-en="Install">ติดตั้ง</span></a>
+        <a href="#brokers" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center"><i class="fas fa-building mr-1"></i><span data-th="โบรกเกอร์" data-en="Brokers">โบรกเกอร์</span></a>
+        <a href="#gallery" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center"><i class="fas fa-images mr-1"></i><span data-th="แกลเลอรี่" data-en="Gallery">แกลเลอรี่</span></a>
+        <a href="#products" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center"><i class="fas fa-download mr-1"></i><span data-th="ดาวน์โหลดฟรี" data-en="Free Download">ดาวน์โหลดฟรี</span></a>
+        <a href="#terms" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center"><i class="fas fa-file-contract mr-1"></i><span data-th="เงื่อนไข" data-en="Terms">เงื่อนไข</span></a>
+        <a href="#contact" class="whitespace-nowrap px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-700 transition flex items-center"><i class="fas fa-phone mr-1"></i><span data-th="ติดต่อ" data-en="Contact">ติดต่อ</span></a>
       </div>
     </div>
   </nav>
@@ -384,23 +319,17 @@
         
         <div class="grid md:grid-cols-2 gap-4 mt-6">
           <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
-            <h3 class="font-semibold text-blue-800 flex items-center">
-              <i class="fas fa-star text-yellow-500 mr-2"></i>
-              <span data-th="✨ จุดเด่น" data-en="✨ Key Features">✨ จุดเด่น</span>
-            </h3>
-           <ul class="mt-2 space-y-1.5 text-sm">
-             <li>✅ <span data-th="ระบบวางคำสั่งแบบคู่ (BuyStop + SellStop + BuyLimit + SellLimit)" data-en="Dual pending order system (BuyStop + SellStop + BuyLimit + SellLimit)">ระบบวางคำสั่งแบบคู่ (BuyStop + SellStop + BuyLimit + SellLimit)</span></li>
-             <li>✅ <span data-th="วางคำสั่งอัตโนมัติจากสัญญาณ ZigZag" data-en="Auto order placement from ZigZag signals">วางคำสั่งอัตโนมัติจากสัญญาณ ZigZag</span></li>
+            <h3 class="font-semibold text-blue-800 flex items-center"><i class="fas fa-star text-yellow-500 mr-2"></i><span data-th="✨ จุดเด่น" data-en="✨ Key Features">✨ จุดเด่น</span></h3>
+            <ul class="mt-2 space-y-1.5 text-sm">
+              <li>✅ <span data-th="ระบบวางคำสั่งแบบคู่ (BuyStop + SellStop + BuyLimit + SellLimit)" data-en="Dual pending order system">ระบบวางคำสั่งแบบคู่ (BuyStop + SellStop + BuyLimit + SellLimit)</span></li>
+              <li>✅ <span data-th="วางคำสั่งอัตโนมัติจากสัญญาณ ZigZag" data-en="Auto order placement from ZigZag signals">วางคำสั่งอัตโนมัติจากสัญญาณ ZigZag</span></li>
               <li>✅ <span data-th="จัดการความเสี่ยงอัตโนมัติ: TP/SL, Trailing, Break-Even" data-en="Auto risk management: TP/SL, Trailing, Break-Even">จัดการความเสี่ยงอัตโนมัติ: TP/SL, Trailing, Break-Even</span></li>
               <li>✅ <span data-th="แดชบอร์ดแสดงสถานะแบบเรียลไทม์" data-en="Real-time status dashboard">แดชบอร์ดแสดงสถานะแบบเรียลไทม์</span></li>
               <li>✅ <span data-th="จำกัดกำไร/ขาดทุนรายวันได้" data-en="Daily profit/loss limits">จำกัดกำไร/ขาดทุนรายวันได้</span></li>
             </ul>
           </div>
           <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
-            <h3 class="font-semibold text-green-800 flex items-center">
-              <i class="fas fa-user-check text-green-600 mr-2"></i>
-              <span data-th="📊 เหมาะสำหรับ" data-en="📊 Ideal For"> เหมาะสำหรับ</span>
-            </h3>
+            <h3 class="font-semibold text-green-800 flex items-center"><i class="fas fa-user-check text-green-600 mr-2"></i><span data-th="📊 เหมาะสำหรับ" data-en="📊 Ideal For">📊 เหมาะสำหรับ</span></h3>
             <ul class="mt-2 space-y-1.5 text-sm">
               <li>• <span data-th="เทรดเดอร์ที่ต้องการระบบอัตโนมัติ" data-en="Traders seeking automation">เทรดเดอร์ที่ต้องการระบบอัตโนมัติ</span></li>
               <li>• <span data-th="ผู้ใช้บัญชี Prop Firm ที่ต้องการควบคุมความเสี่ยง" data-en="Prop Firm traders needing risk control">ผู้ใช้บัญชี Prop Firm ที่ต้องการควบคุมความเสี่ยง</span></li>
@@ -418,27 +347,20 @@
         <i class="fas fa-cogs text-blue-600 mr-2"></i>
         <span data-th="⚙️ การติดตั้งบน MetaTrader 5" data-en="⚙️ Installation on MetaTrader 5">⚙️ การติดตั้งบน MetaTrader 5</span>
       </h2>
-      
       <div class="space-y-4">
         <div class="flex items-start">
           <span class="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm mr-3"><i class="fas fa-download"></i></span>
-          <div>
-            <p class="font-medium" data-th="ดาวน์โหลด" data-en="Download and extract files">ดาวน์โหลด</p>
-            <p class="text-gray-600 text-sm mt-1" data-th="ดาวน์โหลดจากลิงก์ด้านบน" data-en="Download from the link above and extract the .zip file">ดาวน์โหลดจากลิงก์ด้านบน</p>
-          </div>
+          <div><p class="font-medium" data-th="ดาวน์โหลด" data-en="Download">ดาวน์โหลด</p><p class="text-gray-600 text-sm mt-1" data-th="ดาวน์โหลดจากลิงก์ด้านบน" data-en="Download from the link above">ดาวน์โหลดจากลิงก์ด้านบน</p></div>
         </div>
-        
         <div class="flex items-start">
           <span class="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm mr-3"><i class="fas fa-folder-open"></i></span>
           <div>
             <p class="font-medium" data-th="คัดลอกไฟล์ไปยังโฟลเดอร์ MT5" data-en="Copy files to MT5 folders">คัดลอกไฟล์ไปยังโฟลเดอร์ MT5</p>
             <div class="bg-gray-100 rounded p-3 mt-2 text-xs font-mono overflow-x-auto">
               <p class="text-gray-700"><i class="fas fa-folder text-yellow-500"></i> MQL5/Experts/ → วางไฟล์ <code>ZTOP EA V4.ex5</code></p>
-              
             </div>
           </div>
         </div>
-        
         <div class="flex items-start">
           <span class="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm mr-3"><i class="fas fa-check-circle"></i></span>
           <div>
@@ -451,13 +373,9 @@
             </ul>
           </div>
         </div>
-        
         <div class="flex items-start">
           <span class="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm mr-3"><i class="fas fa-play"></i></span>
-          <div>
-            <p class="font-medium" data-th="ลากวางและตั้งค่า" data-en="Attach and configure">ลากวางและตั้งค่า</p>
-            <p class="text-gray-600 text-sm mt-1" data-th="ลาก ZTOP EA V4 ลงบนชาร์ต > ปรับพารามิเตอร์ > กด OK" data-en="Drag ZTOP EA V4 onto a chart > adjust parameters > click OK">ลาก ZTOP EA V4 ลงบนชาร์ต > ปรับพารามิเตอร์ > กด OK</p>
-          </div>
+          <div><p class="font-medium" data-th="ลากวางและตั้งค่า" data-en="Attach and configure">ลากวางและตั้งค่า</p><p class="text-gray-600 text-sm mt-1" data-th="ลาก ZTOP EA V4 ลงบนชาร์ต > ปรับพารามิเตอร์ > กด OK" data-en="Drag ZTOP EA V4 onto a chart > adjust parameters > click OK">ลาก ZTOP EA V4 ลงบนชาร์ต > ปรับพารามิเตอร์ > กด OK</p></div>
         </div>
       </div>
     </section>
@@ -466,343 +384,321 @@
     <section id="brokers" class="mb-12 scroll-mt-24">
       <div class="terms-section">
         <h2 data-th="🏦 โบรกเกอร์ที่รองรับ" data-en="🏦 Supported Brokers">🏦 โบรกเกอร์ที่รองรับ</h2>
-        <p data-th="เพื่อใช้งาน ZTOP EA V4.20 ได้อย่างเต็มประสิทธิภาพ คุณสามารถเปิดบัญชีเทรดจริงหรือบัญชีเดโม่กับโบรกเกอร์ที่รองรับดังนี้:" 
-           data-en="To use ZTOP EA V4.20 at full efficiency, you can open a live or demo trading account with the following supported brokers:">
-           เพื่อใช้งาน ZTOP EA V4.20 ได้อย่างเต็มประสิทธิภาพ คุณสามารถเปิดบัญชีเทรดจริงหรือบัญชีเดโม่กับโบรกเกอร์ที่รองรับดังนี้:
-        </p>
-
+        <p data-th="เพื่อใช้งาน ZTOP EA V4.20 ได้อย่างเต็มประสิทธิภาพ คุณสามารถเปิดบัญชีเทรดจริงหรือบัญชีเดโม่กับโบรกเกอร์ที่รองรับดังนี้:" data-en="To use ZTOP EA V4.20 at full efficiency, you can open a live or demo trading account with the following supported brokers:">เพื่อใช้งาน ZTOP EA V4.20 ได้อย่างเต็มประสิทธิภาพ คุณสามารถเปิดบัญชีเทรดจริงหรือบัญชีเดโม่กับโบรกเกอร์ที่รองรับดังนี้:</p>
         <div class="broker-grid">
           <div class="broker-card">
             <div class="broker-name flex items-center"><i class="fas fa-landmark mr-2"></i> Vantage International</div>
             <div class="broker-platforms"><i class="fas fa-laptop-code"></i> MQL5</div>
-            <a href="https://www.vantagemarkets.com/th/open-live-account/?affid=Njg4NDM%3D" target="_blank" class="broker-link" 
-               data-th="เปิดบัญชี" data-en="Open Account"><i class="fas fa-user-plus mr-1"></i> เปิดบัญชี</a>
+            <a href="https://www.vantagemarkets.com/th/open-live-account/?affid=Njg4NDM%3D" target="_blank" class="broker-link" data-th="เปิดบัญชี" data-en="Open Account"><i class="fas fa-user-plus mr-1"></i> เปิดบัญชี</a>
           </div>
           <div class="broker-card">
             <div class="broker-name flex items-center"><i class="fas fa-landmark mr-2"></i> HFM</div>
             <div class="broker-platforms"><i class="fas fa-laptop-code"></i> MQL5</div>
-            <a href="https://uutrader.short.gy/uutradeHFM" target="_blank" class="broker-link"
-               data-th="เปิดบัญชี" data-en="Open Account"><i class="fas fa-user-plus mr-1"></i> เปิดบัญชี</a>
+            <a href="https://uutrader.short.gy/uutradeHFM" target="_blank" class="broker-link" data-th="เปิดบัญชี" data-en="Open Account"><i class="fas fa-user-plus mr-1"></i> เปิดบัญชี</a>
           </div>
           <div class="broker-card">
             <div class="broker-name flex items-center"><i class="fas fa-landmark mr-2"></i> Exness</div>
             <div class="broker-platforms"><i class="fas fa-laptop-code"></i> MQL5</div>
-            <a href="https://uutrader.short.gy/uutraderExness" target="_blank" class="broker-link"
-               data-th="เปิดบัญชี" data-en="Open Account"><i class="fas fa-user-plus mr-1"></i> เปิดบัญชี</a>
+            <a href="https://uutrader.short.gy/uutraderExness" target="_blank" class="broker-link" data-th="เปิดบัญชี" data-en="Open Account"><i class="fas fa-user-plus mr-1"></i> เปิดบัญชี</a>
           </div>
           <div class="broker-card">
             <div class="broker-name flex items-center"><i class="fas fa-landmark mr-2"></i> Landprime</div>
             <div class="broker-platforms"><i class="fas fa-laptop-code"></i> MQL5</div>
-            <a href="https://uutrader.short.gy/uutradeLandprime" target="_blank" class="broker-link"
-               data-th="เปิดบัญชี" data-en="Open Account"><i class="fas fa-user-plus mr-1"></i> เปิดบัญชี</a>
+            <a href="https://uutrader.short.gy/uutradeLandprime" target="_blank" class="broker-link" data-th="เปิดบัญชี" data-en="Open Account"><i class="fas fa-user-plus mr-1"></i> เปิดบัญชี</a>
           </div>
           <div class="broker-card">
             <div class="broker-name flex items-center"><i class="fas fa-landmark mr-2"></i> FBS</div>
             <div class="broker-platforms"><i class="fas fa-laptop-code"></i> MQL5</div>
-            <a href="https://uutrader.short.gy/uutraderFBS" target="_blank" class="broker-link"
-               data-th="เปิดบัญชี" data-en="Open Account"><i class="fas fa-user-plus mr-1"></i> เปิดบัญชี</a>
+            <a href="https://uutrader.short.gy/uutraderFBS" target="_blank" class="broker-link" data-th="เปิดบัญชี" data-en="Open Account"><i class="fas fa-user-plus mr-1"></i> เปิดบัญชี</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Gallery & Visual Showcase Section -->
-    <section id="gallery" class="mb-12 scroll-mt-24">
-      <h2 class="text-3xl font-bold text-center mb-4 pb-2 border-b border-gray-200 flex items-center justify-center">
-        <i class="fas fa-images text-blue-600 mr-2"></i>
-        <span data-th="🎬 แกลเลอรี่และภาพรวมระบบ" data-en="🎬 Gallery & System Overview">🎬 แกลเลอรี่และภาพรวมระบบ</span>
-      </h2>
-      <p class="text-center text-gray-600 mb-8" data-th="สัมผัสประสบการณ์การเทรดอัตโนมัติที่ทันสมัยและมีประสิทธิภาพ" 
-         data-en="Experience modern and efficient automated trading">
-         สัมผัสประสบการณ์การเทรดอัตโนมัติที่ทันสมัยและมีประสิทธิภาพ
-      </p>
-
-      <!-- Hero Banner - รูปที่ 5 -->
-      <div class="mb-10 rounded-2xl overflow-hidden shadow-2xl gallery-img border-2 border-blue-200">
-        <div class="relative">
-          <img src="assets/images/ztop-hero-banner.jpeg" alt="ZTOP EA Hero Banner" class="w-full h-auto">
-          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
-            <h3 class="text-white text-xl font-bold flex items-center">
-              <i class="fas fa-bolt text-yellow-400 mr-2"></i>
-              <span data-th="ZTOP EA - ZZ + STOP Pending Breakout System" data-en="ZTOP EA - ZZ + STOP Pending Breakout System">ZTOP EA - ZZ + STOP Pending Breakout System</span>
-            </h3>
-            <p class="text-gray-200 text-sm" data-th="Precision Breakout Trading Powered by Pending STOP Logic" 
-               data-en="Precision Breakout Trading Powered by Pending STOP Logic">
-               Precision Breakout Trading Powered by Pending STOP Logic
-            </p>
-          </div>
-        </div>
+    <!-- ========================================================= -->
+    <!-- 🖼️ MODERN GALLERY SECTION (Swiper Carousel) -->
+    <!-- ========================================================= -->
+    <section id="gallery" class="mb-16 scroll-mt-24">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-gray-800 mb-3 flex items-center justify-center">
+          <i class="fas fa-images text-blue-600 mr-3"></i>
+          <span data-th="แกลเลอรี่และภาพรวมระบบ" data-en="Gallery & System Overview">แกลเลอรี่และภาพรวมระบบ</span>
+        </h2>
+        <p class="text-gray-500 max-w-2xl mx-auto" data-th="สัมผัสประสบการณ์การเทรดอัตโนมัติที่ทันสมัย ผ่านหน้าจอที่ออกแบบมาเพื่อประสิทธิภาพสูงสุด" 
+           data-en="Experience modern automated trading through an interface designed for maximum efficiency.">
+           สัมผัสประสบการณ์การเทรดอัตโนมัติที่ทันสมัย ผ่านหน้าจอที่ออกแบบมาเพื่อประสิทธิภาพสูงสุด
+        </p>
       </div>
 
-       <!-- Key Features with Icons -->
-       <div class="grid md:grid-cols-3 gap-6 mb-10">
-         <div class="feature-card bg-gradient-to-br from-blue-500 to-blue-600 text-white p-6 rounded-xl shadow-lg">
-           <div class="text-4xl mb-3"><i class="fas fa-desktop"></i></div>
-           <h3 class="font-bold text-lg mb-2" data-th="แดชบอร์ดแบบเรียลไทม์" data-en="Real-time Dashboard">แดชบอร์ดแบบเรียลไทม์</h3>
-           <p class="text-sm text-blue-100" data-th="ติดตามสถานะการเทรด ยอดเงิน และความเสี่ยงได้ทันที" data-en="Monitor trading status, balance, and risk instantly">ติดตามสถานะการเทรด ยอดเงิน และความเสี่ยงได้ทันที</p>
-         </div>
-         
-         <div class="feature-card bg-gradient-to-br from-emerald-500 to-emerald-600 text-white p-6 rounded-xl shadow-lg">
-           <div class="text-4xl mb-3"><i class="fas fa-exchange-alt"></i></div>
-           <h3 class="font-bold text-lg mb-2" data-th="Pending Order Auto System" data-en="Pending Order Auto System">Pending Order Auto System</h3>
-           <p class="text-sm text-emerald-100" data-th="วางคำสั่ง Buy/Sell Stop และ Buy/Sell Limit อัตโนมัติตามสัญญาณ ZigZag" data-en="Automatically places Buy/Sell Stop and Buy/Sell Limit orders based on ZigZag signals">วางคำสั่ง Buy/Sell Stop และ Buy/Sell Limit อัตโนมัติตามสัญญาณ ZigZag</p>
-         </div>
-         
-         <div class="feature-card bg-gradient-to-br from-purple-500 to-purple-600 text-white p-6 rounded-xl shadow-lg">
-           <div class="text-4xl mb-3"><i class="fas fa-shield-alt"></i></div>
-           <h3 class="font-bold text-lg mb-2" data-th="ป้องกันความเสี่ยง" data-en="Risk Protection">ป้องกันความเสี่ยง</h3>
-           <p class="text-sm text-purple-100" data-th="TP/SL อัตโนมัติ Trailing Stop และ Break Even" data-en="Automatic TP/SL, Trailing Stop and Break Even">TP/SL อัตโนมัติ Trailing Stop และ Break Even</p>
-         </div>
-       </div>
+      <!-- Swiper Container -->
+      <div class="swiper mySwiper rounded-2xl overflow-hidden shadow-2xl border border-gray-200 mb-10">
+        <div class="swiper-wrapper">
+          
+          <!-- Slide 1: Dashboard -->
+          <div class="swiper-slide bg-white">
+            <div class="relative group">
+              <img src="assets/images/ztop-dashboard.png" alt="ZTOP EA Dashboard" class="w-full h-auto object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90"></div>
+              <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+                <span class="inline-block px-3 py-1 bg-blue-600 text-white text-xs font-bold rounded-full mb-3">V4.20</span>
+                <h3 class="text-white text-xl md:text-2xl font-bold mb-2 flex items-center">
+                  <i class="fas fa-tachometer-alt text-blue-400 mr-2"></i>
+                  <span data-th="แดชบอร์ดการเทรดแบบเรียลไทม์" data-en="Real-time Trading Dashboard">แดชบอร์ดการเทรดแบบเรียลไทม์</span>
+                </h3>
+                <p class="text-gray-200 text-sm md:text-base max-w-xl" data-th="แสดงข้อมูลครบถ้วน: ยอดเงิน, สถานะออเดอร์, สัญญาณ ZigZag และการจัดการความเสี่ยงแบบ Live" 
+                   data-en="Complete display: Balance, order status, ZigZag signals, and live risk management.">
+                   แสดงข้อมูลครบถ้วน: ยอดเงิน, สถานะออเดอร์, สัญญาณ ZigZag และการจัดการความเสี่ยงแบบ Live
+                </p>
+              </div>
+            </div>
+          </div>
 
-      <!-- Dashboard Screenshot - รูปที่ 1 -->
-      <div class="mb-10">
-        <div class="flex items-center justify-between mb-4">
-          <h3 class="text-xl font-bold flex items-center">
-            <i class="fas fa-tachometer-alt text-blue-600 mr-2"></i>
-            <span data-th="แดชบอร์ดการเทรด" data-en="Trading Dashboard">แดชบอร์ดการเทรด</span>
-          </h3>
-          <span class="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full flex items-center">
-            <i class="fas fa-code-branch mr-1"></i> V1.00
-          </span>
+          <!-- Slide 2: Strategy Tester -->
+          <div class="swiper-slide bg-white">
+            <div class="relative group">
+              <img src="assets/images/ztop-strategy-tester.png" alt="ZTOP EA Strategy Tester" class="w-full h-auto object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90"></div>
+              <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+                <span class="inline-block px-3 py-1 bg-emerald-600 text-white text-xs font-bold rounded-full mb-3">Backtest</span>
+                <h3 class="text-white text-xl md:text-2xl font-bold mb-2 flex items-center">
+                  <i class="fas fa-chart-line text-emerald-400 mr-2"></i>
+                  <span data-th="การทดสอบกลยุทธ์ที่แม่นยำ" data-en="Precise Strategy Testing">การทดสอบกลยุทธ์ที่แม่นยำ</span>
+                </h3>
+                <p class="text-gray-200 text-sm md:text-base max-w-xl" data-th="เห็นผลลัพธ์ชัดเจนบนชาร์ต ปรับแต่งพารามิเตอร์และทดสอบระบบได้ทันที" 
+                   data-en="Clear results on chart, easy parameter adjustment and instant system testing.">
+                   เห็นผลลัพธ์ชัดเจนบนชาร์ต ปรับแต่งพารามิเตอร์และทดสอบระบบได้ทันที
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 3: Promo Banner -->
+          <div class="swiper-slide bg-gradient-to-br from-blue-900 to-emerald-900 flex items-center justify-center relative overflow-hidden">
+            <img src="assets/images/ztop-promo(PNG).png" alt="ZTOP EA Promo" class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-50 transition-opacity">
+            <div class="relative z-10 text-center p-8 md:p-12">
+              <h3 class="text-white text-2xl md:text-3xl font-bold mb-4 flex items-center justify-center">
+                <i class="fas fa-bolt text-yellow-400 mr-3"></i>
+                <span data-th="ZTOP EA - ZZ + STOP Pending System" data-en="ZTOP EA - ZZ + STOP Pending System">ZTOP EA - ZZ + STOP Pending System</span>
+              </h3>
+              <p class="text-gray-200 text-lg max-w-2xl mx-auto mb-6" data-th="Precision Breakout Trading Powered by Pending STOP Logic" 
+                 data-en="Precision Breakout Trading Powered by Pending STOP Logic">
+                 Precision Breakout Trading Powered by Pending STOP Logic
+              </p>
+              <a href="#products" class="inline-flex items-center px-6 py-3 bg-white text-blue-900 font-bold rounded-full shadow-lg hover:bg-gray-100 transition transform hover:scale-105">
+                <i class="fas fa-download mr-2"></i>
+                <span data-th="ดาวน์โหลดฟรีตอนนี้" data-en="Download Free Now">ดาวน์โหลดฟรีตอนนี้</span>
+              </a>
+            </div>
+          </div>
+
         </div>
-        <div class="rounded-xl overflow-hidden shadow-xl border-2 border-gray-200 gallery-img">
-          <img src="assets/images/ztop-dashboard.png" alt="ZTOP EA Dashboard" class="w-full h-auto">
-        </div>
-        <div class="mt-3 flex items-center text-sm text-gray-600 bg-white p-3 rounded-lg shadow">
-          <i class="fas fa-info-circle text-blue-500 mr-2"></i>
-          <span data-th="แดชบอร์ดแสดงข้อมูลครบถ้วน: ยอดเงิน, สถานะออเดอร์, สัญญาณ, และการจัดการความเสี่ยง" 
-                data-en="Dashboard displays complete information: Balance, order status, signals, and risk management">
-                แดชบอร์ดแสดงข้อมูลครบถ้วน: ยอดเงิน, สถานะออเดอร์, สัญญาณ, และการจัดการความเสี่ยง
-          </span>
-        </div>
+        <!-- Swiper Controls -->
+        <div class="swiper-pagination !bottom-4"></div>
+        <div class="swiper-button-next !hidden md:!flex"></div>
+        <div class="swiper-button-prev !hidden md:!flex"></div>
       </div>
 
-      <!-- Promo Banner - รูปที่ 2 -->
-      <div class="mb-10 rounded-2xl overflow-hidden shadow-xl gallery-img border-2 border-emerald-200">
-        <img src="assets/images/ztop-promo(PNG).png" alt="ZTOP EA ZZ + STOP Pending" class="w-full h-auto">
-      </div>
-
-      <!-- Strategy Visualization - รูปที่ 3 -->
-      <div class="mb-10">
-        <div class="flex items-center justify-between mb-4">
-          <h3 class="text-xl font-bold flex items-center">
-            <i class="fas fa-chart-line text-emerald-600 mr-2"></i>
-            <span data-th="การแสดงผลกลยุทธ์" data-en="Strategy Visualization">การแสดงผลกลยุทธ์</span>
-          </h3>
-          <span class="text-xs bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full flex items-center">
-            <i class="fas fa-vial mr-1"></i> Backtest
-          </span>
-        </div>
-        <div class="rounded-xl overflow-hidden shadow-xl border-2 border-gray-200 gallery-img">
-          <img src="assets/images/ztop-strategy-tester.png" alt="ZTOP EA Strategy Tester" class="w-full h-auto">
-        </div>
-        <div class="mt-3 grid md:grid-cols-3 gap-3">
-          <div class="flex items-center text-sm text-gray-600 bg-white p-3 rounded-lg shadow">
-            <i class="fas fa-check-circle text-emerald-500 mr-2"></i>
-            <span data-th="ทดสอบกลยุทธ์ได้ทันที" data-en="Test strategies instantly">ทดสอบกลยุทธ์ได้ทันที</span>
-          </div>
-          <div class="flex items-center text-sm text-gray-600 bg-white p-3 rounded-lg shadow">
-            <i class="fas fa-check-circle text-emerald-500 mr-2"></i>
-            <span data-th="เห็นผลชัดเจนบนชาร์ต" data-en="Clear results on chart">เห็นผลชัดเจนบนชาร์ต</span>
-          </div>
-          <div class="flex items-center text-sm text-gray-600 bg-white p-3 rounded-lg shadow">
-            <i class="fas fa-check-circle text-emerald-500 mr-2"></i>
-            <span data-th="ปรับปรุงพารามิเตอร์ได้ง่าย" data-en="Easy parameter adjustment">ปรับปรุงพารามิเตอร์ได้ง่าย</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- How It Works with Icons -->
-      <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 shadow-lg mb-10">
-        <h3 class="text-2xl font-bold text-center mb-6 flex items-center justify-center">
+      <!-- How it Works: Compact & Clean -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8">
+        <h3 class="text-xl font-bold text-center mb-6 text-gray-800 flex items-center justify-center">
           <i class="fas fa-cogs text-blue-600 mr-2"></i>
-          <span data-th="วิธีการทำงาน" data-en="How It Works">วิธีการทำงาน</span>
+          <span data-th="วิธีการทำงานใน 4 ขั้นตอน" data-en="How It Works in 4 Steps">วิธีการทำงานใน 4 ขั้นตอน</span>
         </h3>
-        
-        <div class="grid md:grid-cols-4 gap-6">
-          <div class="step-card text-center">
-            <div class="step-icon w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-3 shadow-lg">
-              <i class="fas fa-search"></i>
-            </div>
-            <h4 class="font-semibold mb-2" data-th="1. ตรวจจับสัญญาณ" data-en="1. Detect Signal">1. ตรวจจับสัญญาณ</h4>
-            <p class="text-sm text-gray-600" data-th="ZigZag หาจุดกลับตัว" data-en="ZigZag finds reversal points">ZigZag หาจุดกลับตัว</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="text-center p-4 rounded-xl hover:bg-blue-50 transition-colors group">
+            <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xl mx-auto mb-3 group-hover:scale-110 transition-transform"><i class="fas fa-search"></i></div>
+            <h4 class="font-semibold text-gray-800 text-sm mb-1" data-th="1. ตรวจจับสัญญาณ" data-en="1. Detect">1. ตรวจจับสัญญาณ</h4>
+            <p class="text-xs text-gray-500">ZigZag Reversal</p>
           </div>
-          
-          <div class="step-card text-center">
-            <div class="step-icon w-16 h-16 bg-emerald-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-3 shadow-lg">
-              <i class="fas fa-exchange-alt"></i>
-            </div>
-            <h4 class="font-semibold mb-2" data-th="2. วางคำสั่งอัตโนมัติ" data-en="2. Auto Order Placement">2. วางคำสั่งอัตโนมัติ</h4>
-            <p class="text-sm text-gray-600" data-th="Buy/Sell Stop + Limit" data-en="Buy/Sell Stop + Limit">Buy/Sell Stop + Limit</p>
+          <div class="text-center p-4 rounded-xl hover:bg-emerald-50 transition-colors group">
+            <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-xl mx-auto mb-3 group-hover:scale-110 transition-transform"><i class="fas fa-exchange-alt"></i></div>
+            <h4 class="font-semibold text-gray-800 text-sm mb-1" data-th="2. วางคำสั่ง" data-en="2. Auto Order">2. วางคำสั่ง</h4>
+            <p class="text-xs text-gray-500">Stop & Limit</p>
           </div>
-          
-          <div class="step-card text-center">
-            <div class="step-icon w-16 h-16 bg-purple-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-3 shadow-lg">
-              <i class="fas fa-clock"></i>
-            </div>
-            <h4 class="font-semibold mb-2" data-th="3. จัดการเวลาเทรด" data-en="3. Trading Session">3. จัดการเวลาเทรด</h4>
-            <p class="text-sm text-gray-600" data-th="In/Out Session Logic" data-en="In/Out Session Logic">In/Out Session Logic</p>
+          <div class="text-center p-4 rounded-xl hover:bg-purple-50 transition-colors group">
+            <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-xl mx-auto mb-3 group-hover:scale-110 transition-transform"><i class="fas fa-clock"></i></div>
+            <h4 class="font-semibold text-gray-800 text-sm mb-1" data-th="3. จัดการเวลา" data-en="3. Session">3. จัดการเวลา</h4>
+            <p class="text-xs text-gray-500">In/Out Logic</p>
           </div>
-          
-          <div class="step-card text-center">
-            <div class="step-icon w-16 h-16 bg-orange-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-3 shadow-lg">
-              <i class="fas fa-coins"></i>
-            </div>
-            <h4 class="font-semibold mb-2" data-th="4. ทำกำไร" data-en="4. Take Profit">4. ทำกำไร</h4>
-            <p class="text-sm text-gray-600" data-th="TP/SL + BE + AvgTP" data-en="TP/SL + BE + AvgTP">TP/SL + BE + AvgTP</p>
+          <div class="text-center p-4 rounded-xl hover:bg-orange-50 transition-colors group">
+            <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center text-xl mx-auto mb-3 group-hover:scale-110 transition-transform"><i class="fas fa-coins"></i></div>
+            <h4 class="font-semibold text-gray-800 text-sm mb-1" data-th="4. ทำกำไร" data-en="4. Profit">4. ทำกำไร</h4>
+            <p class="text-xs text-gray-500">TP/SL + BE</p>
           </div>
-        </div>
-      </div>
-
-      <!-- Statistics with Icons -->
-      <div class="grid md:grid-cols-4 gap-4">
-        <div class="bg-white border-2 border-blue-200 rounded-xl p-4 text-center hover:shadow-lg transition">
-          <div class="text-3xl text-blue-600 mb-2"><i class="fas fa-file-alt"></i></div>
-          <div class="text-2xl font-bold text-gray-800">5</div>
-          <div class="text-sm text-gray-600" data-th="ไฟล์ตั้งค่าสำเร็จรูป" data-en="Preset Files">ไฟล์ตั้งค่าสำเร็จรูป</div>
-        </div>
-        
-        <div class="bg-white border-2 border-purple-200 rounded-xl p-4 text-center hover:shadow-lg transition">
-          <div class="text-3xl text-purple-600 mb-2"><i class="fas fa-shield-alt"></i></div>
-          <div class="text-2xl font-bold text-gray-800">100%</div>
-          <div class="text-sm text-gray-600" data-th="ระบบจัดการความเสี่ยง" data-en="Risk Management System">ระบบจัดการความเสี่ยง</div>
-        </div>
-        
-        <div class="bg-white border-2 border-orange-200 rounded-xl p-4 text-center hover:shadow-lg transition">
-          <div class="text-3xl text-orange-600 mb-2"><i class="fas fa-bolt"></i></div>
-          <div class="text-2xl font-bold text-gray-800">24/7</div>
-          <div class="text-sm text-gray-600" data-th="เทรดอัตโนมัติ" data-en="Auto Trading">เทรดอัตโนมัติ</div>
         </div>
       </div>
     </section>
 
-    <!-- EA MT5 Free Section -->
-    <section id="ea-free" class="mb-12 scroll-mt-24">
-      
-      <div class="section-header">
-        <i class="fas fa-robot text-3xl"></i>
-        <div>
-          <h3 data-th="EA MT5 Free" data-en="EA MT5 Free">EA MT5 Free</h3>
-          <p class="text-blue-100 text-sm" data-th="Expert Advisors สำหรับ MetaTrader 5 แจกฟรี!" data-en="Expert Advisors for MetaTrader 5 - Free!">Expert Advisors สำหรับ MetaTrader 5 แจกฟรี!</p>
+    <!-- ========================================================= -->
+    <!-- 🎁 MODERN PRODUCTS HUB - EA + Indicator รวมในที่เดียว -->
+    <!-- ========================================================= -->
+    <section id="products" class="mb-12 scroll-mt-24">
+      <div class="products-hub">
+        <div class="hub-header">
+          <div class="inline-block mb-3 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20">
+            <span class="text-xs font-semibold text-emerald-300 uppercase tracking-wider">
+              <i class="fas fa-gift mr-1"></i>
+              <span data-th="แจกฟรี 100%" data-en="100% Free">แจกฟรี 100%</span>
+            </span>
+          </div>
+          <h2 class="hub-title" data-th="🚀 Trading Products Hub" data-en="🚀 Trading Products Hub">🚀 Trading Products Hub</h2>
+          <p class="hub-subtitle" data-th="รวม EA และ Indicator คุณภาพสูงสำหรับ MetaTrader 5 คัดสรรโดย UU School Trading" 
+             data-en="Collection of high-quality EA and Indicator for MetaTrader 5, curated by UU School Trading">
+             รวม EA และ Indicator คุณภาพสูงสำหรับ MetaTrader 5 คัดสรรโดย UU School Trading
+          </p>
+        </div>
+
+        <div class="stats-bar">
+          <div class="stat-item"><div class="stat-number" id="stat-total">5</div><div class="stat-label" data-th="รายการทั้งหมด" data-en="Total Items">รายการทั้งหมด</div></div>
+          <div class="stat-item"><div class="stat-number" id="stat-ea">3</div><div class="stat-label" data-th="Expert Advisors" data-en="Expert Advisors">Expert Advisors</div></div>
+          <div class="stat-item"><div class="stat-number" id="stat-indicator">2</div><div class="stat-label" data-th="Indicators" data-en="Indicators">Indicators</div></div>
+          <div class="stat-item"><div class="stat-number">FREE</div><div class="stat-label" data-th="ดาวน์โหลดฟรี" data-en="Free Download">ดาวน์โหลดฟรี</div></div>
+        </div>
+
+        <div class="filter-bar">
+          <div class="filter-tabs" role="tablist">
+            <button class="filter-tab active" data-filter="all" onclick="filterProducts('all', this)">
+              <i class="fas fa-th-large"></i><span data-th="ทั้งหมด" data-en="All">ทั้งหมด</span><span class="count">5</span>
+            </button>
+            <button class="filter-tab" data-filter="ea" onclick="filterProducts('ea', this)">
+              <i class="fas fa-robot"></i><span>EA</span><span class="count">3</span>
+            </button>
+            <button class="filter-tab" data-filter="indicator" onclick="filterProducts('indicator', this)">
+              <i class="fas fa-chart-line"></i><span data-th="อินดิเคเตอร์" data-en="Indicator">อินดิเคเตอร์</span><span class="count">2</span>
+            </button>
+          </div>
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" onkeyup="searchProducts()" 
+                   placeholder="ค้นหา EA / Indicator..." 
+                   data-placeholder-th="ค้นหา EA / Indicator..." 
+                   data-placeholder-en="Search EA / Indicator...">
+          </div>
+        </div>
+
+        <div class="products-grid" id="productsGrid">
+          <!-- Product 1 -->
+          <div class="modern-card" data-category="ea" data-name="TBB Gold Engine ระบบเทรดทองคำ HyperStrike">
+            <div class="card-image-wrap">
+              <img src="assets/images/TBB HyperStrike Gold EA200x200PNG.png" alt="TBB Gold Engine">
+              <div class="card-badges"><span class="badge badge-free"><i class="fas fa-gift"></i> FREE</span><span class="badge badge-hot"><i class="fas fa-fire"></i> HOT</span></div>
+              <div class="card-type-tag type-ea"><i class="fas fa-robot mr-1"></i> EA MT5</div>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">TBB Gold Engine</h3>
+              <p class="card-desc" data-th="ระบบเทรดทองคำอัตโนมัติด้วยกลยุทธ์ HyperStrike อัจฉริยะ ออกแบบมาเพื่อตลาด XAUUSD โดยเฉพาะ" data-en="Automated gold trading system with intelligent HyperStrike strategy, designed specifically for XAUUSD market.">ระบบเทรดทองคำอัตโนมัติด้วยกลยุทธ์ HyperStrike อัจฉริยะ ออกแบบมาเพื่อตลาด XAUUSD โดยเฉพาะ</p>
+              <div class="card-meta">
+                <span><i class="fas fa-coins text-yellow-400"></i> XAUUSD</span>
+                <span><i class="fas fa-clock text-blue-400"></i> M15-H1</span>
+                <span><i class="fas fa-star text-purple-400"></i> 4.9</span>
+              </div>
+              <a href="https://drive.google.com/file/d/1S2_M_7f4lF6hkkB_4PTXqVWKL70TvoVk/view?usp=drive_link" target="_blank" class="card-download-btn">
+                <i class="fas fa-download"></i><span data-th="ดาวน์โหลดฟรี" data-en="Free Download">ดาวน์โหลดฟรี</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Product 2 -->
+          <div class="modern-card" data-category="ea" data-name="ZTOP EA V4.20 Momentum Spike Breakout ZigZag">
+            <div class="card-image-wrap">
+              <img src="assets/images/ztop-promo(PNG).png" alt="ZTOP EA">
+              <div class="card-badges"><span class="badge badge-free"><i class="fas fa-gift"></i> FREE</span><span class="badge badge-new"><i class="fas fa-bolt"></i> NEW</span></div>
+              <div class="card-type-tag type-ea"><i class="fas fa-robot mr-1"></i> EA MT5</div>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">ZTOP EA V4.20</h3>
+              <p class="card-desc" data-th="Momentum Spike Breakout System ใช้ ZigZag + Pending Order อัจฉริยะ พร้อมระบบจัดการความเสี่ยงครบวงจร" data-en="Momentum Spike Breakout System using ZigZag + Smart Pending Order with comprehensive risk management.">Momentum Spike Breakout System ใช้ ZigZag + Pending Order อัจฉริยะ พร้อมระบบจัดการความเสี่ยงครบวงจร</p>
+              <div class="card-meta">
+                <span><i class="fas fa-bolt text-yellow-400"></i> Breakout</span>
+                <span><i class="fas fa-clock text-blue-400"></i> M15-H4</span>
+                <span><i class="fas fa-star text-purple-400"></i> 5.0</span>
+              </div>
+              <a href="https://drive.google.com/file/d/1Ev-MMga5poZlMUsoTTOJfR5qiYH5D8ae/view?usp=drive_link" target="_blank" class="card-download-btn">
+                <i class="fas fa-download"></i><span data-th="ดาวน์โหลดฟรี" data-en="Free Download">ดาวน์โหลดฟรี</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Product 3 -->
+          <div class="modern-card" data-category="ea" data-name="MACD Trend Fusion Pro เทรดตามแนวโน้ม">
+            <div class="card-image-wrap">
+              <img src="assets/images/MACDTrendFusionProI_PNG.png" alt="MACD Trend Fusion Pro">
+              <div class="card-badges"><span class="badge badge-free"><i class="fas fa-gift"></i> FREE</span></div>
+              <div class="card-type-tag type-ea"><i class="fas fa-robot mr-1"></i> EA MT5</div>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">MACD Trend Fusion Pro</h3>
+              <p class="card-desc" data-th="EA เทรดตามแนวโน้มด้วยระบบ MACD Fusion อัจฉริยะ ตรวจจับเทรนด์ได้แม่นยำ พร้อมระบบกรองสัญญาณรบกวน" data-en="Trend-following EA with intelligent MACD Fusion system, precise trend detection with noise filtering.">EA เทรดตามแนวโน้มด้วยระบบ MACD Fusion อัจฉริยะ ตรวจจับเทรนด์ได้แม่นยำ พร้อมระบบกรองสัญญาณรบกวน</p>
+              <div class="card-meta">
+                <span><i class="fas fa-chart-line text-green-400"></i> Trend</span>
+                <span><i class="fas fa-clock text-blue-400"></i> H1-D1</span>
+                <span><i class="fas fa-star text-purple-400"></i> 4.8</span>
+              </div>
+              <a href="https://drive.google.com/file/d/11-GTFX2mt3CcDZyjmpYyNM7XN1uLCf3h/view?usp=drive_link" target="_blank" class="card-download-btn">
+                <i class="fas fa-download"></i><span data-th="ดาวน์โหลดฟรี" data-en="Free Download">ดาวน์โหลดฟรี</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Product 4 -->
+          <div class="modern-card" data-category="indicator" data-name="Double MA Cross Moving Average อินดิเคเตอร์">
+            <div class="card-image-wrap">
+              <img src="assets/images/Double MA Cross_PNG.png" alt="Double MA Cross">
+              <div class="card-badges"><span class="badge badge-free"><i class="fas fa-gift"></i> FREE</span><span class="badge badge-new"><i class="fas fa-bolt"></i> NEW</span></div>
+              <div class="card-type-tag type-indicator"><i class="fas fa-chart-line mr-1"></i> Indicator</div>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">Double MA Cross</h3>
+              <p class="card-desc" data-th="อินดิเคเตอร์ Cross of Moving Average สร้างสัญญาณ Buy/Sell ชัดเจน ช่วยตัดสินใจเทรดได้ง่ายขึ้น" data-en="Cross of Moving Average indicator, generates clear Buy/Sell signals to help easier trading decisions.">อินดิเคเตอร์ Cross of Moving Average สร้างสัญญาณ Buy/Sell ชัดเจน ช่วยตัดสินใจเทรดได้ง่ายขึ้น</p>
+              <div class="card-meta">
+                <span><i class="fas fa-wave-square text-cyan-400"></i> MA Cross</span>
+                <span><i class="fas fa-layer-group text-orange-400"></i> All TF</span>
+                <span><i class="fas fa-star text-purple-400"></i> 4.7</span>
+              </div>
+              <a href="https://drive.google.com/file/d/1AVCEKj2h3SmizXiQQc_9jkAYxUGdEtbp/view?usp=drive_link" target="_blank" class="card-download-btn">
+                <i class="fas fa-download"></i><span data-th="ดาวน์โหลดฟรี" data-en="Free Download">ดาวน์โหลดฟรี</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Product 5 -->
+          <div class="modern-card" data-category="indicator" data-name="TBB Gold อินดิเคเตอร์ทองคำ Gold">
+            <div class="card-image-wrap">
+              <img src="assets/images/TBB Gold Indicator_PNG.png" alt="TBB Gold">
+              <div class="card-badges"><span class="badge badge-free"><i class="fas fa-gift"></i> FREE</span></div>
+              <div class="card-type-tag type-indicator"><i class="fas fa-chart-line mr-1"></i> Indicator</div>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">TBB Gold</h3>
+              <p class="card-desc" data-th="อินดิเคเตอร์ช่วยวิเคราะห์และติดตามแนวโน้มตลาดทองคำ (Gold) โดยเฉพาะ แสดงสัญญาณเข้า-ออกชัดเจน" data-en="Indicator specifically for analyzing and tracking Gold market trends, with clear entry/exit signals.">อินดิเคเตอร์ช่วยวิเคราะห์และติดตามแนวโน้มตลาดทองคำ (Gold) โดยเฉพาะ แสดงสัญญาณเข้า-ออกชัดเจน</p>
+              <div class="card-meta">
+                <span><i class="fas fa-coins text-yellow-400"></i> XAUUSD</span>
+                <span><i class="fas fa-layer-group text-orange-400"></i> All TF</span>
+                <span><i class="fas fa-star text-purple-400"></i> 4.8</span>
+              </div>
+              <a href="https://drive.google.com/file/d/1xxdLwu2ygXWsvv6zPdTKE0M5a-X0s1lu/view?usp=sharing" target="_blank" class="card-download-btn">
+                <i class="fas fa-download"></i><span data-th="ดาวน์โหลดฟรี" data-en="Free Download">ดาวน์โหลดฟรี</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="empty-state" id="emptyState" style="display: none;">
+            <i class="fas fa-search"></i>
+            <h3 class="text-lg font-semibold mb-2" data-th="ไม่พบรายการที่ค้นหา" data-en="No items found">ไม่พบรายการที่ค้นหา</h3>
+            <p class="text-sm" data-th="ลองเปลี่ยนคำค้นหาหรือเลือกหมวดหมู่อื่น" data-en="Try different keywords or select another category">ลองเปลี่ยนคำค้นหาหรือเลือกหมวดหมู่อื่น</p>
+          </div>
         </div>
       </div>
-
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        
-        <!-- TBB Gold Engine -->
-        <div class="product-card">
-          <img src="assets/images/TBB HyperStrike Gold EA200x200PNG.png" alt="TBB Gold Engine" class="product-image">
-          <div class="product-content">
-            <span class="product-category category-ea">EA MT5</span>
-            <h3 class="product-title">TBB Gold Engine</h3>
-            <p class="text-gray-600 text-sm mb-4">ระบบเทรดทองคำอัตโนมัติด้วยกลยุทธ์ HyperStrike</p>
-            <a href="https://drive.google.com/file/d/1S2_M_7f4lF6hkkB_4PTXqVWKL70TvoVk/view?usp=drive_link" 
-               target="_blank" 
-               class="download-btn">
-              <i class="fas fa-download mr-2"></i>
-              <span data-th="ดาวน์โหลดฟรี" data-en="Free Download">ดาวน์โหลดฟรี</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- ZTOP EA -->
-        <div class="product-card">
-          <img src="assets/images/ztop-promo(PNG).png" alt="ZTOP EA" class="product-image">
-          <div class="product-content">
-            <span class="product-category category-ea">EA MT5</span>
-            <h3 class="product-title">ZTOP EA V4.20</h3>
-            <p class="text-gray-600 text-sm mb-4">Momentum Spike Breakout System - ZZ + STOP Pending</p>
-            <a href="https://drive.google.com/file/d/1Ev-MMga5poZlMUsoTTOJfR5qiYH5D8ae/view?usp=drive_link" 
-               target="_blank" 
-               class="download-btn">
-              <i class="fas fa-download mr-2"></i>
-              <span data-th="ดาวน์โหลดฟรี" data-en="Free Download">ดาวน์โหลดฟรี</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- MACD Trend Fusion Pro -->
-        <div class="product-card">
-          <img src="assets/images/MACDTrendFusionProI_PNG.png" alt="MACD Trend Fusion Pro" class="product-image">
-          <div class="product-content">
-            <span class="product-category category-ea">EA MT5</span>
-            <h3 class="product-title">MACD Trend Fusion Pro</h3>
-            <p class="text-gray-600 text-sm mb-4">EA เทรดตามแนวโน้มด้วยระบบ MACD Fusion อัจฉริยะ</p>
-            <a href="https://drive.google.com/file/d/11-GTFX2mt3CcDZyjmpYyNM7XN1uLCf3h/view?usp=drive_link" 
-               target="_blank" 
-               class="download-btn">
-              <i class="fas fa-download mr-2"></i>
-              <span data-th="ดาวน์โหลดฟรี" data-en="Free Download">ดาวน์โหลดฟรี</span>
-            </a>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Indicator MT5 Free Section -->
-    <section id="indicator-free" class="mb-12 scroll-mt-24">
-      
-      <div class="section-header">
-        <i class="fas fa-chart-line text-3xl"></i>
-        <div>
-          <h3 data-th="Indicator MT5 Free" data-en="Indicator MT5 Free">Indicator MT5 Free</h3>
-          <p class="text-blue-100 text-sm" data-th="อินดิเคเตอร์สำหรับ MetaTrader 5 แจกฟรี!" data-en="Indicators for MetaTrader 5 - Free!">อินดิเคเตอร์สำหรับ MetaTrader 5 แจกฟรี!</p>
-        </div>
-      </div>
-
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        
-        <!-- Double MA Cross -->
-        <div class="product-card">
-          <img src="assets/images/Double MA Cross_PNG.png" alt="Double MA Cross" class="product-image">
-          <div class="product-content">
-            <span class="product-category category-indicator">Indicator MT5</span>
-            <h3 class="product-title">Double MA Cross</h3>
-            <p class="text-gray-600 text-sm mb-4">อินดิเคเตอร์ Kreuz  of Moving Average สร้างสัญญาณเพื่อช่วยตัดสินใจเทรด</p>
-            <a href="https://drive.google.com/file/d/1AVCEKj2h3SmizXiQQc_9jkAYxUGdEtbp/view?usp=drive_link" 
-               target="_blank" 
-               class="download-btn">
-              <i class="fas fa-download mr-2"></i>
-              <span data-th="ดาวน์โหลดฟรี" data-en="Free Download">ดาวน์โหลดฟรี</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- TBB Gold -->
-        <div class="product-card">
-          <img src="assets/images/TBB Gold Indicator_PNG.png" alt="TBB Gold" class="product-image">
-          <div class="product-content">
-            <span class="product-category category-indicator">Indicator MT5</span>
-            <h3 class="product-title">TBB Gold</h3>
-            <p class="text-gray-600 text-sm mb-4">อินดิเคเตอร์ช่วยวิเคราะห์และติดตามแนวโน้มตลาดทองคำ (Gold)</p>
-            <a href="https://drive.google.com/file/d/1xxdLwu2ygXWsvv6zPdTKE0M5a-X0s1lu/view?usp=sharing" 
-               target="_blank" 
-               class="download-btn">
-              <i class="fas fa-download mr-2"></i>
-              <span data-th="ดาวน์โหลดฟรี" data-en="Free Download">ดาวน์โหลดฟรี</span>
-            </a>
-          </div>
-        </div>
-
-      </div>
-
     </section>
 
     <!-- Terms & Conditions Section -->
     <section id="terms" class="mb-12 scroll-mt-24">
       <div class="terms-section">
         <h2 data-th="️ ข้อกำหนดและเงื่อนไข" data-en="️ Terms and Conditions"><i class="fas fa-exclamation-triangle mr-2"></i> ⚠️ ข้อกำหนดและเงื่อนไข</h2>
-
         <div class="warning-box">
           <h3 data-th="⚠️ คำเตือนความเสี่ยง" data-en="⚠️ Risk Warning"><i class="fas fa-exclamation-circle"></i> ⚠️ คำเตือนความเสี่ยง</h3>
-          <p data-th="การเทรด Forex และ CFDs มีความเสี่ยงสูง อาจทำให้เสียเงินลงทุนทั้งหมด ควรศึกษาและเข้าใจความเสี่ยงก่อนการลงทุน" 
-             data-en="Trading Forex and CFDs involves high risk and may result in loss of all invested capital. Please study and understand the risks before investing.">
-             การเทรด Forex และ CFDs มีความเสี่ยงสูง อาจทำให้เสียเงินลงทุนทั้งหมด ควรศึกษาและเข้าใจความเสี่ยงก่อนการลงทุน
-          </p>
+          <p data-th="การเทรด Forex และ CFDs มีความเสี่ยงสูง อาจทำให้เสียเงินลงทุนทั้งหมด ควรศึกษาและเข้าใจความเสี่ยงก่อนการลงทุน" data-en="Trading Forex and CFDs involves high risk and may result in loss of all invested capital.">การเทรด Forex และ CFDs มีความเสี่ยงสูง อาจทำให้เสียเงินลงทุนทั้งหมด ควรศึกษาและเข้าใจความเสี่ยงก่อนการลงทุน</p>
         </div>
-
         <div class="info-box">
           <h3 data-th="ℹ️ เงื่อนไขการใช้งาน" data-en="️ Terms of Use"><i class="fas fa-info-circle"></i> ℹ️ เงื่อนไขการใช้งาน</h3>
           <p data-th="• EA นี้ใช้งานได้เฉพาะกับโบรกเกอร์ที่ระบุไว้เท่านั้น" data-en="• This EA can only be used with specified brokers"><i class="fas fa-check text-green-500 mr-1"></i> EA นี้ใช้งานได้เฉพาะกับโบรกเกอร์ที่ระบุไว้เท่านั้น</p>
@@ -811,91 +707,62 @@
           <p data-th="• ควรติดตามและปรับแต่งการตั้งค่าให้เหมาะสมกับสภาวะตลาด" data-en="• Should monitor and adjust settings according to market conditions"><i class="fas fa-check text-green-500 mr-1"></i> ควรติดตามและปรับแต่งการตั้งค่าให้เหมาะสมกับสภาวะตลาด</p>
         </div>
       </div>
-
-      <!-- Agreement Section -->
       <div class="terms-section">
         <h2 data-th="📃 ข้อตกลงการใช้งาน" data-en="📃 User Agreement"><i class="fas fa-file-signature mr-2"></i> 📃 ข้อตกลงการใช้งาน</h2>
-        <p data-th="เมื่อคุณดาวน์โหลดและใช้งาน ZTOP EA V4.20 ถือว่าคุณได้ยอมรับเงื่อนไขและข้อตกลงทั้งหมดที่ระบุไว้ในเอกสารนี้" 
-           data-en="By downloading and using ZTOP EA V4.20, you agree to accept all terms and conditions specified in this document.">
-           เมื่อคุณดาวน์โหลดและใช้งาน ZTOP EA V4.20 ถือว่าคุณได้ยอมรับเงื่อนไขและข้อตกลงทั้งหมดที่ระบุไว้ในเอกสารนี้
-        </p>
-        <p data-th="หากมีคำถามเพิ่มเติมเกี่ยวกับการใช้งานหรือข้อกำหนด กรุณาติดต่อผ่านช่องทาง" 
-           data-en="If you have additional questions about usage or requirements, please contact us via">
-           หากมีคำถามเพิ่มเติมเกี่ยวกับการใช้งานหรือข้อกำหนด กรุณาติดต่อผ่านช่องทาง
-        </p>
+        <p data-th="เมื่อคุณดาวน์โหลดและใช้งาน ZTOP EA V4.20 ถือว่าคุณได้ยอมรับเงื่อนไขและข้อตกลงทั้งหมดที่ระบุไว้ในเอกสารนี้" data-en="By downloading and using ZTOP EA V4.20, you agree to accept all terms and conditions specified in this document.">เมื่อคุณดาวน์โหลดและใช้งาน ZTOP EA V4.20 ถือว่าคุณได้ยอมรับเงื่อนไขและข้อตกลงทั้งหมดที่ระบุไว้ในเอกสารนี้</p>
+        <p data-th="หากมีคำถามเพิ่มเติมเกี่ยวกับการใช้งานหรือข้อกำหนด กรุณาติดต่อผ่านช่องทาง" data-en="If you have additional questions about usage or requirements, please contact us via">หากมีคำถามเพิ่มเติมเกี่ยวกับการใช้งานหรือข้อกำหนด กรุณาติดต่อผ่านช่องทาง</p>
         <p><strong style="background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"><i class="fas fa-graduation-cap mr-1"></i> UU School Trading</strong></p>
       </div>
     </section>
 
-    <!-- Contact & Support Section -->
+    <!-- Contact Section -->
     <section id="contact" class="mb-12 scroll-mt-24">
       <h2 class="text-2xl font-bold mb-4 pb-2 border-b border-gray-200 flex items-center">
         <i class="fas fa-headset text-blue-600 mr-2"></i>
-        <span data-th=" ติดต่อ & การสนับสนุน" data-en=" Contact & Support">📞 ติดต่อ & การสนับสนุน</span>
+        <span data-th="📞 ติดต่อ & การสนับสนุน" data-en="📞 Contact & Support">📞 ติดต่อ & การสนับสนุน</span>
       </h2>
-      
       <div class="grid md:grid-cols-2 gap-6">
-        <!-- Contact Card -->
         <div class="bg-white rounded-lg shadow p-5 border border-gray-100">
           <h3 class="font-semibold text-lg mb-4 flex items-center text-blue-700">
             <i class="fas fa-address-card mr-2"></i>
             <span data-th="ช่องทางการติดต่อ" data-en="Contact Channels">ช่องทางการติดต่อ</span>
           </h3>
           <div class="space-y-3">
-            <a href="https://www.facebook.com/uutrader" target="_blank" 
-               class="flex items-center p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition group">
+            <a href="https://www.facebook.com/uutrader" target="_blank" class="flex items-center p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition group">
               <i class="fab fa-facebook text-blue-600 text-xl w-8 group-hover:scale-110 transition"></i>
-              <div class="ml-3">
-                <p class="font-medium text-gray-800">Facebook</p>
-                <p class="text-sm text-gray-600">UU School Trading</p>
-              </div>
+              <div class="ml-3"><p class="font-medium text-gray-800">Facebook</p><p class="text-sm text-gray-600">UU School Trading</p></div>
+            </a>
+            <a href="https://m.me/uutrader" target="_blank" class="flex items-center p-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg hover:from-blue-100 hover:to-purple-100 transition group">
+              <i class="fab fa-facebook-messenger text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-xl w-8 group-hover:scale-110 transition"></i>
+              <div class="ml-3"><p class="font-medium text-gray-800">Messenger</p><p class="text-sm text-gray-600" data-th="แชทกับเราโดยตรง" data-en="Chat with us directly">แชทกับเราโดยตรง</p></div>
             </a>
             <div class="flex items-center p-3 bg-green-50 rounded-lg">
               <i class="fab fa-telegram text-green-600 text-xl w-8"></i>
-              <div class="ml-3">
-                <p class="font-medium text-gray-800">Telegram</p>
-                <p class="text-sm text-gray-600">@teleuutrader</p>
-              </div>
+              <div class="ml-3"><p class="font-medium text-gray-800">Telegram</p><p class="text-sm text-gray-600">@teleuutrader</p></div>
             </div>
             <div class="flex items-center p-3 bg-purple-50 rounded-lg">
               <i class="fas fa-id-card text-purple-600 text-xl w-8"></i>
-              <div class="ml-3">
-                <p class="font-medium text-gray-800">Line ID</p>
-                <p class="text-sm text-gray-600">uutrader</p>
-              </div>
+              <div class="ml-3"><p class="font-medium text-gray-800">Line ID</p><p class="text-sm text-gray-600">uutrader</p></div>
             </div>
           </div>
         </div>
-        
-        <!-- Support Channel Card -->
         <div class="support-channel">
-          <h3 data-th="ช่องทางที่สนับสนุน" data-en="Supported Channel"><i class="fas fa-video mr-1"></i> ช่องทางที่สนับสนุน</h3>
-          <div class="channel-name">uu school trading</div>
-          <br>
-          <a href="https://www.youtube.com/watch?v=1b12km_dAdg&t=703s" target="_blank" rel="noopener noreferrer" class="channel-link"
-             data-th="ดูวิดีโอ YouTube" data-en="Watch YouTube Video">
-            <i class="fab fa-youtube mr-1"></i> ดูวิดีโอ YouTube
-          </a>
-          <p style="margin-top: 12px; color: #6b7280; font-size: 0.9rem;" 
-             data-th="สำหรับคำถาม การสนับสนุน และอัพเดทข้อมูลล่าสุด" 
-             data-en="For questions, support, and latest updates">
-             สำหรับคำถาม การสนับสนุน และอัพเดทข้อมูลล่าสุด
-          </p>
+          <h3 data-th="📺 ช่องทางที่สนับสนุน" data-en="📺 Supported Channel"><i class="fas fa-video mr-1"></i> ช่องทางที่สนับสนุน</h3>
+          <div class="channel-name">uu school trading</div><br>
+          <a href="https://www.youtube.com/watch?v=1b12km_dAdg&t=703s" target="_blank" rel="noopener noreferrer" class="channel-link" data-th="ดูวิดีโอ YouTube" data-en="Watch YouTube Video"><i class="fab fa-youtube mr-1"></i> ดูวิดีโอ YouTube</a>
+          <p style="margin-top: 12px; color: #6b7280; font-size: 0.9rem;" data-th="สำหรับคำถาม การสนับสนุน และอัพเดทข้อมูลล่าสุด" data-en="For questions, support, and latest updates">สำหรับคำถาม การสนับสนุน และอัพเดทข้อมูลล่าสุด</p>
         </div>
       </div>
 
-      <!-- Action Buttons -->
       <div style="text-align: center; margin-top: 24px;">
         <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
-          <a href="https://drive.google.com/file/d/1Ev-MMga5poZlMUsoTTOJfR5qiYH5D8ae/view?usp=drive_link" target="_blank" 
-             class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition">
+          <a href="#products" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-emerald-600 text-white font-semibold rounded-lg shadow hover:shadow-xl transition transform hover:scale-105">
             <i class="fas fa-download mr-2"></i>
-            <span data-th="ดาวน์โหลด EA" data-en="Download EA">ดาวน์โหลด EA</span>
+            <span data-th="ดาวน์โหลดฟรี" data-en="Free Download">ดาวน์โหลดฟรี</span>
           </a>
-          <a href="https://www.facebook.com/uutrader" target="_blank"
-             class="inline-flex items-center px-6 py-3 bg-gray-600 text-white font-semibold rounded-lg shadow hover:bg-gray-700 transition">
-            <i class="fas fa-envelope mr-2"></i>
-            <span data-th="ติดต่อ Admin" data-en="Contact Admin">ติดต่อ Admin</span>
+          <a href="https://m.me/uutrader" target="_blank" class="inline-flex items-center px-6 py-3 messenger-btn text-white font-semibold rounded-lg shadow hover:shadow-xl transition transform hover:scale-105">
+            <i class="fab fa-facebook-messenger mr-2"></i>
+            <span data-th="สอบถามเพิ่มเติม" data-en="Ask More">สอบถามเพิ่มเติม</span>
           </a>
         </div>
       </div>
@@ -906,13 +773,9 @@
   <!-- Footer -->
   <footer class="bg-gray-800 text-gray-300 py-8 px-4 mt-12">
     <div class="max-w-6xl mx-auto text-center">
-      <p class="font-semibold text-white flex items-center justify-center">
-        <i class="fas fa-robot mr-2"></i> ZTOP EA V4.20
-      </p>
+      <p class="font-semibold text-white flex items-center justify-center"><i class="fas fa-robot mr-2"></i> ZTOP EA V4.20</p>
       <p class="text-sm mt-1" data-th="สร้างโดย UU School Trading" data-en="Created by UU School Trading"><i class="fas fa-graduation-cap mr-1"></i> สร้างโดย UU School Trading</p>
-      <p class="text-xs mt-4 text-gray-400">
-        © <span id="year"></span> • All Rights Reserved
-      </p>
+      <p class="text-xs mt-4 text-gray-400">© <span id="year"></span> • All Rights Reserved</p>
       <p class="text-xs mt-2 text-gray-500">
         <span data-th="เว็บไซต์นี้ไม่เกี่ยวข้องกับ MetaQuotes Software Corp." data-en="This website is not affiliated with MetaQuotes Software Corp.">
           <i class="fas fa-info-circle mr-1"></i> เว็บไซต์นี้ไม่เกี่ยวข้องกับ MetaQuotes Software Corp.
@@ -921,51 +784,133 @@
     </div>
   </footer>
 
-  <!-- JavaScript for Language Switching & Smooth Scroll -->
+  <!-- Swiper.js Script -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
     
     function switchLang(lang) {
-      document.getElementById('btn-th').className = 
-        'px-4 py-2 text-sm font-medium transition ' + (lang === 'th' ? 'lang-active' : 'lang-inactive');
-      document.getElementById('btn-en').className = 
-        'px-4 py-2 text-sm font-medium transition ' + (lang === 'en' ? 'lang-active' : 'lang-inactive');
+      document.getElementById('btn-th').className = 'px-4 py-2 text-sm font-medium transition ' + (lang === 'th' ? 'lang-active' : 'lang-inactive');
+      document.getElementById('btn-en').className = 'px-4 py-2 text-sm font-medium transition ' + (lang === 'en' ? 'lang-active' : 'lang-inactive');
       
       document.querySelectorAll('[data-th][data-en]').forEach(el => {
         el.innerHTML = el.getAttribute(`data-${lang}`);
       });
+
+      const searchInput = document.getElementById('searchInput');
+      if (searchInput) {
+        searchInput.placeholder = searchInput.getAttribute(`data-placeholder-${lang}`);
+      }
       
       document.documentElement.lang = lang;
       localStorage.setItem('ztop_lang', lang);
     }
+
+    // ===== Swiper Initialization =====
+    const swiper = new Swiper(".mySwiper", {
+      slidesPerView: 1,
+      spaceBetween: 0,
+      loop: true,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      effect: "fade", // ใช้ Fade effect ให้ดูพรีเมียม
+      fadeEffect: {
+        crossFade: true
+      },
+      speed: 800,
+    });
+
+    // ===== Product Filter & Search =====
+    function filterProducts(category, btn) {
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('searchInput').value = '';
+
+      const cards = document.querySelectorAll('.modern-card');
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.classList.remove('hidden-card');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden-card');
+        }
+      });
+      updateStats();
+      toggleEmptyState(visibleCount);
+    }
+
+    function searchProducts() {
+      const query = document.getElementById('searchInput').value.toLowerCase().trim();
+      const cards = document.querySelectorAll('.modern-card');
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const name = card.getAttribute('data-name').toLowerCase();
+        const desc = card.querySelector('.card-desc').textContent.toLowerCase();
+        const title = card.querySelector('.card-title').textContent.toLowerCase();
+        
+        if (name.includes(query) || desc.includes(query) || title.includes(query)) {
+          card.classList.remove('hidden-card');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden-card');
+        }
+      });
+      toggleEmptyState(visibleCount);
+    }
+
+    function toggleEmptyState(count) {
+      document.getElementById('emptyState').style.display = count === 0 ? 'block' : 'none';
+    }
+
+    function updateStats() {
+      const visibleCards = document.querySelectorAll('.modern-card:not(.hidden-card)');
+      const statTotal = document.getElementById('stat-total');
+      if (statTotal) statTotal.textContent = visibleCards.length;
+    }
     
     document.addEventListener('DOMContentLoaded', function() {
-      // 1. Initialize Language
       const savedLang = localStorage.getItem('ztop_lang') || 'th';
       switchLang(savedLang);
 
-      // 2. Fix Anchor Link Scrolling (ป้องกันเมนูบังเนื้อหา)
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
           const targetId = this.getAttribute('href');
           if (targetId === '#') return;
-          
           const targetElement = document.querySelector(targetId);
           if (targetElement) {
-            e.preventDefault(); // ป้องกันการกระโดดแบบปกติ
-            
-            // คำนวณความสูงของเมนูเพื่อชดเชย
+            e.preventDefault();
             const navHeight = document.querySelector('nav').offsetHeight || 60;
             const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY;
-            const offsetPosition = elementPosition - navHeight - 10; // ลบด้วยความสูงเมนู + เว้นระยะ 10px
-            
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth'
-            });
+            window.scrollTo({ top: elementPosition - navHeight - 10, behavior: 'smooth' });
           }
         });
       });
+
+      setTimeout(() => {
+        document.querySelectorAll('.modern-card').forEach((card, i) => {
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(20px)';
+          setTimeout(() => {
+            card.style.transition = 'all 0.5s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+          }, i * 100);
+        });
+      }, 300);
     });
   </script>
 </body>
